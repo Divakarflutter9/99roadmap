@@ -1,0 +1,238 @@
+/* === GAMIFIED VIBRANT 3D THEME === */
+/* Combined from user inline styles and 3D enhancements */
+
+:root {
+    --bg-body: #020617;
+    --card-bg: rgba(15, 23, 42, 0.95);
+    --border-subtle: rgba(148, 163, 184, 0.25);
+    --primary: #22d3ee;
+    --secondary: #a855f7;
+    --accent: #06b6d4;
+    --radius-md: 1rem;
+    --radius-lg: 1.25rem;
+    --radius-xl: 1.5rem;
+    --radius-full: 999px;
+}
+
+body {
+    background: radial-gradient(circle at top, #0b1120 0%, #020617 45%, #000 100%);
+    color: #e5e7eb;
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.6;
+}
+
+/* === GLASS CARDS === */
+.glass-card {
+    background: linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(15, 23, 42, 0.9));
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9), 0 18px 60px rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(20px);
+}
+
+.glass {
+    background: radial-gradient(circle at top left, rgba(148, 163, 184, 0.16), rgba(15, 23, 42, 0.95));
+    border-radius: var(--radius-md);
+    border: 1px solid rgba(148, 163, 184, 0.45);
+    backdrop-filter: blur(12px);
+}
+
+/* === TYPOGRAPHY === */
+.display-2 {
+    font-size: clamp(2.6rem, 3.4vw + 1.4rem, 3.6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+}
+
+.display-3 {
+    font-size: clamp(2.1rem, 2.8vw + 1.1rem, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.04em;
+}
+
+.display-4 {
+    font-size: clamp(1.8rem, 2.2vw + 0.9rem, 2.4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+}
+
+.text-muted {
+    color: #9ca3af;
+}
+
+.text-primary {
+    color: var(--primary);
+}
+
+.text-secondary {
+    color: var(--secondary);
+}
+
+.text-accent {
+    color: var(--accent);
+}
+
+.bg-primary {
+    background-color: var(--primary);
+}
+
+.bg-secondary {
+    background-color: var(--secondary);
+}
+
+.bg-success {
+    background-color: #22c55e;
+}
+
+/* === GRADIENTS === */
+.text-gradient {
+    background: linear-gradient(120deg, #22d3ee, #a855f7);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 800;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.text-primary-glow {
+    color: #22d3ee;
+    text-shadow: 0 0 30px rgba(34, 211, 238, 0.6);
+}
+
+/* === BUTTONS === */
+.btn {
+    font-weight: 600;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: var(--radius-full);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #22d3ee, #0ea5e9);
+    color: #020617;
+    border: none;
+    padding: 1rem 2rem;
+    box-shadow: 0 14px 40px rgba(34, 211, 238, 0.45);
+    /* 3D Touch */
+    border-bottom: 4px solid #0099CC;
+    transform: translateY(0);
+}
+
+.btn-primary:active {
+    transform: translateY(3px);
+    border-bottom-width: 1px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px) scale(1.01);
+    box-shadow: 0 18px 60px rgba(34, 211, 238, 0.65);
+}
+
+.btn.glass {
+    background: rgba(15, 23, 42, 0.75);
+    border: 1px solid rgba(148, 163, 184, 0.7);
+    color: #e5e7eb;
+    padding: 1rem 2rem;
+}
+
+.btn.glass:hover {
+    background: rgba(30, 64, 175, 0.45);
+    border-color: rgba(59, 130, 246, 0.9);
+}
+
+.btn-lg {
+    padding: 1.25rem 2.5rem;
+    font-size: 1.1rem;
+}
+
+.btn-sm {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+}
+
+.hover-scale:hover {
+    transform: translateY(-1px) scale(1.02);
+}
+
+/* === 3D ICONS & ANIMATIONS === */
+.icon-3d {
+    text-shadow: 0 8px 20px rgba(15, 23, 42, 0.9), 0 0 30px rgba(56, 189, 248, 0.6);
+    filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.4));
+    transform: perspective(500px) rotateX(10deg) rotateY(-10deg);
+    transition: transform 0.3s ease;
+    display: inline-block;
+}
+
+.icon-3d:hover {
+    transform: perspective(500px) rotateX(0deg) rotateY(0deg) scale(1.1);
+    filter: drop-shadow(0 15px 25px rgba(0, 234, 255, 0.4));
+}
+
+/* === COMPONENTS === */
+.badge {
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.progress-bar {
+    background: rgba(255, 255, 255, 0.1);
+    height: 6px;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.3s ease;
+}
+
+/* Hero Specific */
+.hero-graph-card {
+    border-radius: 1.5rem;
+    background: radial-gradient(circle at top left, rgba(34, 211, 238, 0.08), rgba(15, 23, 42, 0.98));
+    border: 1px solid rgba(148, 163, 184, 0.35);
+}
+
+/* Animations */
+.animate-on-load {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-on-load.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Navbar overrides */
+.navbar {
+    background: rgba(2, 6, 23, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.nav-links a:hover {
+    color: var(--primary);
+}
+
+.nav-links a::after {
+    background: var(--primary);
+}
+
+/* Footer Overrides */
+.footer {
+    background: rgba(2, 6, 23, 0.95);
+    border-top: 1px solid rgba(148, 163, 184, 0.15);
+}

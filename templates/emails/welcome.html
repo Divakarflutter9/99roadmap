@@ -1,0 +1,25 @@
+{% extends 'emails/base_email.html' %}
+
+{% block content %}
+<h2>Welcome, {{ user.get_short_name|default:user.username }}! 🚀</h2>
+<p>We're absolutely thrilled to have you on board. 99Roadmap is designed to help you master tech skills with structured,
+    career-focused learning paths.</p>
+
+<p>Here's what you can do right now:</p>
+<ul style="padding-left: 20px; color: #475569;">
+    <li style="margin-bottom: 10px;">Explore our 50+ curated roadmaps</li>
+    <li style="margin-bottom: 10px;">Track your progress and earn XP</li>
+    <li style="margin-bottom: 10px;">Take quizzes to test your knowledge</li>
+</ul>
+
+<div style="text-align: center; margin: 30px 0;">
+    <a href="{{ site_url }}{% url 'dashboard' %}" class="btn">Start Learning Now</a>
+</div>
+
+<p>If you have any questions, feel free to reply to this email. We're here to help you succeed!</p>
+
+<p style="margin-top: 30px;">
+    Best Regards,<br>
+    The 99Roadmap Team
+</p>
+{% endblock %}

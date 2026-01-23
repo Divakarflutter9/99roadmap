@@ -1,0 +1,278 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}FAQ - 99Roadmap{% endblock %}
+
+{% block content %}
+<div class="container container-md py-5">
+    <div class="text-center mb-5 animate-fade-in-up">
+        <h1 class="text-gradient fw-extrabold mb-3">Frequently Asked Questions</h1>
+        <p class="text-secondary fs-5">Find answers to common questions about 99Roadmap</p>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-10 mx-auto animate-fade-in-up delay-100">
+
+            <!-- General Questions -->
+            <h3 class="text-white mb-4"><i class="fas fa-info-circle text-primary me-2"></i> General</h3>
+
+            <div class="faq-item mb-3">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">What is 99Roadmap?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>99Roadmap is a comprehensive learning platform that provides structured roadmaps for various
+                        technologies and career paths. We help students and professionals master new skills through
+                        curated content, interactive quizzes, and AI-powered assistance.</p>
+                </div>
+            </div>
+
+            <div class="faq-item mb-3">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">How does 99Roadmap work?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Simply register for an account, browse our available roadmaps, and enroll in the ones that match
+                        your learning goals. Each roadmap is divided into stages with topics, resources, and quizzes to
+                        test your knowledge. Complete stages to unlock the next ones and earn XP points!</p>
+                </div>
+            </div>
+
+            <div class="faq-item mb-4">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">Is 99Roadmap suitable for beginners?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Absolutely! Our roadmaps cater to all skill levels - from complete beginners to advanced
+                        learners. Each roadmap clearly indicates its difficulty level, and we provide foundational
+                        content before progressing to advanced topics.</p>
+                </div>
+            </div>
+
+            <!-- Account & Subscription -->
+            <h3 class="text-white mb-4 mt-5"><i class="fas fa-user-circle text-primary me-2"></i> Account & Subscription
+            </h3>
+
+            <div class="faq-item mb-3">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">Do I need to pay to use 99Roadmap?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We offer both free and premium content. You can access the first stage of every roadmap for free!
+                        Premium subscribers get unlimited access to all stages, AI-powered learning assistance,
+                        downloadable resources, and exclusive content.</p>
+                </div>
+            </div>
+
+            <div class="faq-item mb-3">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">What payment methods do you accept?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We accept all major payment methods including Credit/Debit Cards, UPI, Net Banking, and popular
+                        digital wallets. All payments are processed securely through our trusted payment gateway.</p>
+                </div>
+            </div>
+
+            <div class="faq-item mb-3">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">Can I cancel my subscription anytime?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! You can cancel your subscription at any time from your profile settings. Your access will
+                        continue until the end of your current billing period. No questions asked!</p>
+                </div>
+            </div>
+
+            <div class="faq-item mb-4">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">What is your refund policy?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We offer a 7-day money-back guarantee on all subscriptions. If you're not satisfied with our
+                        platform, contact us within 7 days of purchase for a full refund. See our <a
+                            href="{% url 'refund_policy' %}" class="text-primary">Refund Policy</a> for details.</p>
+                </div>
+            </div>
+
+            <!-- Learning & Progress -->
+            <h3 class="text-white mb-4 mt-5"><i class="fas fa-graduation-cap text-primary me-2"></i> Learning & Progress
+            </h3>
+
+            <div class="faq-item mb-3">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">How do I track my learning progress?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Your dashboard provides a comprehensive view of your learning progress, including completed
+                        topics, quiz scores, earned XP, current streak, and badges. You can also see your ranking on the
+                        leaderboard!</p>
+                </div>
+            </div>
+
+            <div class="faq-item mb-3">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">What is XP and how do I earn it?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>XP (Experience Points) is our gamification system to make learning fun! You earn XP by completing
+                        topics, passing quizzes, maintaining daily streaks, and achieving milestones. Higher XP means
+                        higher rank on the leaderboard.</p>
+                </div>
+            </div>
+
+            <div class="faq-item mb-3">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">Can I retake quizzes?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! You can retake quizzes as many times as you like to improve your score and understanding. We
+                        encourage learning through practice.</p>
+                </div>
+            </div>
+
+            <div class="faq-item mb-4">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">What is the AI Assistant feature?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Our AI Assistant is your personal learning companion! It can explain complex topics, answer
+                        questions, provide examples, and help you when you're stuck. This feature is available to
+                        premium subscribers.</p>
+                </div>
+            </div>
+
+            <!-- Technical Support -->
+            <h3 class="text-white mb-4 mt-5"><i class="fas fa-headset text-primary me-2"></i> Technical Support</h3>
+
+            <div class="faq-item mb-3">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">I forgot my password. How can I reset it?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Click on "Forgot Password" on the login page and enter your registered email or phone number.
+                        You'll receive a password reset link via email. Follow the instructions to create a new
+                        password.</p>
+                </div>
+            </div>
+
+            <div class="faq-item mb-3">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">Can I use 99Roadmap on mobile devices?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! Our platform is fully responsive and works seamlessly on smartphones, tablets, and desktops.
+                        Learn anywhere, anytime!</p>
+                </div>
+            </div>
+
+            <div class="faq-item mb-3">
+                <div class="faq-question" onclick="toggleFaq(this)">
+                    <h5 class="mb-0">How do I contact support?</h5>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>You can reach our support team via the <a href="{% url 'contact' %}" class="text-primary">Contact
+                            Us</a> page. We typically respond within 24 hours on business days.</p>
+                </div>
+            </div>
+
+            <!-- Still have questions? -->
+            <div class="card-modern p-4 mt-5 text-center">
+                <h4 class="text-white mb-2">Still have questions?</h4>
+                <p class="text-secondary mb-3">Can't find the answer you're looking for? Get in touch with our support
+                    team.</p>
+                <a href="{% url 'contact' %}" class="btn btn-primary">Contact Support</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .faq-item {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        backdrop-filter: blur(12px);
+    }
+
+    .faq-question {
+        padding: 1.25rem 1.5rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.2s ease;
+    }
+
+    .faq-question:hover {
+        background: rgba(99, 102, 241, 0.05);
+    }
+
+    .faq-question h5 {
+        color: white;
+        margin: 0;
+        font-size: 1.05rem;
+        font-weight: 600;
+    }
+
+    .faq-question i {
+        color: var(--primary);
+        transition: transform 0.3s ease;
+    }
+
+    .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        padding: 0 1.5rem;
+    }
+
+    .faq-answer p {
+        color: #cbd5e1;
+        line-height: 1.7;
+        margin: 0;
+    }
+
+    .faq-item.active .faq-answer {
+        max-height: 500px;
+        padding: 0 1.5rem 1.25rem 1.5rem;
+    }
+
+    .faq-item.active .faq-question i {
+        transform: rotate(180deg);
+    }
+</style>
+
+<script>
+    function toggleFaq(element) {
+        const faqItem = element.closest('.faq-item');
+        const isActive = faqItem.classList.contains('active');
+
+        // Close all FAQ items
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        // Toggle current item
+        if (!isActive) {
+            faqItem.classList.add('active');
+        }
+    }
+</script>
+{% endblock %}

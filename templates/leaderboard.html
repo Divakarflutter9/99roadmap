@@ -1,0 +1,371 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Leaderboard - 99Roadmap{% endblock %}
+
+{% block content %}
+<style>
+    /* Podium Styles */
+    .podium-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 1rem;
+        margin-bottom: 3rem;
+        min-height: 330px;
+    }
+
+    .podium-place {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        position: relative;
+        transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .podium-place:hover {
+        transform: translateY(-10px);
+    }
+
+    /* Rank 1 */
+    .place-1 {
+        order: 2;
+        z-index: 10;
+    }
+
+    .place-1 .avatar-ring {
+        border: 4px solid #fbbf24;
+        /* Amber-400 */
+        box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+        width: 100px;
+        height: 100px;
+    }
+
+    .place-1 .crown-icon {
+        position: absolute;
+        top: -30px;
+        color: #fbbf24;
+        font-size: 2rem;
+        animation: float 3s ease-in-out infinite;
+    }
+
+    .place-1 .podium-block {
+        height: 140px;
+        background: linear-gradient(to bottom, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.05));
+        border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    /* Rank 2 */
+    .place-2 {
+        order: 1;
+    }
+
+    .place-2 .avatar-ring {
+        border: 3px solid #94a3b8;
+        /* Slate-400 */
+        box-shadow: 0 0 15px rgba(148, 163, 184, 0.3);
+        width: 80px;
+        height: 80px;
+    }
+
+    .place-2 .podium-block {
+        height: 100px;
+        background: linear-gradient(to bottom, rgba(148, 163, 184, 0.2), rgba(148, 163, 184, 0.05));
+        border: 1px solid rgba(148, 163, 184, 0.3);
+    }
+
+    /* Rank 3 */
+    .place-3 {
+        order: 3;
+    }
+
+    .place-3 .avatar-ring {
+        border: 3px solid #b45309;
+        /* Amber-700 */
+        box-shadow: 0 0 15px rgba(180, 83, 9, 0.3);
+        width: 80px;
+        height: 80px;
+    }
+
+    .place-3 .podium-block {
+        height: 70px;
+        background: linear-gradient(to bottom, rgba(180, 83, 9, 0.2), rgba(180, 83, 9, 0.05));
+        border: 1px solid rgba(180, 83, 9, 0.3);
+    }
+
+    .avatar-ring {
+        border-radius: 50%;
+        padding: 3px;
+        background: #0f172a;
+        margin-bottom: 10px;
+        position: relative;
+    }
+
+    .avatar-ring img,
+    .avatar-ring .avatar-placeholder {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+
+    .avatar-placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #1e293b;
+        color: #cbd5e1;
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    .podium-block {
+        width: 120px;
+        border-radius: 12px 12px 0 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(10px);
+        margin-top: 10px;
+    }
+
+    .rank-number {
+        font-size: 2rem;
+        font-weight: 800;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .user-name-glitch {
+        font-weight: 700;
+        color: white;
+        margin-bottom: 2px;
+        max-width: 120px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .xp-badge {
+        font-size: 0.75rem;
+        padding: 2px 8px;
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 12px;
+        color: #e2e8f0;
+    }
+
+    /* List Styles */
+    .leaderboard-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .leaderboard-item {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 1rem 1.5rem;
+        display: flex;
+        align-items: center;
+        transition: all 0.2s;
+        backdrop-filter: blur(5px);
+    }
+
+    .leaderboard-item:hover {
+        background: rgba(30, 41, 59, 0.6);
+        transform: scale(1.01);
+        border-color: rgba(99, 102, 241, 0.3);
+    }
+
+    .leaderboard-item.current-user {
+        background: rgba(99, 102, 241, 0.15);
+        border: 1px solid rgba(99, 102, 241, 0.4);
+        box-shadow: 0 0 15px rgba(99, 102, 241, 0.1);
+    }
+
+    .rank-col {
+        width: 50px;
+        font-weight: 700;
+        color: #94a3b8;
+    }
+
+    .user-col {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .level-col {
+        width: 100px;
+        text-align: center;
+    }
+
+    .xp-col {
+        width: 120px;
+        text-align: right;
+        font-weight: 700;
+        color: white;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translateY(0px) rotate(0deg);
+        }
+
+        50% {
+            transform: translateY(-8px) rotate(2deg);
+        }
+
+        100% {
+            transform: translateY(0px) rotate(0deg);
+        }
+    }
+</style>
+
+<div class="container container-md py-5">
+
+    <!-- Header -->
+    <div class="text-center mb-5 animate-fade-in-up">
+        <h1 class="display-4 fw-extrabold text-white mb-2">Hall of Fame 🏆</h1>
+        <p class="text-lg text-secondary">Rise to the top and become a legend.</p>
+    </div>
+
+    <!-- Podium Section (Top 3) -->
+    <div class="podium-container animate-fade-in-up delay-100">
+        <!-- Rank 2 -->
+        {% if top_users.1 %}
+        <div class="podium-place place-2">
+            <div class="avatar-ring">
+                {% if top_users.1.user.profile_image %}
+                <img src="{{ top_users.1.user.profile_image.url }}" alt="Rank 2">
+                {% else %}
+                <div class="avatar-placeholder">{{ top_users.1.user.first_name|first|upper }}</div>
+                {% endif %}
+            </div>
+            <div class="user-name-glitch">{{ top_users.1.user.full_name|default:top_users.1.user.username }}</div>
+            <div class="xp-badge">{{ top_users.1.total_xp }} XP</div>
+            <div class="podium-block">
+                <div class="rank-number">2</div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Rank 1 -->
+        {% if top_users.0 %}
+        <div class="podium-place place-1">
+            <i class="fas fa-crown crown-icon"></i>
+            <div class="avatar-ring">
+                {% if top_users.0.user.profile_image %}
+                <img src="{{ top_users.0.user.profile_image.url }}" alt="Rank 1">
+                {% else %}
+                <div class="avatar-placeholder">{{ top_users.0.user.first_name|first|upper }}</div>
+                {% endif %}
+            </div>
+            <div class="user-name-glitch">{{ top_users.0.user.full_name|default:top_users.0.user.username }}</div>
+            <div class="xp-badge">{{ top_users.0.total_xp }} XP</div>
+            <div class="podium-block">
+                <div class="rank-number">1</div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Rank 3 -->
+        {% if top_users.2 %}
+        <div class="podium-place place-3">
+            <div class="avatar-ring">
+                {% if top_users.2.user.profile_image %}
+                <img src="{{ top_users.2.user.profile_image.url }}" alt="Rank 3">
+                {% else %}
+                <div class="avatar-placeholder">{{ top_users.2.user.first_name|first|upper }}</div>
+                {% endif %}
+            </div>
+            <div class="user-name-glitch">{{ top_users.2.user.full_name|default:top_users.2.user.username }}</div>
+            <div class="xp-badge">{{ top_users.2.total_xp }} XP</div>
+            <div class="podium-block">
+                <div class="rank-number">3</div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Remaining List (Rank 4+) -->
+    <div class="leaderboard-list animate-fade-in-up delay-200">
+        {% for record in top_users|slice:"3:" %}
+        <div class="leaderboard-item {% if user.is_authenticated and record.user == user %}current-user{% endif %}">
+            <div class="rank-col">#{{ forloop.counter|add:3 }}</div>
+
+            <div class="user-col">
+                <div class="rounded-circle bg-dark border border-secondary border-opacity-25 overflow-hidden"
+                    style="width: 40px; height: 40px; min-width: 40px;">
+                    {% if record.user.profile_image %}
+                    <img src="{{ record.user.profile_image.url }}" class="w-100 h-100 object-fit-cover">
+                    {% else %}
+                    <div
+                        class="w-100 h-100 d-flex align-items-center justify-content-center text-secondary fw-bold text-sm">
+                        {{ record.user.first_name|first|upper }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <div class="text-white fw-medium">{{ record.user.full_name|default:record.user.username }}</div>
+                    <div class="text-xs text-muted">{{ record.user.branch|default:'Student' }}</div>
+                </div>
+            </div>
+
+            <div class="level-col">
+                <span class="badge glass text-secondary fw-normal">Lvl {{ record.level }}</span>
+            </div>
+
+            <div class="xp-col">
+                {{ record.total_xp }} <span class="text-xs text-muted fw-normal">XP</span>
+            </div>
+        </div>
+        {% empty %}
+        {% if not top_users %}
+        <div class="text-center py-5 text-muted">
+            <i class="fas fa-ghost fa-2x mb-3 opacity-50"></i>
+            <p>No legends have risen yet.</p>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        <!-- Current User Sticky (if outside top list) -->
+        {% if user.is_authenticated and user_rank and user_rank.rank > 20 %} <!-- Adjust 20 to your page size -->
+        <div class="mt-4 pt-3 border-top border-white-10">
+            <div class="text-center text-xs text-muted mb-2">YOUR RANK</div>
+            <div class="leaderboard-item current-user">
+                <div class="rank-col">#{{ user_rank.rank }}</div>
+                <div class="user-col">
+                    <div class="rounded-circle bg-dark border border-primary border-opacity-50 overflow-hidden"
+                        style="width: 40px; height: 40px; min-width: 40px;">
+                        {% if user.profile_image %}
+                        <img src="{{ user.profile_image.url }}" class="w-100 h-100 object-fit-cover">
+                        {% else %}
+                        <div
+                            class="w-100 h-100 d-flex align-items-center justify-content-center text-primary fw-bold text-sm">
+                            {{ user.first_name|first|upper }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <div class="text-white fw-bold">You</div>
+                    </div>
+                </div>
+                <div class="level-col">
+                    <span class="badge bg-primary text-white fw-bold">Lvl {{ user_rank.gamification.level }}</span>
+                </div>
+                <div class="xp-col">
+                    {{ user_rank.gamification.total_xp }} <span class="text-xs text-muted fw-normal">XP</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+{% endblock %}

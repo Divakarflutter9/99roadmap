@@ -1,0 +1,589 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Pricing Plans - 99Roadmap{% endblock %}
+
+{% block content %}
+<style>
+    /* Header Section */
+    .pricing-header {
+        text-align: center;
+        padding: 5rem 0 3rem;
+        background: radial-gradient(circle at center, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+        position: relative;
+    }
+
+    .pricing-header h1 {
+        font-weight: 800;
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        background: linear-gradient(to right, #fff, #94a3b8);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+    }
+
+    /* Tabs */
+    .pricing-tabs-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 4rem;
+    }
+
+    .pricing-tabs {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 99px;
+        padding: 6px;
+        display: inline-flex;
+        position: relative;
+        backdrop-filter: blur(10px);
+    }
+
+    .pricing-tabs .nav-link {
+        color: #94a3b8;
+        border-radius: 99px;
+        padding: 12px 30px;
+        font-weight: 600;
+        border: none;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        z-index: 1;
+        background: transparent;
+    }
+
+    .pricing-tabs .nav-link.active {
+        color: white;
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+    }
+
+    .pricing-tabs .nav-link:hover:not(.active) {
+        color: white;
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Pricing Cards */
+    .pricing-card {
+        background: rgba(30, 41, 59, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: var(--radius-xl);
+        padding: 2.5rem;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        backdrop-filter: blur(12px);
+    }
+
+    .pricing-card:hover {
+        transform: translateY(-10px);
+        background: rgba(30, 41, 59, 0.5);
+        border-color: rgba(99, 102, 241, 0.3);
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Popular Card Styles */
+    .pricing-card.popular {
+        border: 2px solid var(--primary);
+        background: linear-gradient(180deg, rgba(99, 102, 241, 0.1) 0%, rgba(30, 41, 59, 0.4) 100%);
+        box-shadow: 0 0 30px rgba(99, 102, 241, 0.15);
+        transform: scale(1.05);
+        z-index: 10;
+    }
+
+    .pricing-card.popular:hover {
+        transform: scale(1.05) translateY(-10px);
+        box-shadow: 0 20px 50px -10px rgba(99, 102, 241, 0.3);
+    }
+
+    .popular-badge {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: var(--gradient-primary);
+        color: white;
+        padding: 6px 20px;
+        border-radius: 99px;
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+    }
+
+    .plan-name {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: white;
+    }
+
+    .price {
+        margin: 1.5rem 0;
+        display: flex;
+        align-items: flex-end;
+        line-height: 1;
+    }
+
+    .currency {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-right: 4px;
+        color: #94a3b8;
+        margin-bottom: 8px;
+    }
+
+    .amount {
+        font-size: 4rem;
+        font-weight: 800;
+        color: white;
+        letter-spacing: -2px;
+    }
+
+    .period {
+        color: #94a3b8;
+        margin-left: 8px;
+        margin-bottom: 8px;
+        font-size: 1rem;
+    }
+
+    .features-list {
+        margin-bottom: 2.5rem;
+        flex-grow: 1;
+    }
+
+    .features-list li {
+        margin-bottom: 1rem;
+        color: #cbd5e1;
+        display: flex;
+        align-items: center;
+        font-size: 0.95rem;
+    }
+
+    .features-list li i {
+        color: var(--success);
+        background: rgba(16, 185, 129, 0.1);
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        margin-right: 12px;
+        flex-shrink: 0;
+    }
+
+    /* Bundle Grid */
+    .bundle-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .item-thumb {
+        height: 180px;
+        margin: -2.5rem -2.5rem 1.5rem;
+        background: #1e293b;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .item-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .pricing-card:hover .item-thumb img {
+        transform: scale(1.05);
+    }
+
+    /* Search Bar Perfection */
+    .search-container {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .search-input-glass {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        color: white;
+        transition: all 0.3s ease;
+        padding-left: 3.5rem !important;
+        height: 3.5rem;
+        font-size: 1.1rem;
+    }
+
+    .search-input-glass:focus {
+        background: rgba(15, 23, 42, 0.8);
+        border-color: var(--primary);
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+        outline: none;
+    }
+
+    .search-input-glass::placeholder {
+        color: rgba(148, 163, 184, 0.6);
+    }
+
+    .search-icon {
+        color: var(--primary);
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        opacity: 0.7;
+    }
+
+    .search-input-glass:focus+.search-icon,
+    .search-input-glass:focus~.search-icon {
+        opacity: 1;
+        transform: translateY(-50%) scale(1.1);
+    }
+</style>
+
+<!-- Header -->
+<div class="pricing-header animate-fade-in-up">
+    <div class="container container-sm">
+        <h1>Invest in Your Future</h1>
+        <p class="text-xl text-secondary">Choose the plan that fits your learning style. Upskill today.</p>
+    </div>
+</div>
+
+<div class="container container-lg pb-5">
+
+    <!-- Active Sub Alert -->
+    {% if current_subscription and current_subscription.is_active %}
+    <div class="glass border-success p-4 mb-5 mx-auto flex items-center gap-4 animate-fade-in-up delay-100"
+        style="max-width: 600px; background: rgba(16, 185, 129, 0.1);">
+        <i class="fas fa-check-circle fa-2x text-success"></i>
+        <div>
+            <h5 class="h6 text-white mb-1">Active Subscription: {{ current_subscription.plan.name }}</h5>
+            <small class="text-success">Valid until {{ current_subscription.end_date|date:"F j, Y" }}</small>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Tabs -->
+    <div class="pricing-tabs-container animate-fade-in-up delay-100">
+        <div class="pricing-tabs nav nav-pills" id="pills-tab" role="tablist">
+            <a class="nav-link active" id="pills-plans-tab" data-bs-toggle="pill" href="#pills-plans" role="tab">
+                All-Access Plans
+            </a>
+            <a class="nav-link" id="pills-bundles-tab" data-bs-toggle="pill" href="#pills-bundles" role="tab">
+                Bundles
+            </a>
+            <a class="nav-link" id="pills-roadmaps-tab" data-bs-toggle="pill" href="#pills-roadmaps" role="tab">
+                Single Roadmaps
+            </a>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="tab-content animate-fade-in-up delay-200" id="pills-tabContent">
+
+        <!-- Plans -->
+        <div class="tab-pane fade show active" id="pills-plans" role="tabpanel" aria-labelledby="pills-plans-tab">
+            <div class="row justify-content-center g-4">
+
+                <!-- Free Plan (Static) -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="pricing-card h-100 d-flex flex-column animate-up">
+                        <div class="mb-4">
+                            <h3 class="plan-name text-white mb-2">Free Starter</h3>
+                            <p class="text-secondary text-sm">Perfect for exploring and getting started.</p>
+                            <div class="price mt-3">
+                                <span class="currency">₹</span>
+                                <span class="amount">0</span>
+                                <span class="period">/ forever</span>
+                            </div>
+                        </div>
+
+                        <ul class="list-unstyled features-list flex-grow-1">
+                            <li><i class="fas fa-check text-success bg-transparent border border-success"></i> Access to
+                                Free Roadmaps</li>
+                            <li><i class="fas fa-check text-success bg-transparent border border-success"></i> Basic
+                                Progress Tracking</li>
+                            <li><i class="fas fa-check text-success bg-transparent border border-success"></i> Community
+                                Support</li>
+                            <li class="text-muted opacity-50"><i
+                                    class="fas fa-times text-danger bg-transparent border border-danger"></i> Premium
+                                Roadmaps</li>
+                            <li class="text-muted opacity-50"><i
+                                    class="fas fa-times text-danger bg-transparent border border-danger"></i> AI Mentor
+                                Access</li>
+                            <li class="text-muted opacity-50"><i
+                                    class="fas fa-times text-danger bg-transparent border border-danger"></i> Verified
+                                Certificates</li>
+                        </ul>
+
+                        <div class="mt-4">
+                            {% if not current_subscription.is_active %}
+                            <button class="btn btn-outline-white btn-block disabled"
+                                style="cursor: default; opacity: 1; border-style: dashed;">Current Plan</button>
+                            {% else %}
+                            <a href="#" class="btn btn-outline-white btn-block disabled">Always Active</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paid Plans (Dynamic) -->
+                {% for plan in plans %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="pricing-card {% if plan.is_popular %}popular{% endif %} h-100 d-flex flex-column animate-up"
+                        style="animation-delay: 0.1s;">
+                        {% if plan.is_popular %}
+                        <div class="popular-badge">MOST POPULAR</div>
+                        {% endif %}
+
+                        <div class="mb-4">
+                            <h3 class="plan-name text-gradient-primary mb-2">{{ plan.name }}</h3>
+                            <p class="text-secondary text-sm">Unlock your full potential.</p>
+                            <div class="price mt-3">
+                                <span class="currency">₹</span>
+                                <span class="amount">{{ plan.price|floatformat:0 }}</span>
+                                <span class="period">/ {{ plan.get_duration_type_display }}</span>
+                            </div>
+                        </div>
+
+                        <ul class="list-unstyled features-list flex-grow-1">
+                            <li class="fw-bold text-white mb-3"><i
+                                    class="fas fa-check-double text-success bg-success-subtle"></i> Everything in Free,
+                                plus:</li>
+                            {% for feature in plan.features %}
+                            <li><i class="fas fa-check text-success bg-success-subtle"></i> {{ feature }}</li>
+                            {% endfor %}
+                            <li><i class="fas fa-check text-success bg-success-subtle"></i> <strong>Unlimited AI
+                                    Mentor</strong></li>
+                            <li><i class="fas fa-check text-success bg-success-subtle"></i> <strong>Certificates (Coming
+                                    Soon)</strong></li>
+                            <li><i class="fas fa-check text-success bg-success-subtle"></i> Premium Projects</li>
+                        </ul>
+
+                        <div class="mt-4">
+                            {% if current_subscription.plan.id == plan.id and current_subscription.is_active %}
+                            <button class="btn btn-secondary btn-block disabled" style="opacity: 0.7;"><i
+                                    class="fas fa-check-circle me-1"></i> Current Plan</button>
+                            {% else %}
+                            <a href="{% url 'initiate_payment' 'plan' plan.id %}"
+                                class="btn btn-block {% if plan.is_popular %}btn-primary hover-glow{% else %}btn-white text-dark hover-lift{% endif %} fw-bold">
+                                Upgrade to Pro
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center text-muted p-5">
+                    <i class="fas fa-exclamation-circle fa-2x mb-3 opacity-50"></i>
+                    <p>No paid plans are currently public. Check back soon!</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Bundles -->
+        <div class="tab-pane fade" id="pills-bundles" role="tabpanel" aria-labelledby="pills-bundles-tab">
+            <!-- Search Bar -->
+            <div class="mb-5 text-center">
+                <div class="position-relative mx-auto search-container" style="max-width: 500px;">
+                    <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-4 search-icon"></i>
+                    <input type="text" id="bundleSearch"
+                        class="form-control form-control-lg search-input-glass rounded-pill"
+                        placeholder="Search for premium bundles...">
+                </div>
+            </div>
+
+            <div class="row g-4" id="bundleGrid">
+                {% for bundle in bundles %}
+                <div class="col-md-6 col-lg-4 bundle-item">
+                    <div class="pricing-card p-0 overflow-hidden h-100 flex-column justify-content-between">
+                        <!-- Image Area -->
+                        <div class="position-relative" style="height: 200px;">
+                            {% if bundle.image %}
+                            <img src="{{ bundle.image.url }}" alt="{{ bundle.title }}"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                            {% else %}
+                            <div class="w-100 h-100 bg-gradient-dark d-flex align-items-center justify-content-center">
+                                <i class="fas fa-cubes fa-4x text-white opacity-25"></i>
+                            </div>
+                            {% endif %}
+                            <div
+                                class="position-absolute bottom-0 start-0 w-100 p-3 bg-gradient-to-t from-black to-transparent">
+                                <h3 class="h5 text-white mb-0 text-shadow bundle-title">{{ bundle.title }}</h3>
+                            </div>
+                        </div>
+
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <span class="badge bg-white-10 text-primary border border-white-10">Bundle Deal</span>
+                                <div class="price m-0">
+                                    <span class="currency text-sm">₹</span>
+                                    <span class="amount h2 mb-0">{{ bundle.price|floatformat:0 }}</span>
+                                </div>
+                            </div>
+
+                            <p class="text-sm text-secondary mb-4">{{ bundle.get_roadmaps_count }} Premium Roadmaps
+                                Included
+                            </p>
+
+                            <ul class="list-unstyled features-list small mb-4">
+                                <li class="mb-2"><i
+                                        class="fas fa-check text-success bg-transparent border border-success p-1 rounded-circle"
+                                        style="width: 18px; height: 18px; font-size: 0.6rem;"></i> Lifetime Access</li>
+                                <li class="mb-2"><i
+                                        class="fas fa-check text-success bg-transparent border border-success p-1 rounded-circle"
+                                        style="width: 18px; height: 18px; font-size: 0.6rem;"></i> Future Updates
+                                    Included</li>
+                            </ul>
+
+                            <a href="{% url 'initiate_payment' 'bundle' bundle.id %}"
+                                class="btn btn-primary btn-block mt-auto hover-glow fw-bold text-white">
+                                Buy Bundle
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center text-muted py-5">No bundles available yet.</div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Roadmaps -->
+        <div class="tab-pane fade" id="pills-roadmaps" role="tabpanel" aria-labelledby="pills-roadmaps-tab">
+            <!-- Search Bar -->
+            <div class="mb-5 text-center">
+                <div class="position-relative mx-auto search-container" style="max-width: 500px;">
+                    <i class="fas fa-search position-absolute top-50 start-0 translate-middle-y ms-4 search-icon"></i>
+                    <input type="text" id="roadmapSearch"
+                        class="form-control form-control-lg search-input-glass rounded-pill"
+                        placeholder="Search for single roadmaps...">
+                </div>
+            </div>
+
+            <div class="row g-4" id="roadmapGrid">
+                {% for roadmap in premium_roadmaps %}
+                <div class="col-md-6 col-lg-4 roadmap-item">
+                    <div class="pricing-card p-0 overflow-hidden h-100 flex-column justify-content-between">
+                        <!-- Image Area -->
+                        <div class="position-relative" style="height: 200px;">
+                            {% if roadmap.thumbnail %}
+                            <img src="{{ roadmap.thumbnail.url }}" alt="{{ roadmap.title }}"
+                                style="width: 100%; height: 100%; object-fit: cover;">
+                            {% else %}
+                            <div class="w-100 h-100 bg-gradient-dark d-flex align-items-center justify-content-center">
+                                <i class="fas fa-map-signs fa-4x text-white opacity-25"></i>
+                            </div>
+                            {% endif %}
+                            <div
+                                class="position-absolute bottom-0 start-0 w-100 p-3 bg-gradient-to-t from-black to-transparent">
+                                <h3 class="h5 text-white mb-0 text-shadow roadmap-title">{{ roadmap.title }}</h3>
+                            </div>
+                        </div>
+
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <span class="badge bg-warning text-dark border border-warning">Premium Course</span>
+                                <div class="price m-0">
+                                    <span class="currency text-sm">₹</span>
+                                    <span class="amount h2 mb-0">{{ roadmap.price|floatformat:0 }}</span>
+                                </div>
+                            </div>
+
+                            <ul class="list-unstyled features-list small mb-4">
+                                <li class="mb-2"><i
+                                        class="fas fa-check text-success bg-transparent border border-success p-1 rounded-circle"
+                                        style="width: 18px; height: 18px; font-size: 0.6rem;"></i> Full Course Access
+                                </li>
+                                <li class="mb-2"><i
+                                        class="fas fa-check text-success bg-transparent border border-success p-1 rounded-circle"
+                                        style="width: 18px; height: 18px; font-size: 0.6rem;"></i> Certificate Included
+                                </li>
+                            </ul>
+
+                            <div class="mt-auto">
+                                <a href="{% url 'initiate_payment' 'roadmap' roadmap.id %}"
+                                    class="btn btn-primary btn-block hover-glow fw-bold text-white">
+                                    Buy Roadmap
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center text-muted py-5">No single roadmaps for sale.</div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Bundle Search
+            const bundleSearch = document.getElementById('bundleSearch');
+            const bundleGrid = document.getElementById('bundleGrid');
+            if (bundleSearch && bundleGrid) {
+                bundleSearch.addEventListener('keyup', function () {
+                    const value = this.value.toLowerCase();
+                    const items = bundleGrid.querySelectorAll('.bundle-item');
+                    items.forEach(function (item) {
+                        const title = item.querySelector('.bundle-title').textContent.toLowerCase();
+                        if (title.indexOf(value) > -1) {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            }
+
+            // Roadmap Search
+            const roadmapSearch = document.getElementById('roadmapSearch');
+            const roadmapGrid = document.getElementById('roadmapGrid');
+            if (roadmapSearch && roadmapGrid) {
+                roadmapSearch.addEventListener('keyup', function () {
+                    const value = this.value.toLowerCase();
+                    const items = roadmapGrid.querySelectorAll('.roadmap-item');
+                    items.forEach(function (item) {
+                        const title = item.querySelector('.roadmap-title').textContent.toLowerCase();
+                        if (title.indexOf(value) > -1) {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            }
+
+            // Auto-scroll on Tab Change
+            const tabs = document.querySelectorAll('.pricing-tabs .nav-link');
+            const contentSection = document.getElementById('pills-tabContent');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('shown.bs.tab', function (e) {
+                    // Scroll a bit above the content to keep tabs visible
+                    const yOffset = -100;
+                    const y = contentSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({ top: y, behavior: 'smooth' });
+                });
+            });
+        });
+    </script>
+
+    <!-- Trust Signals -->
+    <div class="text-center mt-5 pt-5 border-top border-white-5 opacity-50">
+        <div class="flex-center gap-4 mb-3">
+            <i class="fas fa-shield-alt fa-2x"></i>
+            <i class="fas fa-lock fa-2x"></i>
+        </div>
+        <p class="text-xs text-secondary">Secured by Cashfree Payments. 100% Secure Transaction.</p>
+    </div>
+
+</div>
+{% endblock %}

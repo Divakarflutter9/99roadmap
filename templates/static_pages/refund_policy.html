@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Refund Policy - 99Roadmap{% endblock %}
+
+{% block content %}
+<div class="container container-md py-5">
+    <div class="text-center mb-5 animate-fade-in-up">
+        <h1 class="text-gradient fw-extrabold mb-3">Refund Policy</h1>
+        <p class="text-secondary">Last updated: January 23, 2026</p>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card-modern p-4 p-lg-5">
+
+                <p class="text-secondary mb-4">
+                    At 99Roadmap, we operate a strict No Refund Policy. This policy outlines our stance on refunds and
+                    the very limited circumstances under which refunds may be considered.
+                </p>
+
+                <h3 class="text-white mb-3">1. No Refund Policy</h3>
+                <p class="text-secondary mb-4">
+                    <strong>All sales are final.</strong> 99Roadmap operates a strict <strong>No Refund Policy</strong>.
+                    Once a subscription is purchased and payment is processed, we <strong>do not provide
+                        refunds</strong> under normal circumstances. Please carefully review our platform features,
+                    content, and pricing before making a purchase decision.
+                </p>
+
+                <div class="alert alert-warning mb-4">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <strong>No Refunds:</strong> All subscription purchases are final and non-refundable. Make sure you
+                    understand this policy before purchasing.
+                </div>
+
+                <h3 class="text-white mb-3">2. Rare Exceptions to No Refund Policy</h3>
+
+                <p class="text-secondary mb-3">Refunds will <strong>ONLY</strong> be considered in the following
+                    exceptional circumstances:</p>
+
+                <h5 class="text-white mb-2">Limited Exceptions (rare cases only):</h5>
+                <ul class="text-secondary mb-3">
+                    <li><strong>Critical Platform Failure:</strong> If our entire platform is completely inaccessible
+                        for more than 7 consecutive days AND our technical team cannot resolve the issue</li>
+                    <li><strong>Duplicate Transactions:</strong> If you were accidentally charged multiple times for the
+                        exact same transaction</li>
+                    <li><strong>Verified Billing Error:</strong> If a confirmed system error resulted in charging you an
+                        incorrect amount</li>
+                </ul>
+
+                <h5 class="text-white mb-2">You are NOT eligible for refunds in these cases:</h5>
+                <ul class="text-secondary mb-4">
+                    <li>Change of mind or dissatisfaction with content</li>
+                    <li>Not utilizing the subscription or accessing content</li>
+                    <li>Finding similar content elsewhere or alternative platforms</li>
+                    <li>Minor technical issues, temporary glitches, or slow loading times</li>
+                    <li>Account termination due to Terms of Service violations</li>
+                    <li>After accessing or consuming premium content</li>
+                    <li>Device compatibility issues on your end</li>
+                    <li>Internet connection problems</li>
+                </ul>
+
+                <h3 class="text-white mb-3">3. Subscription Renewals</h3>
+                <p class="text-secondary mb-4">
+                    <strong>No refunds are provided for subscription renewals</strong> (monthly or annual). It is your
+                    responsibility to cancel your subscription before the renewal date if you do not wish to continue.
+                    Auto-renewals are clearly disclosed at the time of purchase, and you are responsible for managing
+                    your subscription.
+                </p>
+
+                <h3 class="text-white mb-3">4. How to Request a Refund</h3>
+                <p class="text-secondary mb-2">To request a refund, follow these steps:</p>
+                <ol class="text-secondary mb-4">
+                    <li>Contact our support team via email at <a href="mailto:support@99roadmap.com"
+                            class="text-primary">support@99roadmap.com</a> or through our <a href="{% url 'contact' %}"
+                            class="text-primary">Contact Us</a> page</li>
+                    <li>Include your account email, transaction ID, and reason for refund</li>
+                    <li>Our team will review your request within 2-3 business days</li>
+                    <li>If approved, the refund will be processed within 5-7 business days</li>
+                </ol>
+
+                <h3 class="text-white mb-3">5. Refund Processing Time</h3>
+                <p class="text-secondary mb-4">
+                    Once your refund is approved:
+                <ul class="text-secondary">
+                    <li><strong>Credit/Debit Cards:</strong> 5-7 business days</li>
+                    <li><strong>UPI/Wallets:</strong> 3-5 business days</li>
+                    <li><strong>Net Banking:</strong> 5-7 business days</li>
+                </ul>
+                Please note that the actual time may vary depending on your bank or payment provider.
+                </p>
+
+                <h3 class="text-white mb-3">6. Partial Refunds</h3>
+                <p class="text-secondary mb-4">
+                    We do not offer partial refunds for unused portions of a subscription period. If you cancel your
+                    subscription mid-cycle, you will retain access until the end of the current billing period, but no
+                    refund will be issued for the remaining time.
+                </p>
+
+                <h3 class="text-white mb-3">7. Cancellation Policy</h3>
+                <p class="text-secondary mb-4">
+                    You can cancel your subscription at any time from your profile settings. Upon cancellation:
+                <ul class="text-secondary">
+                    <li>You'll retain access to premium features until the end of your billing period</li>
+                    <li>Your subscription will not auto-renew</li>
+                    <li>Your account will remain active as a free user</li>
+                    <li>Your learning progress and data will be preserved</li>
+                </ul>
+                </p>
+
+                <h3 class="text-white mb-3">8. Free Trials</h3>
+                <p class="text-secondary mb-4">
+                    If you sign up for a free trial, you must cancel before the trial period ends to avoid being
+                    charged. <strong>No refunds will be provided</strong> if you forget to cancel and are charged after
+                    the trial ends. The trial period duration and pricing are clearly stated at the time of signup.
+                </p>
+
+                <h3 class="text-white mb-3">9. Promotional Offers and Discounts</h3>
+                <p class="text-secondary mb-4">
+                    Subscriptions purchased with promotional discounts are subject to the same refund policy. Refunds
+                    will be issued for the amount actually paid, not the original price before the discount.
+                </p>
+
+                <h3 class="text-white mb-3">10. Fraudulent Activity</h3>
+                <p class="text-secondary mb-4">
+                    If we detect fraudulent activity or abuse of our refund policy (such as multiple refund requests
+                    from the same user), we reserve the right to deny refunds and terminate the account.
+                </p>
+
+                <h3 class="text-white mb-3">11. Changes to This Refund Policy</h3>
+                <p class="text-secondary mb-4">
+                    We reserve the right to modify this Refund Policy at any time. Changes will be effective immediately
+                    upon posting on this page. We encourage you to review this policy periodically.
+                </p>
+
+                <h3 class="text-white mb-3">12. Contact Information</h3>
+                <p class="text-secondary mb-4">
+                    For refund requests or questions about this policy, please contact us:
+                    <br><br>
+                    <strong>Email:</strong> <a href="mailto:support@99roadmap.com"
+                        class="text-primary">support@99roadmap.com</a><br>
+                    <strong>Phone:</strong> +91 98765 43210<br>
+                    <strong>Contact Form:</strong> <a href="{% url 'contact' %}" class="text-primary">Contact Us</a>
+                </p>
+
+                <div class="card-modern bg-gradient-primary p-4 mt-4">
+                    <div class="row align-items-center">
+                        <div class="col-md-8">
+                            <h4 class="text-white mb-2">Have Questions About Refunds?</h4>
+                            <p class="text-white-80 mb-0">Our support team is here to help you with any refund-related
+                                queries.</p>
+                        </div>
+                        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                            <a href="{% url 'contact' %}" class="btn btn-white">Contact Support</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+    }
+
+    .text-white-80 {
+        color: rgba(255, 255, 255, 0.8);
+    }
+
+    .btn-white {
+        background: white;
+        color: var(--primary);
+        font-weight: 600;
+    }
+
+    .btn-white:hover {
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--primary);
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Us - 99Roadmap{% endblock %}
+
+{% block content %}
+<div class="container container-md py-5">
+    <div class="text-center mb-5 animate-fade-in-up">
+        <h1 class="text-gradient fw-extrabold mb-3">Get in Touch</h1>
+        <p class="text-secondary fs-5">Have questions? We'd love to hear from you.</p>
+    </div>
+
+    <div class="row g-4">
+        <!-- Contact Form -->
+        <div class="col-lg-7 animate-fade-in-up delay-100">
+            <div class="card-modern p-4">
+                <h3 class="text-white mb-4">Send us a Message</h3>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label class="auth-label">Your Name</label>
+                        <input type="text" name="name" class="auth-input" placeholder="John Doe" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="auth-label">Email Address</label>
+                        <input type="email" name="email" class="auth-input" placeholder="john@example.com" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="auth-label">Subject</label>
+                        <input type="text" name="subject" class="auth-input" placeholder="How can we help?" required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="auth-label">Message</label>
+                        <textarea name="message" rows="5" class="auth-input"
+                            placeholder="Tell us more about your question or feedback..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100">
+                        <i class="fas fa-paper-plane me-2"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="col-lg-5 animate-fade-in-up delay-200">
+            <div class="card-modern p-4 mb-4">
+                <h4 class="text-white mb-4">Contact Information</h4>
+
+                <div class="d-flex align-items-start mb-3">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-white mb-1">Email</h6>
+                        <a href="mailto:support@99roadmap.com" class="text-secondary">support@99roadmap.com</a>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-start mb-3">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-white mb-1">Phone</h6>
+                        <a href="tel:+919876543210" class="text-secondary">+91 98765 43210</a>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-start">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <h6 class="text-white mb-1">Address</h6>
+                        <p class="text-secondary mb-0">Hyderabad, Telangana<br>India</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-modern p-4">
+                <h4 class="text-white mb-3">Follow Us</h4>
+                <div class="d-flex gap-3">
+                    <a href="#" class="btn btn-outline-white btn-sm">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="btn btn-outline-white btn-sm">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="btn btn-outline-white btn-sm">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="btn btn-outline-white btn-sm">
+                        <i class="fab fa-github"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .contact-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: var(--radius-lg);
+        background: rgba(99, 102, 241, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary);
+        font-size: 1.25rem;
+        margin-right: 1rem;
+        flex-shrink: 0;
+    }
+</style>
+{% endblock %}

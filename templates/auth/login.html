@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Login - 99Roadmap{% endblock %}
+
+{% block content %}
+<div class="auth-container bg-grid-pattern">
+    <div class="auth-card">
+        <div class="text-center mb-4">
+            <h2 class="text-gradient fw-extrabold mb-1">Welcome Back!</h2>
+            <p class="text-secondary">Continue your learning journey</p>
+        </div>
+
+        <form method="post">
+            {% load socialaccount %}
+            <div class="mb-3">
+                <a href="{% provider_login_url 'google' %}"
+                    class="btn btn-outline-light w-100 d-flex align-items-center justify-content-center"
+                    style="border-radius: 8px; border-color: rgba(255,255,255,0.1); padding: 10px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google"
+                        style="width: 20px; height: 20px; margin-right: 10px;">
+                    <span style="font-weight: 500;">Continue with Google</span>
+                </a>
+            </div>
+
+            <div class="d-flex align-items-center mb-3">
+                <div style="flex-grow: 1; height: 1px; background: rgba(255,255,255,0.1);"></div>
+                <span class="text-secondary mx-3" style="font-size: 0.9rem;">OR</span>
+                <div style="flex-grow: 1; height: 1px; background: rgba(255,255,255,0.1);"></div>
+            </div>
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="auth-label">Email or Phone Number</label>
+                {% render_field form.username class="auth-input" placeholder="Enter your email" %}
+                {% if form.username.errors %}
+                <small class="text-danger mt-1 d-block">{{ form.username.errors.0 }}</small>
+                {% endif %}
+            </div>
+
+            <div class="mb-4">
+                <div class="d-flex justify-between align-center mb-1">
+                    <label class="auth-label mb-0">Password</label>
+                    <a href="{% url 'forgot_password' %}" class="auth-link text-sm" style="font-size: 0.85rem;">Forgot
+                        Password?</a>
+                </div>
+                {% render_field form.password class="auth-input" placeholder="Enter your password" %}
+                {% if form.password.errors %}
+                <small class="text-danger mt-1 d-block">{{ form.password.errors.0 }}</small>
+                {% endif %}
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 mb-3" style="width: 100%; border-radius: 8px;">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+
+            <p class="text-center text-secondary mb-0">
+                Don't have an account? <a href="{% url 'register' %}" class="auth-link">Register now</a>
+            </p>
+        </form>
+    </div>
+</div>
+{% endblock %}

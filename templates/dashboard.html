@@ -1,0 +1,313 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - 99Roadmap{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+
+    <!-- Top Section: Welcome & Daily Goals -->
+    <div class="row align-items-end mb-5 g-4">
+        <div class="col-lg-8">
+            <h1 class="h2 text-white mb-2">Welcome back, {{ user.full_name|default:user.username }}! 👋</h1>
+            <p class="text-secondary mb-0">You're on a <strong>{{ gamification.current_streak }}-day streak</strong>!
+                Keep it up to earn more XP.</p>
+        </div>
+        <div class="col-lg-4">
+            <!-- Daily Progress Widget -->
+            <div class="glass glass-bordered p-3 rounded-lg d-flex align-items-center justify-content-between">
+                <div>
+                    <div class="text-xs text-uppercase text-secondary fw-bold mb-1">Daily Goal Progress</div>
+                    <div class="progress" style="height: 6px; width: 150px; background: rgba(255,255,255,0.1);">
+                        <div class="progress-bar bg-success" role="progressbar"
+                            style="width: {{ daily_progress_percent }}%"></div>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <div class="text-xl fw-bold text-white">{{ daily_completed_count }}/{{ daily_total_count }}</div>
+                    <div class="text-xs text-success">Goals</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Grid (Expanded) -->
+    <div class="row mb-5 g-4">
+        <!-- Level -->
+        <div class="col-6 col-md-3">
+            <div
+                class="glass glass-bordered p-4 rounded-lg h-100 position-relative overflow-hidden group hover-lift transition-all">
+                <div class="position-absolute top-0 end-0 p-3 opacity-10"><i
+                        class="fas fa-trophy fa-4x text-warning"></i></div>
+                <div class="text-xs text-uppercase text-secondary fw-bold mb-2">Level {{ gamification.level }}</div>
+                <div class="d-flex align-items-baseline gap-2">
+                    <h3 class="fw-extrabold text-white mb-0">{{ gamification.level }}</h3>
+                    <span class="text-xs text-warning">+{{ gamification.xp_to_next_level }} XP to next</span>
+                </div>
+                <!-- Mini Progress -->
+                <div class="mt-3 w-100 bg-white-10 rounded-pill" style="height: 4px;">
+                    <div class="bg-warning h-100 rounded-pill" style="width: {{ gamification.level_progress }}%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total XP -->
+        <div class="col-6 col-md-3">
+            <div
+                class="glass glass-bordered p-4 rounded-lg h-100 position-relative overflow-hidden group hover-lift transition-all">
+                <div class="position-absolute top-0 end-0 p-3 opacity-10"><i class="fas fa-bolt fa-4x text-primary"></i>
+                </div>
+                <div class="text-xs text-uppercase text-secondary fw-bold mb-2">Total XP</div>
+                <h3 class="fw-extrabold text-gradient-primary mb-0">{{ gamification.total_xp }}</h3>
+            </div>
+        </div>
+
+        <!-- Roadmaps Completed -->
+        <div class="col-6 col-md-3">
+            <div
+                class="glass glass-bordered p-4 rounded-lg h-100 position-relative overflow-hidden group hover-lift transition-all">
+                <div class="position-absolute top-0 end-0 p-3 opacity-10"><i
+                        class="fas fa-check-circle fa-4x text-success"></i></div>
+                <div class="text-xs text-uppercase text-secondary fw-bold mb-2">Roadmaps Completed</div>
+                <h3 class="fw-extrabold text-white mb-0">{{ gamification.roadmaps_completed }}</h3>
+            </div>
+        </div>
+
+        <!-- Quizzes Completed -->
+        <div class="col-6 col-md-3">
+            <div
+                class="glass glass-bordered p-4 rounded-lg h-100 position-relative overflow-hidden group hover-lift transition-all">
+                <div class="position-absolute top-0 end-0 p-3 opacity-10"><i
+                        class="fas fa-graduation-cap fa-4x text-info"></i></div>
+                <div class="text-xs text-uppercase text-secondary fw-bold mb-2">Quizzes Completed</div>
+                <h3 class="fw-extrabold text-white mb-0">{{ gamification.quizzes_passed }}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-5"> <!-- Increased gap for separation -->
+
+        <!-- Left Column: Content & Charts -->
+        <div class="col-lg-8">
+
+            <!-- Active Roadmaps (Moved Up) -->
+            <div class="mb-5">
+                <h4 class="h5 text-white mb-4"><i class="fas fa-stream text-success me-2"></i> Active Roadmaps</h4>
+                {% if enrollments %}
+                <div class="d-flex flex-column gap-4">
+                    {% for enrollment in enrollments %}
+                    <div
+                        class="glass glass-bordered p-4 rounded-lg hover-card transition-all position-relative overflow-hidden">
+                        <div class="position-absolute top-0 start-0 h-100 bg-primary opacity-10" style="width: 4px;">
+                        </div>
+
+                        <div class="row align-items-center">
+                            <div class="col-md-8">
+                                <div class="badge bg-white-10 text-primary mb-2">{{ enrollment.roadmap.category.name }}
+                                </div>
+                                <h5 class="text-white mb-1">{{ enrollment.roadmap.title }}</h5>
+                                <p class="text-secondary text-sm mb-3">
+                                    {% if enrollment.current_stage %}
+                                    Current: <span class="text-white">{{ enrollment.current_stage.title }}</span>
+                                    {% else %}
+                                    Completed!
+                                    {% endif %}
+                                </p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <div class="text-2xl fw-bold text-white mb-1">{{ enrollment.get_progress_percentage }}%
+                                </div>
+                                <div class="progress bg-dark" style="height: 6px;">
+                                    <div class="progress-bar bg-success"
+                                        style="width: {{ enrollment.get_progress_percentage }}%"></div>
+                                </div>
+                                <a href="{% url 'roadmap_detail' enrollment.roadmap.slug %}"
+                                    class="btn btn-sm btn-outline-white mt-3 w-100">Continue</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="glass p-5 text-center text-muted dashed-border">
+                    <p>No active roadmaps.</p>
+                    <a href="{% url 'roadmap_list' %}" class="btn btn-primary btn-sm">Start Learning</a>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Skill Analysis Chart -->
+            <div class="glass glass-bordered p-4 rounded-lg mb-5">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h4 class="h5 text-white mb-0"><i class="fas fa-chart-radar text-primary me-2"></i> Skill Profile
+                    </h4>
+                    <span class="badge bg-white-10 text-secondary">Beta</span>
+                </div>
+
+                <!-- Dynamic Skill Bars -->
+                <div class="d-flex flex-column gap-3">
+                    {% for skill in skill_list %}
+                    <div class="skill-bar-item">
+                        <div class="d-flex justify-content-between text-xs mb-1">
+                            <span class="text-white">{{ skill.label }}</span>
+                            <span class="text-primary">{{ skill.percentage }}%</span>
+                        </div>
+                        <div class="progress bg-dark" style="height: 8px;">
+                            <div class="progress-bar bg-primary" style="width: {{ skill.percentage }}%"></div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-center text-muted text-sm">Complete roadmaps to see your skill profile.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Right Column: Sidebar Widgets -->
+        <div class="col-lg-4">
+
+            <!-- Daily Goals Widget -->
+            <div class="glass glass-bordered p-4 rounded-lg mb-4">
+                <h6 class="text-uppercase text-secondary fw-bold text-xs mb-3">Today's Quests</h6>
+                <div class="d-flex flex-column gap-3">
+                    {% for goal in daily_goals %}
+                    <div class="d-flex align-items-center gap-3 p-2 rounded hover-bg-white-5 transition-all">
+                        <div class="rounded-circle d-flex align-items-center justify-content-center {% if goal.completed %}bg-success text-white{% else %}bg-dark text-secondary border border-secondary{% endif %}"
+                            style="width: 24px; height: 24px; min-width: 24px;">
+                            {% if goal.completed %}<i class="fas fa-check text-xs"></i>{% endif %}
+                        </div>
+                        <div class="flex-grow-1">
+                            <div
+                                class="text-sm {% if goal.completed %}text-muted text-decoration-line-through{% else %}text-white{% endif %}">
+                                {{ goal.title }}</div>
+                            <div class="text-xs text-warning">+{{ goal.xp }} XP</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Profile & Badges -->
+            <div class="glass glass-bordered p-4 rounded-lg mb-4 text-center">
+                <div class="mb-3 position-relative d-inline-block">
+                    {% if user.profile_image %}
+                    <img src="{{ user.profile_image.url }}" class="rounded-circle border-2 border-primary p-1"
+                        width="70" height="70" style="object-fit: cover;">
+                    {% else %}
+                    <div class="rounded-circle bg-dark border-2 border-primary p-1 d-flex align-items-center justify-content-center text-white fw-bold text-xl"
+                        style="width: 70px; height: 70px;">
+                        {{ user.get_short_name|default:''|first|upper }}
+                    </div>
+                    {% endif %}
+                    <span class="position-absolute bottom-0 end-0 badge rounded-pill bg-primary border border-dark">Lvl
+                        {{ gamification.level }}</span>
+                </div>
+
+                <h5 class="text-white mb-3">{{ user.full_name|default:user.username }}</h5>
+
+                <!-- Badges Row -->
+                <div class="d-flex justify-content-center gap-2 mb-3">
+                    {% for badge in badges %}
+                    <div class="badge-icon-item" title="{{ badge.name }}" data-bs-toggle="tooltip">
+                        <div class="glass p-2 rounded-circle d-flex align-items-center justify-content-center"
+                            style="width: 40px; height: 40px;">
+                            <i class="{{ badge.icon }} {{ badge.color }}"></i>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="badge-icon-item">
+                        <div class="glass p-2 rounded-circle d-flex align-items-center justify-content-center opacity-50"
+                            style="width: 40px; height: 40px; border: 1px dashed white;">
+                            <i class="fas fa-plus text-xs text-secondary"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <a href="{% url 'profile' %}" class="btn btn-sm btn-outline-white">View Profile</a>
+                </div>
+            </div>
+
+            <!-- Leaderboard Preview -->
+            <div class="glass glass-bordered p-4 rounded-lg mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h6 class="text-uppercase text-secondary fw-bold text-xs mb-0">Top Learners</h6>
+                    <a href="{% url 'leaderboard' %}" class="text-xs text-primary text-decoration-none">View All</a>
+                </div>
+
+                <div class="d-flex flex-column gap-3">
+                    {% for leader in leaderboard_top %}
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="fw-bold text-secondary text-sm w-4">#{{ forloop.counter }}</div>
+                        {% if leader.user.profile_image %}
+                        <img src="{{ leader.user.profile_image.url }}" class="rounded-circle" width="32" height="32">
+                        {% else %}
+                        <div class="rounded-circle bg-white-10 text-white d-flex align-items-center justify-content-center text-xs"
+                            style="width: 32px; height: 32px;">{{ leader.user.username|default:''|first|upper }}</div>
+                        {% endif %}
+                        <div class="flex-grow-1 text-truncate">
+                            <div class="text-sm text-white">{{ leader.user.full_name|default:leader.user.username }}
+                            </div>
+                            <div class="text-xs text-muted">Lvl {{ leader.level }}</div>
+                        </div>
+                        <div class="text-xs fw-bold text-primary">{{ leader.total_xp }} XP</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Recent Activity Mini -->
+            <div class="glass glass-bordered p-4 rounded-lg">
+                <h6 class="text-uppercase text-secondary fw-bold text-xs mb-3">Activity Log</h6>
+                <div class="activity-timeline-mini">
+                    {% for topic in recent_topics|slice:":3" %}
+                    <div class="pb-3 border-start border-white-10 ps-3 position-relative">
+                        <div class="position-absolute top-0 start-0 translate-middle-x bg-success rounded-circle mt-1"
+                            style="width: 8px; height: 8px;"></div>
+                        <div class="text-sm text-white lh-sm mb-1">{{ topic.topic.title }}</div>
+                        <div class="text-xs text-secondary">{{ topic.completed_at|timesince }} ago</div>
+                    </div>
+                    {% empty %}
+                    <p class="text-xs text-muted">No recent activity.</p>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    /* New Dashboard Styles */
+    .glass-bordered {
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .hover-lift:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        border-color: var(--primary) !important;
+    }
+
+    .bg-white-10 {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .text-gradient-primary {
+        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .dashed-border {
+        border: 2px dashed rgba(255, 255, 255, 0.1);
+    }
+
+    .w-4 {
+        width: 1rem;
+    }
+</style>
+{% endblock %}

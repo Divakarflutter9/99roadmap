@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Quiz Result - 99Roadmap{% endblock %}
+
+{% block content %}
+<style>
+    /* Result Container */
+    .result-container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 4rem 0;
+        text-align: center;
+    }
+
+    .result-card {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: var(--radius-xl);
+        padding: 3rem;
+        backdrop-filter: blur(12px);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    /* Medal / Icon */
+    .result-icon-wrapper {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+        position: relative;
+    }
+
+    .result-icon-wrapper.success {
+        background: rgba(16, 185, 129, 0.1);
+        border: 2px solid var(--success);
+        box-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+    }
+
+    .result-icon-wrapper.failure {
+        background: rgba(239, 68, 68, 0.1);
+        border: 2px solid var(--danger);
+        box-shadow: 0 0 30px rgba(239, 68, 68, 0.3);
+    }
+
+    .result-icon-wrapper i {
+        font-size: 4rem;
+    }
+
+    /* Score Chart */
+    .circular-chart {
+        display: block;
+        margin: 0 auto 1.5rem;
+        max-width: 160px;
+        max-height: 160px;
+    }
+
+    .circle-bg {
+        fill: none;
+        stroke: rgba(255, 255, 255, 0.1);
+        stroke-width: 2.5;
+    }
+
+    .circle {
+        fill: none;
+        stroke-width: 2.5;
+        stroke-linecap: round;
+        animation: progress 1.5s ease-out forwards;
+    }
+
+    .percentage {
+        fill: white;
+        font-family: var(--font-heading);
+        font-weight: 700;
+        font-size: 0.5em;
+        text-anchor: middle;
+    }
+
+    @keyframes progress {
+        0% {
+            stroke-dasharray: 0 100;
+        }
+    }
+
+    /* Next Steps */
+    .next-step-box {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    /* Confetti Canvas */
+    #confetti {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1050;
+        /* Above modal/card if needed */
+    }
+</style>
+
+<div class="result-container">
+    <div class="result-card animate-fade-in-up">
+
+        {% if attempt.passed %}
+        <!-- Success State -->
+        <canvas id="confetti"></canvas>
+
+        <div class="result-icon-wrapper success pulse">
+            <i class="fas fa-trophy text-success"></i>
+        </div>
+
+        <h1 class="display-4 font-bold text-white mb-2">Stage Complete!</h1>
+        <p class="text-secondary text-lg mb-5">You've mastered this stage.</p>
+
+        <div class="score-container mb-5">
+            <div class="circular-chart">
+                <svg viewBox="0 0 36 36">
+                    <path class="circle-bg"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="circle" stroke="#10b981" stroke-dasharray="{{ attempt.score }}, 100"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <text x="18" y="20.35" class="percentage">{{ attempt.score }}%</text>
+                </svg>
+            </div>
+            <div class="glass inline-flex items-center gap-2 px-4 py-2 rounded-full border-warning">
+                <i class="fas fa-star text-warning"></i>
+                <span class="text-warning font-bold">+{{ quiz.xp_reward }} XP Earned</span>
+            </div>
+        </div>
+
+        {% if next_stage %}
+        <div class="next-step-box">
+            <h4 class="text-white text-sm uppercase tracking-wide mb-2 opacity-75">Coming Up Next</h4>
+            <h3 class="h4 text-primary mb-0">{{ next_stage.title }}</h3>
+        </div>
+
+        <a href="{% url 'stage_detail' quiz.stage.roadmap.slug next_stage.order %}"
+            class="btn btn-primary btn-lg w-100 hover-scale">
+            Start Next Stage <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+        {% else %}
+        <div class="next-step-box border-success">
+            <h3 class="h4 text-success mb-2">Roadmap Mastered! 🎓</h3>
+            <p class="text-secondary mb-0">Congratulations! You've completed the entire roadmap.</p>
+        </div>
+        <a href="{% url 'dashboard' %}" class="btn btn-primary btn-lg w-100 hover-scale">
+            Go to Dashboard
+        </a>
+        {% endif %}
+
+        {% else %}
+        <!-- Failure State -->
+        <div class="result-icon-wrapper failure">
+            <i class="fas fa-times text-danger"></i>
+        </div>
+
+        <h1 class="display-4 font-bold text-white mb-2">Keep Trying!</h1>
+        <p class="text-secondary text-lg mb-5">Review the material and try again.</p>
+
+        <div class="score-container mb-5">
+            <div class="circular-chart">
+                <svg viewBox="0 0 36 36">
+                    <path class="circle-bg"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <path class="circle" stroke="#ef4444" stroke-dasharray="{{ attempt.score }}, 100"
+                        d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    <text x="18" y="20.35" class="percentage">{{ attempt.score }}%</text>
+                </svg>
+            </div>
+            <p class="text-sm text-muted">Passing Score: <span class="text-white font-bold">{{ quiz.passing_score
+                    }}%</span></p>
+        </div>
+
+        <div class="grid grid-2 gap-3">
+            <a href="{% url 'stage_detail' quiz.stage.roadmap.slug quiz.stage.order %}" class="btn btn-outline-white">
+                <i class="fas fa-book me-2"></i> Review Topics
+            </a>
+            <a href="{% url 'stage_quiz' quiz.stage.id %}" class="btn btn-primary">
+                <i class="fas fa-redo me-2"></i> Retry Quiz
+            </a>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+    {% if attempt.passed %}
+    document.addEventListener('DOMContentLoaded', function () {
+        var count = 200;
+        var defaults = {
+            origin: { y: 0.7 }
+        };
+
+        function fire(particleRatio, opts) {
+            confetti(Object.assign({}, defaults, opts, {
+                particleCount: Math.floor(count * particleRatio)
+            }));
+        }
+
+        // Fire confetti animation
+        setTimeout(() => {
+            fire(0.25, { spread: 26, startVelocity: 55, });
+            fire(0.2, { spread: 60, });
+            fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+            fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+            fire(0.1, { spread: 120, startVelocity: 45, });
+        }, 300);
+    });
+    {% endif %}
+</script>
+{% endblock %}

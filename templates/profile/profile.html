@@ -1,0 +1,490 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}My Profile - 99Roadmap{% endblock %}
+
+{% block content %}
+<!-- Cropper.js CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
+
+<style>
+    /* Compact Progress Bar */
+    .kyc-progress-container {
+        max-width: 500px;
+        margin: 0 auto 2rem;
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 99px;
+        padding: 0.5rem 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        backdrop-filter: blur(10px);
+    }
+
+    .kyc-step {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        color: #64748b;
+        transition: all 0.3s;
+    }
+
+    .kyc-step.active,
+    .kyc-step.completed {
+        color: white;
+        font-weight: 600;
+    }
+
+    .kyc-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #334155;
+    }
+
+    .kyc-step.completed .kyc-dot {
+        background: var(--success);
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+    }
+
+    .kyc-step.active .kyc-dot {
+        background: var(--primary);
+        box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+    }
+
+    /* Profile Card */
+    .profile-card {
+        background: rgba(30, 41, 59, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        backdrop-filter: blur(20px);
+    }
+
+    .profile-cover {
+        height: 150px;
+        background: radial-gradient(circle at center, rgba(99, 102, 241, 0.2), transparent 70%);
+        position: relative;
+    }
+
+    .profile-avatar-container {
+        width: 120px;
+        height: 120px;
+        margin: -60px auto 1rem;
+        position: relative;
+    }
+
+    .profile-avatar {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 4px solid #0f172a;
+        background: var(--gradient-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: white;
+        font-weight: 800;
+        overflow: hidden;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .edit-avatar-btn {
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
+        width: 36px;
+        height: 36px;
+        background: var(--primary);
+        border-radius: 50%;
+        border: 3px solid #0f172a;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        cursor: pointer;
+        transition: transform 0.2s;
+        z-index: 10;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .edit-avatar-btn:hover {
+        transform: scale(1.1);
+        background: #4f46e5;
+    }
+
+    /* Verified Badge */
+    .verified-badge {
+        color: #3b82f6;
+        /* Blue tick color */
+        margin-left: 0.5rem;
+        font-size: 1.2rem;
+        animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+        0% {
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        100% {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .form-section {
+        background: rgba(15, 23, 42, 0.3);
+        border-radius: var(--radius-lg);
+        padding: 2rem;
+        margin-top: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Hidden Edit Section */
+    #editSection {
+        display: none;
+        animation: slideDown 0.4s ease-out;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Cropper Modal */
+    .cropper-modal-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .cropper-container-box {
+        background: #1e293b;
+        border-radius: 12px;
+        padding: 20px;
+        width: 90%;
+        max-width: 500px;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .img-container {
+        max-height: 400px;
+        overflow: hidden;
+        margin-bottom: 20px;
+        background: #000;
+    }
+
+    .img-container img {
+        max-width: 100%;
+    }
+</style>
+
+<div class="container container-md py-5">
+
+    <!-- KYC Progress (Only show if NOT complete) -->
+    {% if progress_percentage < 100 %} <div class="kyc-progress-container animate-fade-in-up">
+        {% for step in setup_steps %}
+        <div class="kyc-step {% if step.is_completed %}completed{% elif step.step == current_step %}active{% endif %}">
+            <div class="kyc-dot"></div>
+            <span>{{ step.title }}</span>
+        </div>
+        {% endfor %}
+
+        <button onclick="toggleEdit()" class="btn btn-xs btn-primary rounded-pill ms-3 px-3">
+            Complete Setup <i class="fas fa-arrow-right ms-1"></i>
+        </button>
+</div>
+{% endif %}
+
+<!-- Main Profile Card -->
+<div class="profile-card animate-fade-in-up delay-100">
+    <div class="profile-cover">
+        <!-- Edit Toggle Button (Top Right) -->
+        <button onclick="toggleEdit()"
+            class="btn btn-sm glass position-absolute top-0 end-0 m-3 text-white border-0 hover-bg-white-10"
+            title="Edit Profile">
+            <i class="fas fa-edit me-1"></i> Edit Profile
+        </button>
+    </div>
+
+    <div class="px-4 pb-5">
+        <!-- Avatar & Header -->
+        <form id="avatarForm" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="action" value="update_avatar">
+            <div class="profile-avatar-container">
+                <div class="profile-avatar">
+                    {% if user.profile_image %}
+                    <img src="{{ user.profile_image.url }}" alt="{{ user.first_name }}">
+                    {% else %}
+                    {{ user.first_name|first|upper }}
+                    {% endif %}
+                </div>
+
+                <label for="id_profile_image" class="edit-avatar-btn" title="Change Profile Picture">
+                    <i class="fas fa-camera text-sm"></i>
+                </label>
+                <input type="file" name="profile_image" id="id_profile_image" class="d-none" accept="image/*">
+                <input type="hidden" name="cropped_image_data" id="cropped_image_data">
+            </div>
+        </form>
+
+        <div class="text-center mb-4">
+            <h1 class="h2 text-white mb-1 flex-center">
+                {{ user.full_name }}
+                {% if progress_percentage == 100 %}
+                <i class="fas fa-check-circle verified-badge" title="Verified Student"></i>
+                {% endif %}
+            </h1>
+
+            <p class="text-secondary mb-3">
+                {% if user.branch %}
+                {{ user.branch }} Student
+                {% if user.college %} at <span class="text-white">{{ user.college }}</span>{% endif %}
+                {% else %}
+                Setup your profile to see details here
+                {% endif %}
+            </p>
+
+            <div class="flex-center gap-3">
+                <span class="badge glass px-3 py-2 text-dim">
+                    <i class="far fa-calendar-alt me-1"></i> Year {{ user.year|default:"-" }}
+                </span>
+                <span class="badge glass px-3 py-2 text-dim">
+                    <i class="fas fa-graduation-cap me-1"></i> {{ user.get_study_type_display }}
+                </span>
+
+                <!-- Social Links Display -->
+                {% if user.linkedin_profile %}
+                <a href="{{ user.linkedin_profile }}" target="_blank"
+                    class="badge glass px-3 py-2 text-primary hover-bg-white-10">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                {% endif %}
+                {% if user.github_profile %}
+                <a href="{{ user.github_profile }}" target="_blank"
+                    class="badge glass px-3 py-2 text-white hover-bg-white-10">
+                    <i class="fab fa-github"></i>
+                </a>
+                {% endif %}
+            </div>
+
+            {% if user.future_goals %}
+            <div class="mt-4 mx-auto text-sm text-dim fst-italic" style="max-width: 500px;">
+                "{{ user.future_goals }}"
+            </div>
+            {% endif %}
+        </div>
+
+
+        <!-- Edit Details Form (Hidden by default) -->
+        <div id="editSection">
+            <hr class="border-white-5 my-4">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="update_profile">
+
+                <div class="row g-4">
+                    <!-- Left Column: Personal -->
+                    <div class="col-lg-6">
+                        <h4 class="h6 text-uppercase text-secondary font-bold tracking-wider mb-3">Personal Details</h4>
+                        <div class="form-section mt-0">
+                            <div class="mb-3">
+                                <label class="text-sm text-dim mb-1">Full Name</label>
+                                {{ form.full_name|add_class:"form-control bg-dark border-white-10 text-white" }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="text-sm text-dim mb-1">Phone</label>
+                                {{ form.phone|add_class:"form-control bg-dark border-white-10 text-white" }}
+                            </div>
+                            <div class="mb-3">
+                                <label class="text-sm text-dim mb-1">Bio</label>
+                                {{ form.bio|add_class:"form-control bg-dark border-white-10 text-white" }}
+                            </div>
+                        </div>
+
+                        <h4 class="h6 text-uppercase text-secondary font-bold tracking-wider mb-3 mt-4">Socials</h4>
+                        <div class="form-section mt-0">
+                            <div class="mb-3">
+                                <label class="text-sm text-dim mb-1"><i class="fab fa-linkedin text-primary me-1"></i>
+                                    LinkedIn</label>
+                                {{ form.linkedin_profile|add_class:"form-control bg-dark border-white-10 text-white" }}
+                            </div>
+                            <div class="mb-0">
+                                <label class="text-sm text-dim mb-1"><i class="fab fa-github text-white me-1"></i>
+                                    GitHub</label>
+                                {{ form.github_profile|add_class:"form-control bg-dark border-white-10 text-white" }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Education & Goals -->
+                    <div class="col-lg-6">
+                        <h4 class="h6 text-uppercase text-secondary font-bold tracking-wider mb-3">Education</h4>
+                        <div class="form-section mt-0">
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <label class="text-sm text-dim mb-1">College</label>
+                                    {{ form.college|add_class:"form-control bg-dark border-white-10 text-white" }}
+                                </div>
+                                <div class="col-6">
+                                    <label class="text-sm text-dim mb-1">Type</label>
+                                    {{ form.study_type|add_class:"form-control bg-dark border-white-10 text-white" }}
+                                </div>
+                            </div>
+                            <div class="row g-2 mb-0">
+                                <div class="col-8">
+                                    <label class="text-sm text-dim mb-1">Branch</label>
+                                    {{ form.branch|add_class:"form-control bg-dark border-white-10 text-white" }}
+                                </div>
+                                <div class="col-4">
+                                    <label class="text-sm text-dim mb-1">Year</label>
+                                    {{ form.year|add_class:"form-control bg-dark border-white-10 text-white" }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 class="h6 text-uppercase text-secondary font-bold tracking-wider mb-3 mt-4">Future Goals
+                        </h4>
+                        <div class="form-section mt-0">
+                            <label class="text-sm text-dim mb-1">What are your aspirations? <span
+                                    class="text-success">*</span></label>
+                            {{ form.future_goals|add_class:"form-control bg-dark border-white-10 text-white" }}
+                            <div class="text-xs text-muted mt-2">Required for profile verification</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <button type="submit" class="btn btn-primary px-5 py-3 fw-bold shadow-lg hover-lift rounded-pill">
+                        Save & Update Profile
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Cropper Modal -->
+<div id="cropperModal" class="cropper-modal-overlay">
+    <div class="cropper-container-box animate-bounce-in">
+        <h5 class="text-white mb-3">Crop Image</h5>
+        <div class="img-container">
+            <img id="imageToCrop" src="" alt="Picture">
+        </div>
+        <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="cancelCrop()">Cancel</button>
+            <button type="button" class="btn btn-primary btn-sm" onclick="cropAndSave()">Crop & Save</button>
+        </div>
+    </div>
+</div>
+
+<!-- Cropper.js Script -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+<script>
+    function toggleEdit() {
+        var editSection = document.getElementById('editSection');
+        if (editSection.style.display === 'none' || editSection.style.display === '') {
+            editSection.style.display = 'block';
+            editSection.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            editSection.style.display = 'none';
+        }
+    }
+
+    // Cropper Logic
+    let cropper;
+    const imageInput = document.getElementById('id_profile_image');
+    const imageToCrop = document.getElementById('imageToCrop');
+    const cropperModal = document.getElementById('cropperModal');
+    const avatarForm = document.getElementById('avatarForm');
+
+    imageInput.addEventListener('change', function (e) {
+        const files = e.target.files;
+        if (files && files.length > 0) {
+            const file = files[0];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                // Remove previous onchange to avoid loop if we set value later
+                // imageInput.removeAttribute('onchange'); 
+
+                imageToCrop.src = e.target.result;
+                cropperModal.style.display = 'flex';
+
+                // Destroy old cropper if exists
+                if (cropper) {
+                    cropper.destroy();
+                }
+
+                cropper = new Cropper(imageToCrop, {
+                    aspectRatio: 1,
+                    viewMode: 1,
+                    autoCropArea: 1,
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    function cancelCrop() {
+        cropperModal.style.display = 'none';
+        imageInput.value = ''; // Clear input
+        if (cropper) {
+            cropper.destroy();
+        }
+    }
+
+    function cropAndSave() {
+        if (cropper) {
+            cropper.getCroppedCanvas({
+                width: 400,
+                height: 400,
+            }).toBlob((blob) => {
+                // Create a new File object
+                const file = new File([blob], "profile-avatar.png", { type: "image/png" });
+
+                // Use DataTransfer to simulate file input change
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                imageInput.files = dataTransfer.files;
+
+                // Close modal
+                cropperModal.style.display = 'none';
+
+                // Submit form
+                avatarForm.submit();
+            });
+        }
+    }
+</script>
+{% endblock %}

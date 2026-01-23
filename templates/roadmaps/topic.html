@@ -1,0 +1,516 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ topic.title }} - 99Roadmap{% endblock %}
+
+{% block content %}
+<style>
+    /* Topic Content Styles */
+    .topic-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 3rem 0;
+    }
+
+    .topic-header {
+        margin-bottom: 2rem;
+    }
+
+    .topic-meta {
+        font-size: 0.9rem;
+        color: #94a3b8;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .topic-card-content {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: var(--radius-xl);
+        padding: 3rem;
+        backdrop-filter: blur(12px);
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #e2e8f0;
+    }
+
+    .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%;
+        /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+        border-radius: var(--radius-lg);
+        margin-top: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .nav-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(15, 23, 42, 0.5);
+        padding: 1.5rem;
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(5px);
+    }
+
+    .confetti-canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+    }
+
+    /* Typography inside content */
+    .topic-card-content h2,
+    .topic-card-content h3 {
+        color: white;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 700;
+    }
+
+    .topic-card-content p {
+        margin-bottom: 1.5rem;
+    }
+
+    .topic-card-content ul,
+    .topic-card-content ol {
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+    }
+
+    .topic-card-content li {
+        margin-bottom: 0.5rem;
+    }
+
+    .topic-card-content code {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 2px 6px;
+        border-radius: 4px;
+        color: #c084fc;
+        font-family: monospace;
+    }
+
+    .topic-card-content pre {
+        background: rgba(15, 23, 42, 0.8);
+        padding: 1.5rem;
+        border-radius: var(--radius-lg);
+        overflow-x: auto;
+        margin: 1.5rem 0;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Layout & Sidebar */
+    .topic-layout {
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 2rem;
+        align-items: start;
+    }
+
+    @media (max-width: 992px) {
+        .topic-layout {
+            grid-template-columns: 1fr !important;
+        }
+
+        .ai-sidebar-container {
+            display: none;
+            /* Hide on mobile for now or implement toggle */
+        }
+    }
+
+    .ai-sidebar {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        border-radius: var(--radius-xl);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        backdrop-filter: blur(20px);
+    }
+
+    .ai-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        background: linear-gradient(to right, rgba(99, 102, 241, 0.1), transparent);
+    }
+
+    .chat-box {
+        flex-grow: 1;
+        overflow-y: auto;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .message {
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        max-width: 85%;
+        word-wrap: break-word;
+    }
+
+    .message.ai {
+        background: rgba(255, 255, 255, 0.05);
+        color: #e2e8f0;
+        border-bottom-left-radius: 2px;
+        align-self: flex-start;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .message.user {
+        background: var(--primary);
+        color: white;
+        border-bottom-right-radius: 2px;
+        align-self: flex-end;
+        box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+    }
+
+    .input-area {
+        padding: 1rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+        background: rgba(15, 23, 42, 0.5);
+    }
+
+    .ai-input {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        border-radius: var(--radius-lg);
+        padding: 10px;
+        width: 100%;
+        resize: none;
+        font-family: inherit;
+    }
+
+    /* Locked Overlay */
+    .locked-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(15, 17, 26, 0.6);
+        backdrop-filter: blur(4px);
+    }
+
+    .locked-card {
+        background: rgba(30, 41, 59, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .blur-content {
+        filter: blur(4px);
+        pointer-events: none;
+        user-select: none;
+    }
+</style>
+
+<div class="container container-lg">
+    <div class="topic-layout grid" style="grid-template-columns: 1fr 350px; gap: 2rem;">
+
+        <!-- Main Content (Left) -->
+        <div class="topic-container animate-fade-in-up w-100" style="max-width: none;">
+
+            <!-- Header -->
+            <div class="topic-header">
+                <a href="{% url 'stage_detail' topic.stage.roadmap.slug topic.stage.order %}"
+                    class="text-sm text-secondary hover-text-white mb-3 d-inline-block transition-colors">
+                    <i class="fas fa-arrow-left me-2"></i> Back to Stage {{ topic.stage.order }}
+                </a>
+
+                <div class="topic-meta">
+                    <span class="text-primary font-bold uppercase tracking-wide text-xs">Topic 0{{ topic.order }}</span>
+                    <span>•</span>
+                    <span><i class="far fa-clock me-1"></i> {{ topic.duration_minutes }} min read</span>
+                    <span>•</span>
+                    <span class="text-warning"><i class="fas fa-bolt me-1"></i> {{ topic.xp_reward }} XP</span>
+                </div>
+
+                <h1 class="display-4 font-bold text-white mb-0">{{ topic.title }}</h1>
+            </div>
+
+            <!-- Content Card -->
+            <div class="topic-card-content">
+                {{ topic.content|linebreaks }}
+
+                {% if topic.video_url %}
+                <div class="video-wrapper">
+                    <iframe src="{{ topic.video_url }}" frameborder="0" allowfullscreen></iframe>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Navigation & Actions -->
+            <div class="nav-controls animate-fade-in-up delay-100">
+                <!-- Prev -->
+                <div>
+                    {% if prev_topic %}
+                    <a href="{% url 'topic_view' prev_topic.id %}" class="btn btn-outline-white btn-sm px-4">
+                        <i class="fas fa-arrow-left me-2"></i> Previous
+                    </a>
+                    {% endif %}
+                </div>
+
+                <!-- Mark Complete -->
+                <div>
+                    {% if not progress.is_completed %}
+                    <button onclick="markComplete()" class="btn btn-success px-5 py-2 hover-scale pulse">
+                        <i class="fas fa-check-circle me-2"></i> Mark Complete
+                        <span class="ms-1 opacity-75 text-xs">(+{{ topic.xp_reward }} XP)</span>
+                    </button>
+                    {% else %}
+                    <button class="btn btn-success btn-sm px-4 opacity-75" disabled>
+                        <i class="fas fa-check-double me-2"></i> Completed
+                    </button>
+                    {% endif %}
+                </div>
+
+                <!-- Next -->
+                <div>
+                    {% if next_topic %}
+                    <a href="{% url 'topic_view' next_topic.id %}" class="btn btn-primary btn-sm px-4">
+                        Next <i class="fas fa-arrow-right ms-2"></i>
+                    </a>
+                    {% elif progress.is_completed %}
+                    <a href="{% url 'stage_quiz' topic.stage.id %}"
+                        class="btn btn-warning btn-sm px-4 hover-glow text-dark font-bold">
+                        Take Quiz <i class="fas fa-graduation-cap ms-2"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Sidebar (Right) -->
+        <div class="ai-sidebar-container position-relative animate-fade-in-right">
+            {% if is_ai_locked %}
+            <div class="locked-overlay" style="border-radius: var(--radius-xl); z-index: 10;">
+                <div class="locked-card p-4">
+                    <i class="fas fa-crown text-warning fa-2x mb-3"></i>
+                    <h4 class="h6 text-white mb-2">AI Tutor Locked</h4>
+                    <p class="small text-secondary mb-3">Upgrade to Pro or Buy this Roadmap to unlock AI assistance.</p>
+                    <a href="{% url 'subscription_plans' %}" class="btn btn-primary btn-sm w-100">Unlock Now</a>
+                </div>
+            </div>
+            {% endif %}
+
+            <div class="ai-sidebar {% if is_ai_locked %}blur-content{% endif %}"
+                style="height: calc(100vh - 100px); position: sticky; top: 100px;">
+                <div class="ai-header flex-between items-center">
+                    <div>
+                        <h4 class="h6 text-white mb-0 font-bold flex items-center gap-2">
+                            <i class="fas fa-robot text-primary"></i> AI Tutor
+                        </h4>
+                        <p class="text-xs text-secondary mb-0">Ask about {{ topic.title }}</p>
+                    </div>
+                </div>
+
+                <div id="ai-chat-box" class="chat-box custom-scrollbar">
+                    <div class="message ai">
+                        Hi! I'm your AI tutor. I can help you understand "<strong>{{ topic.title }}</strong>". Ask me
+                        anything!
+                    </div>
+                </div>
+
+                <div class="input-area">
+                    <textarea id="ai-input" class="ai-input mb-2" rows="2" placeholder="Ask a doubt..."></textarea>
+                    <button onclick="sendAIMessage()" class="btn btn-primary d-block w-100 py-2">
+                        <i class="fas fa-paper-plane me-2"></i> Ask AI
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<button id="aiToggleBtn" class="ai-toggle-btn animate-bounce-in">
+    <i class="fas fa-robot"></i>
+</button>
+
+<canvas id="confetti" class="confetti-canvas"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+    function sendAIMessage() {
+        const input = document.getElementById('ai-input');
+        const box = document.getElementById('ai-chat-box');
+        const message = input.value.trim();
+
+        if (!message) return;
+
+        // Add user message
+        box.innerHTML += `<div class="message user animate-fade-in-up">${message}</div>`;
+        input.value = '';
+        box.scrollTop = box.scrollHeight;
+
+        // Show typing indicator
+        const loadingId = 'loading-' + Date.now();
+        box.innerHTML += `
+            <div id="${loadingId}" class="message ai flex items-center gap-2">
+                <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+                <span>Thinking...</span>
+            </div>`;
+        box.scrollTop = box.scrollHeight;
+
+        fetch('{% url "ai_ask" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                message: message,
+                topic_id: '{{ topic.id }}', // Topic Context
+                roadmap_id: '{{ roadmap.id }}'
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById(loadingId).remove();
+                if (data.success) {
+                    const formatted = data.response.replace(/\n/g, '<br>');
+                    box.innerHTML += `<div class="message ai animate-fade-in">${formatted}</div>`;
+                } else {
+                    box.innerHTML += `<div class="message ai text-danger">Error: ${data.error}</div>`;
+                }
+                box.scrollTop = box.scrollHeight;
+            })
+            .catch(err => {
+                const loader = document.getElementById(loadingId);
+                if (loader) loader.remove();
+                box.innerHTML += `<div class="message ai text-danger">Network Connection Error</div>`;
+                box.scrollTop = box.scrollHeight;
+            });
+    }
+
+    // Allow Enter key to send (Shift+Enter for new line)
+    const aiInput = document.getElementById('ai-input');
+    if (aiInput) {
+        aiInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendAIMessage();
+            }
+        });
+    }
+
+    // Mobile AI Toggle
+    const aiToggleBtn = document.getElementById('aiToggleBtn');
+    const aiSidebar = document.querySelector('.ai-sidebar-container');
+
+    if (aiToggleBtn) {
+        aiToggleBtn.addEventListener('click', function () {
+            this.classList.toggle('active');
+            aiSidebar.classList.toggle('show');
+
+            // Focus input if opening
+            if (aiSidebar.classList.contains('show')) {
+                setTimeout(() => document.getElementById('ai-input').focus(), 300);
+            }
+        });
+    }
+
+    // Close sidebar when clicking outside (mobile)
+    document.addEventListener('click', function (e) {
+        if (window.innerWidth <= 992 &&
+            aiSidebar.classList.contains('show') &&
+            !aiSidebar.contains(e.target) &&
+            !aiToggleBtn.contains(e.target)) {
+
+            aiToggleBtn.classList.remove('active');
+            aiSidebar.classList.remove('show');
+        }
+    });
+
+    // Fire Confetti on complete
+    function fireConfetti() {
+        var count = 200;
+        var defaults = {
+            origin: { y: 0.7 }
+        };
+
+        function fire(particleRatio, opts) {
+            confetti(Object.assign({}, defaults, opts, {
+                particleCount: Math.floor(count * particleRatio)
+            }));
+        }
+
+        fire(0.25, { spread: 26, startVelocity: 55, });
+        fire(0.2, { spread: 60, });
+        fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+        fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+        fire(0.1, { spread: 120, startVelocity: 45, });
+    }
+
+    function markComplete() {
+        // Show immediate visual feedback
+        const btn = document.querySelector('button[onclick="markComplete()"]');
+        if (btn) {
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Saving...';
+            btn.disabled = true;
+        }
+
+        fetch('{% url "mark_topic_complete" topic.id %}', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Fire confetti!
+                    fireConfetti();
+
+                    if (btn) {
+                        btn.className = 'btn btn-success btn-sm px-4';
+                        btn.innerHTML = '<i class="fas fa-check-double me-2"></i> Completed';
+                    }
+
+                    // Show floating XP notification (optional, simplified here with alert-like replacement or toast)
+                    // For now, reload after short delay to show next button state updates
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
+                }
+            })
+            .catch(err => {
+                if (btn) {
+                    btn.innerHTML = 'Error. Try Again.';
+                    btn.disabled = false;
+                }
+                console.error(err);
+            });
+    }
+</script>
+{% endblock %}

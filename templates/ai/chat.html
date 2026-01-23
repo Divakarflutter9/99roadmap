@@ -1,0 +1,534 @@
+{% extends 'base.html' %}
+
+{% block title %}AI Mentor - 99Roadmap{% endblock %}
+
+{% block content %}
+<!-- Highlight.js for Code -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<!-- Marked.js for Markdown -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<style>
+    :root {
+        --chat-bg: #0f111a;
+        --sidebar-bg: #1e293b;
+        --msg-user: #6366f1;
+        --msg-ai: #1e293b;
+        --text-primary: #f8fafc;
+        --text-secondary: #94a3b8;
+    }
+
+    /* Layout */
+    .chat-layout {
+        display: flex;
+        height: calc(100vh - 70px);
+        /* Adjust based on navbar height */
+        background: var(--chat-bg);
+        margin-top: -1.5rem;
+        /* Offset container padding if needed */
+        position: relative;
+    }
+
+    /* Sidebar */
+    .chat-sidebar {
+        width: 300px;
+        background: var(--sidebar-bg);
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .context-selector {
+        margin-bottom: 2rem;
+    }
+
+    .context-label {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.05em;
+    }
+
+    .context-btn {
+        width: 100%;
+        text-align: left;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 10px 15px;
+        border-radius: 8px;
+        color: var(--text-primary);
+        transition: all 0.2s;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .context-btn:hover,
+    .context-btn.active {
+        background: rgba(99, 102, 241, 0.1);
+        border-color: var(--msg-user);
+        color: white;
+    }
+
+    .context-btn i {
+        color: var(--msg-user);
+    }
+
+    /* Main Chat Area */
+    .chat-main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background: var(--chat-bg);
+        position: relative;
+    }
+
+    .chat-messages {
+        flex: 1;
+        padding: 2rem 10%;
+        overflow-y: auto;
+        scroll-behavior: smooth;
+    }
+
+    .message {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        opacity: 0;
+        animation: fadeIn 0.3s forwards;
+    }
+
+    @keyframes fadeIn {
+        to {
+            opacity: 1;
+        }
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-weight: bold;
+    }
+
+    .avatar.ai {
+        background: #10b981;
+        color: white;
+    }
+
+    .avatar.user {
+        background: var(--msg-user);
+        color: white;
+    }
+
+    .message-content {
+        flex: 1;
+        max-width: 800px;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #e2e8f0;
+    }
+
+    .message-content p {
+        margin-bottom: 1rem;
+    }
+
+    .message-content p:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Code Blocks */
+    .message-content pre {
+        background: #282c34;
+        padding: 1rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1rem 0;
+    }
+
+    .message-content code {
+        font-family: 'Fira Code', monospace;
+        font-size: 0.9em;
+    }
+
+    /* Input Area */
+    .input-area {
+        padding: 2rem 10%;
+        background: var(--chat-bg);
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .input-wrapper {
+        position: relative;
+        background: var(--sidebar-bg);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-input {
+        width: 100%;
+        background: transparent;
+        border: none;
+        color: white;
+        padding: 15px;
+        resize: none;
+        max-height: 200px;
+        outline: none;
+    }
+
+    .send-btn {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        background: var(--msg-user);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .send-btn:hover {
+        background: #4f46e5;
+    }
+
+    .send-btn:disabled {
+        background: #475569;
+        cursor: not-allowed;
+    }
+
+    /* Typing Indicator */
+    .typing-indicator {
+        display: flex;
+        gap: 5px;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        width: fit-content;
+        margin-left: 55px;
+        /* Avatar offset */
+        margin-bottom: 1rem;
+    }
+
+    .dot {
+        width: 8px;
+        height: 8px;
+        background: #94a3b8;
+        border-radius: 50%;
+        animation: bounce 1.4s infinite ease-in-out both;
+    }
+
+    .dot:nth-child(1) {
+        animation-delay: -0.32s;
+    }
+
+    .dot:nth-child(2) {
+        animation-delay: -0.16s;
+    }
+
+    @keyframes bounce {
+
+        0%,
+        80%,
+        100% {
+            transform: scale(0);
+        }
+
+        40% {
+            transform: scale(1);
+        }
+    }
+
+    /* Quick Prompts */
+    .quick-prompts {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        margin-bottom: 1rem;
+    }
+
+    .prompt-pill {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: 0.2s;
+        white-space: nowrap;
+    }
+
+    .prompt-pill:hover {
+        background: var(--sidebar-bg);
+        color: var(--msg-user);
+        border-color: var(--msg-user);
+    }
+
+    /* Locked State */
+    .blur-container {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .blur-content {
+        filter: blur(5px);
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .locked-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        background: rgba(15, 17, 26, 0.6);
+        backdrop-filter: blur(2px);
+    }
+
+    .locked-card {
+        background: rgba(30, 41, 59, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 3rem;
+        border-radius: 20px;
+        text-align: center;
+        max-width: 500px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+</style>
+
+<div class="chat-layout blur-container">
+    {% if is_locked %}
+    <div class="locked-overlay">
+        <div class="locked-card">
+            <i class="fas fa-crown text-warning fa-3x mb-4"></i>
+            <h2 class="h3 text-white mb-3">Upgrade to Pro</h2>
+            <p class="text-secondary mb-4">Unlock unlimited AI mentorship, personalized quizzes, and code debugging
+                assistance.</p>
+            <a href="{% url 'subscription_plans' %}" class="btn btn-primary btn-lg px-5">
+                <i class="fas fa-rocket me-2"></i> Join Pro
+            </a>
+            <p class="small text-muted mt-3 mb-0">Starting at ₹499/month</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Sidebar -->
+    <div class="chat-sidebar d-none d-md-flex {% if is_locked %}blur-content{% endif %}">
+        <div class="sidebar-title">
+            <i class="fas fa-robot text-primary"></i> AI Mentor
+        </div>
+
+        <div class="context-selector">
+            <div class="context-label">Context</div>
+            <button class="context-btn active" onclick="setContext(null, 'General')">
+                <i class="fas fa-globe"></i> General
+            </button>
+            {% for enrollment in enrollments %}
+            <button class="context-btn"
+                onclick="setContext({{ enrollment.roadmap.id }}, '{{ enrollment.roadmap.title }}')">
+                <i class="fas fa-book"></i> {{ enrollment.roadmap.title }}
+            </button>
+            {% endfor %}
+        </div>
+
+        <div class="mt-auto">
+            <div class="card bg-darker border-0 p-3">
+                <small class="text-muted"><i class="fas fa-info-circle"></i> Tips</small>
+                <p class="small text-secondary mt-1 mb-0">Ask for code examples, quizzes, or explanations of complex
+                    topics.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Chat -->
+    <div class="chat-main {% if is_locked %}blur-content{% endif %}">
+        <div class="chat-messages" id="chat-container">
+            <!-- Welcome Message -->
+            <div class="message">
+                <div class="avatar ai"><i class="fas fa-robot"></i></div>
+                <div class="message-content">
+                    <p>Hello! I'm your specific AI mentor. I can help you with your coursework, generate practice
+                        quizzes, or debug your code.</p>
+                    <p>What are we learning today?</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-area">
+            <!-- Quick Prompts -->
+            <div class="quick-prompts">
+                <div class="prompt-pill" onclick="sendQuick('Create a quiz for me')">📝 Create a Quiz</div>
+                <div class="prompt-pill" onclick="sendQuick('Explain the concept of...')">💡 Explain Concept</div>
+                <div class="prompt-pill" onclick="sendQuick('Write a code example for...')">💻 Code Example</div>
+                <div class="prompt-pill" onclick="sendQuick('How can I improve my...')">🚀 Study Tips</div>
+            </div>
+
+            <div class="input-wrapper">
+                <textarea id="user-input" class="chat-input" rows="1"
+                    placeholder="Type your message... (Shift+Enter for new line)"></textarea>
+                <button id="send-btn" class="send-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            <p class="text-center text-muted small mt-2">AI can make mistakes. Please verify important information.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentRoadmapId = null;
+    let currentContextName = 'General';
+
+    // Auto-resize textarea
+    const textarea = document.getElementById('user-input');
+    textarea.addEventListener('input', function () {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+        if (this.value === '') this.style.height = 'auto';
+    });
+
+    // Handle Enter key
+    textarea.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+
+    function setContext(id, name) {
+        currentRoadmapId = id;
+        currentContextName = name;
+
+        // Update styling
+        document.querySelectorAll('.context-btn').forEach(btn => btn.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+
+        // Announce change
+        const chat = document.getElementById('chat-container');
+        chat.innerHTML += `
+            <div class="text-center my-3">
+                <span class="badge badge-secondary">Context switched to: ${name}</span>
+            </div>
+        `;
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    function sendQuick(text) {
+        textarea.value = text;
+        textarea.focus();
+    }
+
+    function sendMessage() {
+        const message = textarea.value.trim();
+        if (!message) return;
+
+        const chat = document.getElementById('chat-container');
+
+        // Add User Message
+        chat.innerHTML += `
+            <div class="message">
+                <div class="avatar user"><i class="fas fa-user"></i></div>
+                <div class="message-content">
+                    <p>${escapeHtml(message)}</p>
+                </div>
+            </div>
+        `;
+
+        textarea.value = '';
+        textarea.style.height = 'auto';
+        chat.scrollTop = chat.scrollHeight;
+
+        // Show Loading
+        const loadingId = 'loading-' + Date.now();
+        chat.innerHTML += `
+            <div id="${loadingId}" class="typing-indicator">
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            </div>
+        `;
+        chat.scrollTop = chat.scrollHeight;
+
+        // API Call
+        fetch('{% url "ai_ask" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                message: message,
+                roadmap_id: currentRoadmapId
+            })
+        })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById(loadingId).remove();
+
+                if (data.success) {
+                    // Parse Markdown
+                    const rawHtml = marked.parse(data.response);
+
+                    chat.innerHTML += `
+                    <div class="message">
+                        <div class="avatar ai"><i class="fas fa-robot"></i></div>
+                        <div class="message-content">
+                            ${rawHtml}
+                        </div>
+                    </div>
+                `;
+
+                    // Highlight Code
+                    document.querySelectorAll('pre code').forEach((block) => {
+                        hljs.highlightElement(block);
+                    });
+
+                } else {
+                    chat.innerHTML += `<div class="alert alert-danger mx-5">Error: ${data.error}</div>`;
+                }
+                chat.scrollTop = chat.scrollHeight;
+            })
+            .catch(err => {
+                document.getElementById(loadingId).remove();
+                chat.innerHTML += `<div class="alert alert-danger mx-5">Network Error</div>`;
+            });
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML.replace(/\n/g, '<br>');
+    }
+</script>
+{% endblock %}

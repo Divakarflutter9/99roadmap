@@ -1,0 +1,520 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Hero Section with Animated Elements -->
+<section class="hero-section"
+    style="position: relative; padding: 8rem 0 4rem; background: var(--bg-body); overflow: hidden;">
+    <!-- Grid Background Pattern -->
+    <div
+        style="position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 50px 50px; opacity: 0.5; pointer-events: none;">
+    </div>
+
+    <div class="container" style="position: relative; z-index: 10;">
+        <div class="text-center">
+            <!-- Main Heading -->
+            <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1.5rem;">
+                <span style="color: var(--text-primary);">TECH CAREER</span><br>
+                <span
+                    style="display: inline-block; background: var(--accent-yellow); color: var(--bg-body); padding: 0.5rem 2rem; font-weight: 900;">ROADMAP
+                    PLATFORM</span>
+            </h1>
+
+            <!-- Subtitle -->
+            <p
+                style="font-size: clamp(1rem, 2vw, 1.25rem); color: var(--text-secondary); max-width: 700px; margin: 0 auto 3rem; padding: 0 1rem;">
+                Master your skills with structured learning paths - #1 platform trusted by developers worldwide
+            </p>
+
+            <!-- CTA Buttons -->
+            <div class="d-flex gap-3 justify-center" style="margin-bottom: 6rem; flex-wrap: wrap;">
+                <a href="{% url 'register' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-shopping-cart"></i> Start Learning ($0)
+                </a>
+                <a href="{% url 'roadmap_list' %}" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-compass"></i> Discover Roadmaps
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Left Floating Stat: Roadmaps Counter -->
+    <div class="floating-stat-left parallax-element d-none d-lg-block" data-speed="15"
+        style="position: absolute; left: 5%; top: 35%; z-index: 5;">
+        <div style="text-align: center;">
+            <div style="font-size: 5rem; font-weight: 900; color: white; line-height: 1;">50+</div>
+            <div
+                style="font-size: 1rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 2px; margin-top: 0.5rem;">
+                ROADMAPS</div>
+        </div>
+
+        <!-- Curved Arrow SVG -->
+        <svg width="120" height="80" viewBox="0 0 120 80" style="margin-top: 1rem; opacity: 0.6;">
+            <path d="M10 10 Q 60 40, 90 15" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" />
+            <path d="M85 10 L 95 15 L 90 25" fill="white" />
+        </svg>
+    </div>
+
+    <!-- Right Floating Badge: #1 Best Platform -->
+    <div class="floating-badge-right parallax-element d-none d-lg-block" data-speed="-15"
+        style="position: absolute; right: 5%; top: 30%; z-index: 5;">
+        <div style="position: relative; text-align: center;">
+            <!-- Laurel Wreath SVG -->
+            <svg width="180" height="180" viewBox="0 0 180 180"
+                style="position: absolute; top: -40px; left: -40px; opacity: 0.3;">
+                <circle cx="90" cy="90" r="70" stroke="var(--accent-yellow)" stroke-width="2" fill="none" />
+                <path d="M30 90 Q 35 70, 25 60 Q 30 65, 35 60 Q 40 70, 35 90" fill="var(--accent-yellow)"
+                    opacity="0.6" />
+                <path d="M30 95 Q 35 115, 25 125 Q 30 120, 35 125 Q 40 115, 35 95" fill="var(--accent-yellow)"
+                    opacity="0.6" />
+                <path d="M150 90 Q 145 70, 155 60 Q 150 65, 145 60 Q 140 70, 145 90" fill="var(--accent-yellow)"
+                    opacity="0.6" />
+                <path d="M150 95 Q 145 115, 155 125 Q 150 120, 145 125 Q 140 115, 145 95" fill="var(--accent-yellow)"
+                    opacity="0.6" />
+            </svg>
+
+            <!-- Badge Content -->
+            <div
+                style="position: relative; background: var(--bg-surface); border: 3px solid var(--accent-yellow); border-radius: 50%; width: 140px; height: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: var(--shadow-lg);">
+                <div style="font-size: 4rem; font-weight: 900; color: var(--accent-yellow); line-height: 1;">#1</div>
+                <div
+                    style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">
+                    BEST</div>
+                <div
+                    style="font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px;">
+                    PLATFORM</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Preview Image/Mockup Area -->
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10">
+                <div
+                    style="background: var(--bg-surface); border-radius: 12px; padding: 2rem; box-shadow: var(--shadow-lg); border: 1px solid var(--border-light);">
+                    <div
+                        style="background: linear-gradient(135deg, rgba(74, 144, 226, 0.2) 0%, rgba(255, 139, 56, 0.2) 50%, rgba(255, 193, 7, 0.2) 100%); height: 350px; border-radius: 8px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;">
+                        <!-- Decorative Elements -->
+                        <div
+                            style="position: absolute; top: 20%; left: 10%; width: 60px; height: 60px; background: rgba(74, 144, 226, 0.3); border-radius: 12px; transform: rotate(15deg);">
+                        </div>
+                        <div
+                            style="position: absolute; bottom: 20%; right: 10%; width: 80px; height: 80px; background: rgba(255, 139, 56, 0.3); border-radius: 50%;">
+                        </div>
+                        <i class="fas fa-route"
+                            style="font-size: 6rem; color: rgba(255, 255, 255, 0.15); z-index: 1;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Choose Us - Stats Cards Section -->
+<section style="padding: 6rem 0; background: var(--bg-body); position: relative; overflow: hidden;">
+    <div class="container">
+        <div class="text-center mb-4">
+            <h2 style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem;">Why Choose Us</h2>
+            <p
+                style="font-size: clamp(1rem, 2vw, 1.125rem); max-width: 800px; margin: 0 auto; color: var(--text-secondary);">
+                99Roadmap elevates your career with Innovative Solutions, Inspiring Engagement, and Unleashing Learning
+                Potential.
+            </p>
+        </div>
+
+        <div class="stats-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-top: 4rem;">
+            <!-- Stat Card 1 -->
+            <div class="stat-card parallax-card" data-speed="5"
+                style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-light); border-radius: 16px; padding: 3rem 2rem; text-align: center; transition: all 0.3s ease;">
+                <div
+                    style="width: 60px; height: 60px; background: rgba(255, 139, 56, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                    <i class="fas fa-calendar-alt" style="font-size: 1.5rem; color: var(--primary);"></i>
+                </div>
+                <div style="font-size: 3.5rem; font-weight: 900; color: white; margin-bottom: 0.5rem;">0+</div>
+                <div style="color: var(--text-secondary); font-size: 0.9375rem;">Years Developed</div>
+            </div>
+
+            <!-- Stat Card 2 -->
+            <div class="stat-card parallax-card" data-speed="-5"
+                style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-light); border-radius: 16px; padding: 3rem 2rem; text-align: center; transition: all 0.3s ease;">
+                <div
+                    style="width: 60px; height: 60px; background: rgba(74, 144, 226, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                    <i class="fas fa-cubes" style="font-size: 1.5rem; color: var(--accent-blue);"></i>
+                </div>
+                <div style="font-size: 3.5rem; font-weight: 900; color: white; margin-bottom: 0.5rem;">60+</div>
+                <div style="color: var(--text-secondary); font-size: 0.9375rem;">Amazing Content Blocks</div>
+            </div>
+
+            <!-- Stat Card 3 -->
+            <div class="stat-card parallax-card" data-speed="8"
+                style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-light); border-radius: 16px; padding: 3rem 2rem; text-align: center; transition: all 0.3s ease;">
+                <div
+                    style="width: 60px; height: 60px; background: rgba(255, 139, 56, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                    <i class="fas fa-globe" style="font-size: 1.5rem; color: var(--primary);"></i>
+                </div>
+                <div style="font-size: 3.5rem; font-weight: 900; color: white; margin-bottom: 0.5rem;">20K+</div>
+                <div style="color: var(--text-secondary); font-size: 0.9375rem;">Websites Trust 99Roadmap</div>
+            </div>
+
+            <!-- Stat Card 4 -->
+            <div class="stat-card parallax-card" data-speed="-8"
+                style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-light); border-radius: 16px; padding: 3rem 2rem; text-align: center; transition: all 0.3s ease;">
+                <div
+                    style="width: 60px; height: 60px; background: rgba(255, 193, 7, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                    <i class="fas fa-puzzle-piece" style="font-size: 1.5rem; color: var(--accent-yellow);"></i>
+                </div>
+                <div style="font-size: 3.5rem; font-weight: 900; color: white; margin-bottom: 0.5rem;">10+</div>
+                <div style="color: var(--text-secondary); font-size: 0.9375rem;">Premium Add-Ons Included</div>
+            </div>
+
+            <!-- Stat Card 5 -->
+            <div class="stat-card parallax-card" data-speed="10"
+                style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-light); border-radius: 16px; padding: 3rem 2rem; text-align: center; transition: all 0.3s ease;">
+                <div
+                    style="width: 60px; height: 60px; background: rgba(74, 144, 226, 0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+                    <i class="fas fa-users" style="font-size: 1.5rem; color: var(--accent-blue);"></i>
+                </div>
+                <div style="font-size: 3.5rem; font-weight: 900; color: white; margin-bottom: 0.5rem;">1.5K</div>
+                <div style="color: var(--text-secondary); font-size: 0.9375rem;">Happy Customers</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Large Number with Background Text - Premium Roadmaps -->
+<section style="padding: 8rem 0; background: var(--bg-surface); position: relative; overflow: hidden;">
+    <div class="parallax-text-bg" data-speed="20"
+        style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: clamp(6rem, 20vw, 18rem); font-weight: 900; color: rgba(255, 255, 255, 0.02); white-space: nowrap; pointer-events: none; user-select: none;">
+        99ROADMAP
+    </div>
+
+    <div class="container text-center" style="position: relative; z-index: 10;">
+        <div class="big-number-display" style="margin-bottom: 2rem;">
+            <span
+                style="font-size: clamp(6rem, 15vw, 12rem); font-weight: 900; color: var(--primary); line-height: 1;">50</span>
+            <span
+                style="font-size: clamp(4rem, 10vw, 8rem); font-weight: 900; color: #EF4444; line-height: 1; margin-left: 1rem;">+</span>
+        </div>
+        <h2 style="font-size: clamp(2rem, 4vw, 3rem); color: white; margin-bottom: 1rem;">Premium Roadmaps</h2>
+        <p
+            style="font-size: clamp(1rem, 2vw, 1.25rem); color: var(--text-secondary); max-width: 700px; margin: 0 auto;">
+            Easy to follow and complete with structured paths designed to take you from beginner to expert.
+        </p>
+    </div>
+</section>
+
+<!-- Circular Logo Badge Section - #1 Platform -->
+<section style="padding: 8rem 0; background: var(--bg-body); position: relative;">
+    <div class="container text-center">
+        <!-- Large Circular Logo Badge -->
+        <div
+            style="width: 280px; height: 280px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 3rem; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
+            <i class="fas fa-map" style="font-size: 8rem; color: var(--primary);"></i>
+        </div>
+
+        <!-- Heading -->
+        <h2 style="font-size: clamp(2rem, 4vw, 3rem); color: white; margin-bottom: 1.5rem; font-weight: 900;">
+            #1 Learning Roadmap Platform
+        </h2>
+
+        <!-- Description -->
+        <p
+            style="font-size: clamp(1rem, 2vw, 1.125rem); color: var(--text-secondary); max-width: 900px; margin: 0 auto; line-height: 1.8;">
+            99Roadmap is a comprehensive learning platform designed for aspiring developers. This is one of the best
+            roadmap platforms which offers you a lot of benefits, such as: easy to follow, structured paths, AI
+            assistance, and the ability to track your progress effectively.
+        </p>
+    </div>
+</section>
+
+<!-- Demo Showcase Section -->
+<section style="padding: 6rem 0; background: var(--bg-surface);">
+    <div class="container">
+        <!-- Filter Tabs -->
+        <!-- Filter Tabs -->
+        <div class="site-tabs">
+            <button class="tab-btn active" data-filter="all">
+                All <span class="tab-count">{{ all_roadmaps.count }}</span>
+            </button>
+            <button class="tab-btn" data-filter="popular">
+                Popular
+            </button>
+            {% for category in categories %}
+            <button class="tab-btn" data-filter="{{ category.slug }}">
+                {{ category.name }}
+            </button>
+            {% endfor %}
+        </div>
+
+        <!-- Demo Cards Grid -->
+        <div class="demo-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 2rem;">
+
+            {% for roadmap in all_roadmaps %}
+            <!-- Roadmap Card - {{ roadmap.title }} -->
+            <div class="roadmap-card"
+                data-category="{% if roadmap.category %}{{ roadmap.category.slug }}{% else %}all{% endif %}">
+
+                <!-- Badge -->
+                {% if roadmap.is_featured %}
+                <div class="badge-ui badge-popular">Popular</div>
+                {% elif roadmap.difficulty == 'advanced' %}
+                <div class="badge-ui badge-hot">Advanced</div>
+                {% elif roadmap.difficulty == 'beginner' %}
+                <div class="badge-ui badge-new">Beginner</div>
+                {% endif %}
+
+                <!-- Image Area -->
+                <div class="roadmap-card-image">
+                    {% if roadmap.thumbnail %}
+                    <img src="{{ roadmap.thumbnail.url }}" alt="{{ roadmap.title }}">
+                    {% else %}
+                    <!-- Default icon based on category -->
+                    <i class="{{ roadmap.category.icon|default:'fas fa-route' }}"
+                        style="font-size: 4rem; color: rgba(255, 255, 255, 0.15); z-index: 1;"></i>
+                    {% endif %}
+                </div>
+
+                <!-- Content -->
+                <div class="roadmap-card-content">
+                    <h4 class="roadmap-card-title">{{ roadmap.title }}</h4>
+                    {% if roadmap.short_description %}
+                    <p class="roadmap-card-desc">{{ roadmap.short_description|truncatewords:10 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Link overlay -->
+                <a href="{% url 'roadmap_detail' roadmap.slug %}" style="position: absolute; inset: 0; z-index: 5;"></a>
+            </div>
+            {% empty %}
+            <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+                <p style="color: var(--text-secondary); font-size: 1.125rem;">No roadmaps available yet. Check back
+                    soon!</p>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</section>
+
+
+<!-- CTA Section -->
+<section style="padding: 6rem 0; background: linear-gradient(135deg, var(--primary), var(--primary-dark));">
+    <div class="container text-center">
+        <h2 style="color: white; font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem;">Ready to Start Your Journey?
+        </h2>
+        <p style="color: rgba(255,255,255,0.9); font-size: clamp(1rem, 2vw, 1.25rem); margin-bottom: 2rem;">
+            Join 10,000+ developers mastering their tech careers
+        </p>
+        <a href="{% url 'register' %}" class="btn btn-lg"
+            style="background: white; color: var(--primary); box-shadow: var(--shadow-lg);">
+            <i class="fas fa-rocket"></i> Start Learning Free
+        </a>
+    </div>
+</section>
+
+<!-- Enhanced Parallax JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', function (e) {
+            const parallaxElements = document.querySelectorAll('.parallax-element, .parallax-card, .parallax-text-bg');
+            const mouseX = e.clientX / window.innerWidth - 0.5;
+            const mouseY = e.clientY / window.innerHeight - 0.5;
+
+            parallaxElements.forEach(element => {
+                const speed = parseInt(element.dataset.speed) || 10;
+                const x = mouseX * speed;
+                const y = mouseY * speed;
+
+                element.style.transform = `translate(${x}px, ${y}px)`;
+            });
+        });
+
+        // Hover effect for stat cards
+        const statCards = document.querySelectorAll('.stat-card');
+        statCards.forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-10px) scale(1.05)';
+                this.style.boxShadow = 'var(--shadow-lg)';
+                this.style.borderColor = 'var(--primary)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.boxShadow = 'none';
+                this.style.borderColor = 'var(--border-light)';
+            });
+        });
+
+        // Demo card hover effects
+        const demoCards = document.querySelectorAll('.demo-card');
+        demoCards.forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Tab filtering functionality
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const demoCardsForFilter = document.querySelectorAll('.demo-card');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                // Remove active class from all buttons
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.style.color = 'var(--text-secondary)';
+                });
+
+                // Add active class to clicked button
+                this.classList.add('active');
+                this.style.color = 'white';
+
+                // Get filter value
+                const filterValue = this.dataset.filter;
+
+                // Filter cards
+                demoCardsForFilter.forEach(card => {
+                    if (filterValue === 'all') {
+                        card.style.display = 'block';
+                    } else {
+                        if (card.dataset.category === filterValue) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+    });
+</script>
+
+<style>
+    @keyframes float {
+
+        0%,
+        100% {
+            transform: translateY(0px);
+        }
+
+        50% {
+            transform: translateY(-15px);
+        }
+    }
+
+    .parallax-element,
+    .parallax-card,
+    .parallax-text-bg {
+        transition: transform 0.1s ease-out;
+        will-change: transform;
+    }
+
+    .floating-stat-left,
+    .floating-badge-right {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 1024px) {
+        .stats-grid {
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+        }
+
+        .floating-stat-left,
+        .floating-badge-right {
+            display: none !important;
+        }
+
+        .demo-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hero-section {
+            padding: 4rem 0 2rem !important;
+        }
+
+        .stats-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+        }
+
+        .stat-card {
+            padding: 2rem 1.5rem !important;
+            /* Creative mobile transforms */
+            transform: none !important;
+            border-left: 4px solid var(--primary) !important;
+        }
+
+        .stat-card:nth-child(even) {
+            border-left-color: var(--accent-blue) !important;
+        }
+
+        .stat-card:nth-child(3n) {
+            border-left-color: var(--accent-yellow) !important;
+        }
+
+        /* Mobile demo grid */
+        .demo-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1.5rem !important;
+        }
+
+        .demo-card {
+            /* Creative card tilt on mobile */
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+        }
+
+        .demo-card:nth-child(odd) {
+            transform: translateX(-5px) !important;
+        }
+
+        .demo-card:nth-child(even) {
+            transform: translateX(5px) !important;
+        }
+
+        /* Mobile tab navigation */
+        .demo-tabs {
+            gap: 1rem !important;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 1.5rem !important;
+            justify-content: flex-start !important;
+        }
+
+        .tab-btn {
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
+        }
+
+        /* Better mobile spacing */
+        section {
+            padding: 3rem 0 !important;
+        }
+
+        h2 {
+            line-height: 1.3 !important;
+            margin-bottom: 1rem !important;
+        }
+
+        /* Mobile badge enhancements */
+        .badge-popular,
+        .badge-hot,
+        .badge-new {
+            font-size: 0.65rem !important;
+            padding: 0.3rem 0.7rem !important;
+        }
+    }
+</style>
+
+{% endblock %}

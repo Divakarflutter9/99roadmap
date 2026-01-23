@@ -1,0 +1,343 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Checkout - 99Roadmap{% endblock %}
+
+{% block content %}
+<style>
+    /* Checkout Specific Styles */
+    .checkout-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding-top: 3rem;
+        padding-bottom: 5rem;
+    }
+
+    .checkout-card {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: var(--radius-xl);
+        padding: 2.5rem;
+        backdrop-filter: blur(12px);
+    }
+
+    .summary-box {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+    }
+
+    .item-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .price-tag {
+        font-family: var(--font-heading);
+        font-weight: 700;
+        color: white;
+    }
+
+    .total-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: white;
+    }
+
+    /* Coupon Input */
+    .coupon-group {
+        position: relative;
+    }
+
+    .coupon-input {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        border-radius: var(--radius-md);
+        padding: 12px 15px;
+        width: 100%;
+        transition: 0.3s;
+    }
+
+    .coupon-input:focus {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--primary);
+        box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+        outline: none;
+    }
+
+    .btn-apply {
+        position: absolute;
+        right: 5px;
+        top: 5px;
+        bottom: 5px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: none;
+        border-radius: var(--radius-sm);
+        padding: 0 15px;
+        font-weight: 600;
+        transition: 0.2s;
+        cursor: pointer;
+    }
+
+    .btn-apply:hover {
+        background: var(--primary);
+    }
+
+    /* Payment Section */
+    .secure-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: #94a3b8;
+        font-size: 0.85rem;
+        margin-top: 1rem;
+        opacity: 0.8;
+    }
+
+    .pulse-glow {
+        animation: pulse-glow 2s infinite;
+    }
+
+    @keyframes pulse-glow {
+        0% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+        }
+
+        70% {
+            box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        }
+    }
+</style>
+
+<div class="checkout-container">
+    <div class="checkout-card animate-fade-in-up">
+        <h2 class="h3 text-white mb-4 flex items-center gap-3">
+            <span class="w-10 h-10 rounded-full bg-gradient-primary flex-center text-sm"><i
+                    class="fas fa-lock"></i></span>
+            Secure Checkout
+        </h2>
+
+        <div class="grid grid-2" style="gap: 3rem;">
+            <!-- Left: Summary -->
+            <div>
+                <div class="summary-box mb-4">
+                    <h5 class="text-sm text-secondary uppercase font-bold tracking-wide mb-3">Order Summary</h5>
+
+                    <!-- Item -->
+                    <div class="item-row">
+                        <span class="text-white">
+                            {% if payment.subscription_plan %}
+                            {{ payment.subscription_plan.name }} <span class="text-muted text-sm">(Subscription)</span>
+                            {% elif payment.roadmap %}
+                            {{ payment.roadmap.title }} <span class="text-muted text-sm">(Roadmap)</span>
+                            {% elif payment.bundle %}
+                            {{ payment.bundle.title }} <span class="text-muted text-sm">(Bundle)</span>
+                            {% else %}
+                            Unknown Item
+                            {% endif %}
+                        </span>
+                        <span class="price-tag">₹<span id="base-price">{{ payment.amount }}</span></span>
+                    </div>
+
+                    <!-- Discount Row (Hidden initially) -->
+                    <div id="discount-row" class="flex-between text-success mt-2 mb-2 font-weight-bold"
+                        style="display: none;">
+                        <span><i class="fas fa-tag me-1"></i> Coupon (<span id="discount-percent">0</span>%)</span>
+                        <span>- ₹<span id="discount-amount">0</span></span>
+                    </div>
+
+                    <!-- Total -->
+                    <div class="total-row">
+                        <span>Total to Pay</span>
+                        <span class="text-primary text-gradient">₹<span id="final-price">{{ payment.amount
+                                }}</span></span>
+                    </div>
+                </div>
+
+                <!-- Coupon Section -->
+                {% if not payment.coupon %}
+                <div class="mb-4">
+                    <label class="text-sm text-muted mb-2 d-block">Have a discount code?</label>
+                    <div class="coupon-group">
+                        <input type="text" id="coupon-code" class="coupon-input" placeholder="Enter coupon code">
+                        <button class="btn-apply" id="apply-coupon">Apply</button>
+                    </div>
+                    <small id="coupon-msg" class="d-block mt-2 font-bold"></small>
+                </div>
+                {% else %}
+                <div class="glass border-success p-3 rounded flex items-center gap-2 text-success">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Coupon <strong>{{ payment.coupon.code }}</strong> applied successfully!</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Right: Payment Actions -->
+            <div class="flex flex-col justify-content-center">
+
+                <div id="payment-section">
+
+                    <div class="text-center mb-4">
+                        <p class="text-muted mb-2">You will be redirected to the secure payment gateway.</p>
+                    </div>
+
+                    <button id="pay-btn" type="button"
+                        class="btn btn-success btn-lg w-100 pulse-glow py-3 font-bold text-lg">
+                        Proceed to Pay ₹<span id="pay-btn-amount">{{ payment.amount }}</span> <i
+                            class="fas fa-arrow-right ms-2"></i>
+                    </button>
+
+                    <div class="secure-badge">
+                        <i class="fas fa-shield-alt"></i> Secured by Cashfree Payments
+                    </div>
+
+                    <!-- Error Log for User Feedback -->
+                    <div id="payment-debug-log" class="text-white bg-danger p-2 rounded mt-3"
+                        style="display: none; font-size: 0.8rem;"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- SIMPLE, ROBUST SCRIPT IMPLEMENTATION       -->
+<!-- ========================================== -->
+
+<!-- 1. Load Cashfree SDK -->
+<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+
+<!-- 2. Main Logic -->
+<script>
+    // Configuration
+    const MODE = "{{ cashfree_env|default:'sandbox' }}".toLowerCase();
+    const SESSION_ID = "{{ payment_session_id }}";
+
+    // UI Elements
+    const payBtn = document.getElementById('pay-btn');
+    const logDiv = document.getElementById('payment-debug-log');
+
+    // Helper: Log Error to UI
+    function showError(message) {
+        console.error(message);
+        if (logDiv) {
+            logDiv.style.display = 'block';
+            logDiv.innerHTML += `<div>• ${message}</div>`;
+        }
+        alert("Payment Error: " + message);
+    }
+
+    // Helper: Initialize Cashfree
+    function initCashfree() {
+        if (typeof Cashfree === 'undefined') {
+            console.warn("Cashfree SDK not loaded.");
+            return null;
+        }
+        try {
+            return Cashfree({ mode: MODE });
+        } catch (e) {
+            console.error("Cashfree Init Failed", e);
+            return null;
+        }
+    }
+
+    // Main Click Handler
+    if (payBtn) {
+        payBtn.addEventListener('click', function () {
+            console.log("Pay Button Clicked");
+
+            // 1. Validate Session
+            if (!SESSION_ID || SESSION_ID === 'None' || SESSION_ID === '') {
+                showError("Invalid Payment Session ID. Please refresh.");
+                return;
+            }
+
+            // 2. Check for Dev Mode Bypass (Dummy Session)
+            if (SESSION_ID.startsWith('session_ORDER_')) {
+                console.log("Dev Mode Triggered");
+                payBtn.innerHTML = "Processing (Dev Mode)...";
+                payBtn.disabled = true;
+                setTimeout(() => {
+                    window.location.href = "{% url 'payment_callback' payment.id %}";
+                }, 1000);
+                return;
+            }
+
+            // 3. Initialize SDK
+            const cashfree = initCashfree();
+
+            // 4. Real Payment Flow
+            if (cashfree) {
+                payBtn.innerHTML = "Redirecting...";
+                payBtn.disabled = true;
+
+                cashfree.checkout({
+                    paymentSessionId: SESSION_ID
+                }).then(function (result) {
+                    if (result.error) {
+                        showError(result.error.message);
+                        payBtn.innerHTML = "Retry Payment";
+                        payBtn.disabled = false;
+                    }
+                });
+            } else {
+                // SDK Failed to load but we have a real session ID? 
+                // We should probably check if we can force dev mode? No, that's dangerous.
+                // Just error out.
+                showError("Payment Gateway failed to load. Please check your internet connection.");
+            }
+        });
+    } else {
+        console.error("Pay Button Not Found!");
+    }
+
+    // Coupon Logic (Simplified)
+    const applyCouponBtn = document.getElementById('apply-coupon');
+    if (applyCouponBtn) {
+        applyCouponBtn.addEventListener('click', function () {
+            const code = document.getElementById('coupon-code').value;
+            if (!code) return alert("Please enter a code");
+
+            // Construct Form and Submit to Reload Page
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = window.location.href;
+
+            const inputCode = document.createElement('input');
+            inputCode.type = 'hidden';
+            inputCode.name = 'coupon_code';
+            inputCode.value = code;
+
+            const inputCsrf = document.createElement('input');
+            inputCsrf.type = 'hidden';
+            inputCsrf.name = 'csrfmiddlewaretoken';
+            inputCsrf.value = '{{ csrf_token }}';
+
+            form.appendChild(inputCode);
+            form.appendChild(inputCsrf);
+            document.body.appendChild(form);
+            form.submit();
+        });
+    }
+
+</script>
+
+{% endblock %}

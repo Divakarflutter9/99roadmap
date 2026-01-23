@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Explore Roadmaps - 99Roadmap{% endblock %}
+
+{% block content %}
+<div class="bg-grid-pattern" style="min-height: 100vh;">
+    <!-- Header & Search -->
+    <div class="container" style="padding-top: 6rem; padding-bottom: 3rem; text-align: center;">
+        <span class="badge-ui badge-popular"
+            style="position: relative; display: inline-block; top: auto; right: auto; margin-bottom: 1rem;">Discover
+            Your Path</span>
+        <h1 class="display-4 fw-extrabold text-white mb-3" style="font-size: clamp(2.5rem, 5vw, 4rem);">Explore Roadmaps
+        </h1>
+        <p class="text-xl text-secondary mb-5" style="max-width: 600px; margin: 0 auto 3rem;">
+            Systematic learning paths tailored for your career growth.
+        </p>
+
+        <!-- Search Form -->
+        <form method="GET" action="." class="position-relative mx-auto mb-5"
+            style="max-width: 600px; position: relative;">
+            <input type="text" name="search"
+                style="width: 100%; background: rgba(30, 41, 59, 0.6); border: 1px solid var(--border-light); padding: 1.25rem 3.5rem 1.25rem 1.5rem; border-radius: 50px; color: white; display: block;"
+                placeholder="Search for Python, React, Data Science..." value="{{ search_query|default:'' }}">
+            <button type="submit"
+                style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; background: var(--primary); border: none; border-radius: 50%; color: white; cursor: pointer; display: flex; align-items: center; justify-content: center;">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+
+        <!-- Filter Tabs (Adapted to Pills style for filters) -->
+        <div class="site-tabs" style="border-bottom: none; gap: 1rem;">
+            <a href="?{% if search_query %}search={{ search_query }}{% endif %}#roadmaps-list"
+                class="tab-btn {% if not selected_category %}active{% endif %}" style="text-decoration: none;">
+                All Paths
+            </a>
+            {% for category in categories %}
+            <a href="?category={{ category.slug }}{% if search_query %}&search={{ search_query }}{% endif %}#roadmaps-list"
+                class="tab-btn {% if selected_category == category.slug %}active{% endif %}"
+                style="text-decoration: none;">
+                {% if category.icon %}<i class="{{ category.icon }} me-1"></i>{% endif %} {{ category.name }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="container pb-5" id="roadmaps-list">
+        <!-- Results Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
+            {% for roadmap in roadmaps %}
+            <!-- Roadmap Card -->
+            <div class="roadmap-card" onclick="window.location.href='{% url 'roadmap_detail' roadmap.slug %}'">
+
+                <!-- Badge -->
+                {% if roadmap.is_premium %}
+                <div class="badge-ui badge-warning">Premium</div>
+                {% else %}
+                <div class="badge-ui badge-new">Free</div>
+                {% endif %}
+
+                <!-- Image Area -->
+                <div class="roadmap-card-image">
+                    {% if roadmap.thumbnail %}
+                    <img src="{{ roadmap.thumbnail.url }}" alt="{{ roadmap.title }}">
+                    {% else %}
+                    <!-- Default icon based on category -->
+                    <i class="{{ roadmap.category.icon|default:'fas fa-route' }}"
+                        style="font-size: 4rem; color: rgba(255, 255, 255, 0.15); z-index: 1;"></i>
+                    {% endif %}
+                </div>
+
+                <!-- Content -->
+                <div class="roadmap-card-content" style="text-align: left; align-items: flex-start;">
+                    <div class="d-flex justify-between w-100 mb-2">
+                        <span
+                            style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 700;">
+                            {{ roadmap.get_difficulty_display }}
+                        </span>
+                        <span style="font-size: 0.8rem; color: var(--accent-yellow);">
+                            <i class="fas fa-star"></i> 4.8
+                        </span>
+                    </div>
+
+                    <h4 class="roadmap-card-title" style="font-size: 1.25rem;">{{ roadmap.title }}</h4>
+
+                    {% if roadmap.short_description %}
+                    <p class="roadmap-card-desc mb-4"
+                        style="text-align: left; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                        {{ roadmap.short_description }}
+                    </p>
+                    {% endif %}
+
+                    <div class="mt-auto pt-3 border-top w-100 d-flex justify-between text-muted"
+                        style="font-size: 0.85rem;">
+                        <span><i class="far fa-clock me-1"></i> {{ roadmap.estimated_hours }}h</span>
+                        <span><i class="fas fa-layer-group me-1"></i> {{ roadmap.total_stages }} Stages</span>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div
+                style="grid-column: 1 / -1; text-align: center; padding: 4rem; background: rgba(30, 41, 59, 0.3); border-radius: var(--radius-lg); border: 1px solid var(--border-light);">
+                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                <h3 class="h4 text-white">No roadmaps found</h3>
+                <p class="text-secondary">Try adjusting your search terms or filters.</p>
+                <a href="{% url 'roadmap_list' %}" class="btn btn-primary mt-3">Clear Filters</a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        {% if roadmaps.has_other_pages %}
+        <nav class="mt-5 pt-4 d-flex justify-center">
+            <div class="d-flex gap-2">
+                {% if roadmaps.has_previous %}
+                <a class="btn btn-secondary btn-sm"
+                    href="?page={{ roadmaps.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&search={{ query }}{% endif %}#roadmaps-list">
+                    <i class="fas fa-chevron-left me-1"></i> Previous
+                </a>
+                {% endif %}
+
+                <span class="btn btn-secondary btn-sm" style="cursor: default; opacity: 0.7;">
+                    {{ roadmaps.number }} / {{ roadmaps.paginator.num_pages }}
+                </span>
+
+                {% if roadmaps.has_next %}
+                <a class="btn btn-secondary btn-sm"
+                    href="?page={{ roadmaps.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if search_query %}&search={{ query }}{% endif %}#roadmaps-list">
+                    Next <i class="fas fa-chevron-right ms-1"></i>
+                </a>
+                {% endif %}
+            </div>
+        </nav>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
