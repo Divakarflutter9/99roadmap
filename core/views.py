@@ -476,7 +476,16 @@ def roadmap_detail_view(request, slug):
             user_has_access = True
         else:
             # Check subscription (will implement in payments app)
-            user_has_access = getattr(request.user, 'has_active_subscription', lambda: False)()
+            has_subscription = getattr(request.user, 'has_active_subscription', lambda: False)()
+            
+            # Check for direct purchase
+            has_purchase = Payment.objects.filter(
+                user=request.user,
+                roadmap=roadmap,
+                status='success'
+            ).exists()
+            
+            user_has_access = has_subscription or has_purchase
     
     context = {
         'roadmap': roadmap,
