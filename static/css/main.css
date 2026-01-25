@@ -819,3 +819,135 @@ main {
   gap: 0.75rem;
   font-size: 0.9375rem;
 }
+
+/* === MISSING ANIMATIONS === */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(.3);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  70% {
+    transform: scale(.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-fade-in-up {
+  animation-name: fadeInUp;
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
+}
+
+.animate-fade-in-right {
+  animation-name: fadeInRight;
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
+}
+
+.animate-bounce-in {
+  animation-name: bounceIn;
+  animation-duration: 0.8s;
+  animation-fill-mode: both;
+}
+
+.delay-100 {
+  animation-delay: 0.1s;
+}
+
+/* === AI CHATBOT TOGGLE (MOBILE) === */
+.ai-toggle-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  border: none;
+  box-shadow: 0 4px 20px rgba(255, 139, 56, 0.4);
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.ai-toggle-btn:hover {
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: 0 10px 30px rgba(255, 139, 56, 0.6);
+}
+
+.ai-toggle-btn.active {
+  transform: rotate(45deg);
+  background: var(--bg-surface);
+  border: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+/* Hide toggle on desktop, show on mobile */
+@media (min-width: 993px) {
+  .ai-toggle-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 992px) {
+  .ai-sidebar-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    visibility: hidden;
+    transform: translateY(100%);
+    transition: all 0.3s ease-in-out;
+  }
+
+  .ai-sidebar-container.show {
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .ai-sidebar {
+    height: 70vh !important;
+    /* Overriding inline height */
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+  }
+}
