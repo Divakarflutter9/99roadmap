@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /dashboard/
+Disallow: /profile/
+Disallow: /login/
+Disallow: /register/
+Disallow: /admin/
+Disallow: /_nested_admin/
+Disallow: /email-verification/
+Disallow: /password-reset/
+
+Sitemap: https://99roadmap.droptechie.com/sitemap.xml
