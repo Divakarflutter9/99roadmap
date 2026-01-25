@@ -166,8 +166,7 @@
                     <!-- Total -->
                     <div class="total-row">
                         <span>Total to Pay</span>
-                        <span class="text-primary text-gradient">₹<span id="final-price">{{ payment.amount
-                                }}</span></span>
+                        <span class="text-primary text-gradient">₹<span id="final-price">{{ payment.amount|floatformat:2 }}</span></span>
                     </div>
                 </div>
 

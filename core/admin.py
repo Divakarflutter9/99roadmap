@@ -9,8 +9,10 @@ from django.utils.html import format_html
 from nested_admin import NestedModelAdmin, NestedTabularInline
 from .models import (
     User, RoadmapCategory, Roadmap, Stage, Topic, Quiz, QuizQuestion, QuizOption, RoadmapBundle,
-    UserRoadmapEnrollment, UserTopicProgress, UserQuizAttempt, UserGamification, XPTransaction
+    UserRoadmapEnrollment, UserTopicProgress, UserQuizAttempt, UserGamification, XPTransaction,
+    SiteSetting
 )
+from payments.models import UserSubscription
 
 
 class UserRoadmapEnrollmentInline(admin.TabularInline):
@@ -29,6 +31,45 @@ class UserRoadmapEnrollmentInline(admin.TabularInline):
         if obj.id:
             from django.urls import reverse
             url = reverse('admin:core_userroadmapenrollment_delete', args=[obj.id])
+            return format_html(
+                '<a href="{}" style="display: inline-block; background-color: #ba2121; color: white !important; padding: 5px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 11px; text-transform: uppercase;">Unenroll / Delete</a>',
+                url
+            )
+        return ""
+    delete_button.short_description = 'Action'
+
+
+    delete_button.short_description = 'Action'
+
+
+@admin.register(SiteSetting)
+class SiteSettingAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'maintenance_mode']
+    list_editable = ['maintenance_mode']
+    
+    def has_add_permission(self, request):
+        # Prevent adding more than one setting
+        if self.model.objects.exists():
+            return False
+        return super().has_add_permission(request)
+    
+    def has_delete_permission(self, request, obj=None):
+        # Prevent deleting the setting
+        return False
+
+
+class UserSubscriptionInline(admin.TabularInline):
+    model = UserSubscription
+    extra = 0
+    fields = ['plan', 'status', 'start_date', 'end_date', 'delete_button']
+    readonly_fields = ['start_date', 'end_date', 'delete_button']
+    can_delete = True
+    show_change_link = True
+    
+    def delete_button(self, obj):
+        if obj.id:
+            from django.urls import reverse
+            url = reverse('admin:payments_usersubscription_delete', args=[obj.id])
             return format_html(
                 '<a href="{}" style="display: inline-block; background-color: #ba2121; color: white !important; padding: 5px 12px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 11px; text-transform: uppercase;">Unenroll / Delete</a>',
                 url
@@ -63,7 +104,7 @@ class UserAdmin(BaseUserAdmin):
     
     readonly_fields = ['date_joined', 'last_login']
     
-    inlines = [UserRoadmapEnrollmentInline]
+    inlines = [UserRoadmapEnrollmentInline, UserSubscriptionInline]
 
 
 @admin.register(RoadmapCategory)

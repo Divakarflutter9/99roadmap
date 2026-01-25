@@ -1,238 +1,73 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Under Maintenance | 99Roadmap</title>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <title>Under Maintenance - 99Roadmap</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg-body: #0A1628;
+            --bg-surface: #0F1D35;
+            --primary: #FF8B38;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .bg-pattern {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image:
-                linear-gradient(rgba(251, 191, 36, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(251, 191, 36, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 0;
-        }
-
-        .maintenance-container {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            max-width: 700px;
-            padding: 2rem;
-            animation: fadeInUp 0.6s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .maintenance-icon {
-            font-size: 6rem;
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 2rem;
-            animation: rotate 3s linear infinite;
-        }
-
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
+            background-color: var(--bg-body);
             color: #e2e8f0;
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .subtitle {
-            font-size: 1.3rem;
-            color: #cbd5e1;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        p {
-            font-size: 1.1rem;
-            color: #94a3b8;
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-
-        .info-card {
-            background: rgba(251, 191, 36, 0.1);
-            border: 1px solid rgba(251, 191, 36, 0.3);
-            border-radius: 12px;
-            padding: 2rem;
-            margin: 2rem 0;
-        }
-
-        .info-card h3 {
-            font-size: 1.2rem;
-            color: #fbbf24;
-            margin-bottom: 1rem;
+            font-family: 'Inter', system-ui, sans-serif;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.5rem;
+            text-align: center;
         }
 
-        .info-card p {
-            margin-bottom: 0;
-            font-size: 1rem;
+        .maintenance-card {
+            background: rgba(15, 29, 53, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            max-width: 500px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
         }
 
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
+        .icon {
+            font-size: 4rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
         }
 
-        .social-links a {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.2rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-            border-color: #fbbf24;
-            transform: translateY(-3px);
-        }
-
-        .status {
-            margin-top: 2rem;
-            font-size: 0.9rem;
-            color: #64748b;
-        }
-
-        .status .dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #fbbf24;
-            border-radius: 50%;
-            margin-right: 0.5rem;
-            animation: blink 2s infinite;
-        }
-
-        @keyframes blink {
-
-            0%,
-            100% {
+        @keyframes pulse {
+            0% {
                 opacity: 1;
+                transform: scale(1);
             }
 
             50% {
-                opacity: 0.3;
+                opacity: 0.7;
+                transform: scale(1.05);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
             }
         }
     </style>
 </head>
 
 <body>
-    <div class="bg-pattern"></div>
-
-    <div class="maintenance-container">
-        <div class="maintenance-icon">
-            <i class="fas fa-tools"></i>
-        </div>
-
-        <h1>Under Maintenance</h1>
-        <p class="subtitle">We're Making Things Better!</p>
-
-        <p>
-            99Roadmap is currently undergoing scheduled maintenance to improve your learning experience.
-            We'll be back online shortly with awesome new features and improvements!
-        </p>
-
-        <div class="info-card">
-            <h3>
-                <i class="fas fa-clock"></i>
-                Estimated Downtime
-            </h3>
-            <p>We expect to be back in approximately <strong>30 minutes</strong></p>
-        </div>
-
-        <p style="font-size: 1rem; color: #cbd5e1;">
-            <i class="fas fa-envelope me-1"></i> Have questions? Contact us at
-            <a href="mailto:support@99roadmap.com"
-                style="color: #fbbf24; text-decoration: none;">support@99roadmap.com</a>
-        </p>
-
-        <div class="social-links">
-            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
-            <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-            <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
-            <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-        </div>
-
-        <div class="status">
-            <span class="dot"></span>
-            System Status: Maintenance in Progress
-        </div>
+    <div class="maintenance-card">
+        <i class="fas fa-tools icon"></i>
+        <h1 class="h2 text-white mb-3">Under Maintenance</h1>
+        <p class="text-secondary mb-4">{{ message }}</p>
+        <p class="small text-muted mb-0">&copy; 99Roadmap. We'll be back shortly.</p>
     </div>
 </body>
 

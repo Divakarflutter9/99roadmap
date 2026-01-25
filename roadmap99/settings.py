@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'allauth.account.middleware.AccountMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'core.middleware.MaintenanceMiddleware',  # Maintenance Mode
 ]
 
 ROOT_URLCONF = 'roadmap99.urls'

@@ -19,6 +19,11 @@ class Coupon(models.Model):
     usage_limit = models.PositiveIntegerField(default=100)
     used_count = models.PositiveIntegerField(default=0)
     
+    # Restrictions
+    valid_for_plans = models.ManyToManyField('SubscriptionPlan', blank=True)
+    valid_for_roadmaps = models.ManyToManyField(Roadmap, blank=True)
+    valid_for_bundles = models.ManyToManyField(RoadmapBundle, blank=True)
+    
     def __str__(self):
         return f"{self.code} - {self.discount_percent}%"
         

@@ -201,6 +201,19 @@ a:hover {
   font-size: 1.125rem;
 }
 
+.btn-white {
+  background: white;
+  color: var(--bg-body);
+  border: 1px solid white;
+}
+
+.btn-white:hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--bg-body);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
 /* === NAVBAR === */
 .navbar {
   background: rgba(10, 22, 40, 0.95);

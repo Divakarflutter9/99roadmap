@@ -28,6 +28,7 @@ from .models import (
     QuizQuestion, QuizOption, UserRoadmapEnrollment, UserTopicProgress,
     UserQuizAttempt, XPTransaction
 )
+from payments.models import UserSubscription, Payment
 from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserAvatarForm, QuizSubmissionForm
 
 
@@ -263,6 +264,26 @@ def profile_view(request):
         {'step': 3, 'title': 'Set Goals', 'is_completed': has_goals},
     ]
 
+    # Purchase Stats
+    stats = {
+        'roadmaps_count': UserRoadmapEnrollment.objects.filter(user=request.user).count(),
+        'bundles_count': Payment.objects.filter(user=request.user, bundle__isnull=False, status='success').count(),
+        'subscriptions_count': Payment.objects.filter(user=request.user, subscription_plan__isnull=False, status='success').count(),
+    }
+    
+    # Detailed lists for Modals
+    purchased_bundles = Payment.objects.filter(
+        user=request.user, 
+        bundle__isnull=False, 
+        status='success'
+    ).select_related('bundle').order_by('-created_at')
+    
+    subscription_history = Payment.objects.filter(
+        user=request.user, 
+        subscription_plan__isnull=False, 
+        status='success'
+    ).select_related('subscription_plan').order_by('-created_at')
+
     context = {
         'form': form,
         'gamification': gamification,
@@ -270,6 +291,9 @@ def profile_view(request):
         'setup_steps': setup_steps,
         'current_step': current_step,
         'progress_percentage': progress_percentage,
+        'stats': stats,
+        'purchased_bundles': purchased_bundles,
+        'subscription_history': subscription_history,
     }
     return render(request, 'profile/profile.html', context)
 

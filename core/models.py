@@ -484,3 +484,23 @@ class XPTransaction(models.Model):
     
     def __str__(self):
         return f"{self.user.email} +{self.amount} XP ({self.action})"
+
+
+class SiteSetting(models.Model):
+    """Singleton model for site-wide settings"""
+    
+    maintenance_mode = models.BooleanField(default=False)
+    maintenance_message = models.TextField(default="We are currently undergoing maintenance. Please check back later.")
+    
+    def save(self, *args, **kwargs):
+        if not self.pk and SiteSetting.objects.exists():
+            # If trying to create a new instance when one exists, update the existing one
+            return SiteSetting.objects.first()
+        return super(SiteSetting, self).save(*args, **kwargs)
+        
+    def __str__(self):
+        return "Site Configuration"
+    
+    class Meta:
+        verbose_name = "Site Setting"
+        verbose_name_plural = "Site Settings"

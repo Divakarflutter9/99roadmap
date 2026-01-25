@@ -9,50 +9,106 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" />
 
 <style>
-    /* Compact Progress Bar */
-    .kyc-progress-container {
-        max-width: 500px;
-        margin: 0 auto 2rem;
-        background: rgba(30, 41, 59, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: 99px;
-        padding: 0.5rem 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        backdrop-filter: blur(10px);
+    /* Professional KYC Stepper */
+    .kyc-stepper-container {
+        max-width: 700px;
+        margin: 0 auto 3rem;
+        position: relative;
+        padding: 0 1rem;
     }
 
-    .kyc-step {
+    .kyc-stepper {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        z-index: 1;
+    }
+
+    .kyc-step-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+        flex: 1;
+        position: relative;
+    }
+
+    /* Connecting Line Background */
+    .kyc-line-bg {
+        position: absolute;
+        top: 20px;
+        left: 5%;
+        width: 90%;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        z-index: 0;
+    }
+
+    /* Active Progress Line */
+    .kyc-line-progress {
+        position: absolute;
+        top: 20px;
+        left: 5%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 10px;
+        z-index: 0;
+        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+    }
+
+    .step-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: #0f172a;
+        border: 2px solid rgba(255, 255, 255, 0.1);
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 1rem;
+        color: #64748b;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 2;
+    }
+
+    .step-label {
         font-size: 0.85rem;
         color: #64748b;
+        font-weight: 500;
         transition: all 0.3s;
+        text-align: center;
+        opacity: 0.7;
     }
 
-    .kyc-step.active,
-    .kyc-step.completed {
+    /* Active State */
+    .kyc-step-item.active .step-icon {
+        border-color: var(--primary);
+        background: rgba(99, 102, 241, 0.1);
+        color: var(--primary);
+        transform: scale(1.1);
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .kyc-step-item.active .step-label {
         color: white;
+        opacity: 1;
         font-weight: 600;
     }
 
-    .kyc-dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background: #334155;
-    }
-
-    .kyc-step.completed .kyc-dot {
+    /* Completed State */
+    .kyc-step-item.completed .step-icon {
         background: var(--success);
-        box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+        border-color: var(--success);
+        color: white;
+        box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
     }
 
-    .kyc-step.active .kyc-dot {
-        background: var(--primary);
-        box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+    .kyc-step-item.completed .step-label {
+        color: var(--success);
+        opacity: 1;
     }
 
     /* Profile Card */
@@ -209,18 +265,34 @@
 
 <div class="container container-md py-5">
 
-    <!-- KYC Progress (Only show if NOT complete) -->
-    {% if progress_percentage < 100 %} <div class="kyc-progress-container animate-fade-in-up">
-        {% for step in setup_steps %}
-        <div class="kyc-step {% if step.is_completed %}completed{% elif step.step == current_step %}active{% endif %}">
-            <div class="kyc-dot"></div>
-            <span>{{ step.title }}</span>
-        </div>
-        {% endfor %}
+    <!-- Professional KYC Stepper -->
+    {% if progress_percentage < 100 %} <div class="kyc-stepper-container animate-fade-in-up">
 
-        <button onclick="toggleEdit()" class="btn btn-xs btn-primary rounded-pill ms-3 px-3">
-            Complete Setup <i class="fas fa-arrow-right ms-1"></i>
-        </button>
+        <!-- Connecting Lines -->
+        <div class="kyc-line-bg"></div>
+        <div class="kyc-line-progress" style="width: {{ progress_percentage }}%;"></div>
+
+        <div class="kyc-stepper">
+            {% for step in setup_steps %}
+            <div
+                class="kyc-step-item {% if step.is_completed %}completed{% elif step.step == current_step %}active{% endif %}">
+                <div class="step-icon">
+                    {% if step.is_completed %}
+                    <i class="fas fa-check"></i>
+                    {% else %}
+                    {{ step.step }}
+                    {% endif %}
+                </div>
+                <div class="step-label">{{ step.title }}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-4 pt-2">
+            <button onclick="toggleEdit()" class="btn btn-primary rounded-pill px-4 py-2 shadow-lg hover-lift">
+                Complete Setup <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+        </div>
 </div>
 {% endif %}
 
@@ -302,6 +374,31 @@
                 "{{ user.future_goals }}"
             </div>
             {% endif %}
+        </div>
+
+        <!-- Purchase Stats -->
+        <div class="row g-3 mb-5 px-3">
+            <div class="col-md-4">
+                <div class="glass p-3 rounded text-center hover-up cursor-pointer" data-bs-toggle="modal"
+                    data-bs-target="#roadmapsModal">
+                    <h5 class="h2 text-white mb-0 font-bold">{{ stats.roadmaps_count }}</h5>
+                    <p class="text-xs text-secondary font-bold uppercase tracking-wider">Roadmaps Enrolled</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass p-3 rounded text-center hover-up cursor-pointer" data-bs-toggle="modal"
+                    data-bs-target="#bundlesModal">
+                    <h5 class="h2 text-white mb-0 font-bold">{{ stats.bundles_count }}</h5>
+                    <p class="text-xs text-secondary font-bold uppercase tracking-wider">Bundles Purchased</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="glass p-3 rounded text-center hover-up cursor-pointer" data-bs-toggle="modal"
+                    data-bs-target="#subscriptionsModal">
+                    <h5 class="h2 text-white mb-0 font-bold">{{ stats.subscriptions_count }}</h5>
+                    <p class="text-xs text-secondary font-bold uppercase tracking-wider">Subscriptions</p>
+                </div>
+            </div>
         </div>
 
 
@@ -392,6 +489,102 @@
         </div>
     </div>
 </div>
+</div>
+
+</div>
+
+<!-- Modals -->
+
+<!-- Roadmaps Modal -->
+<div class="modal fade" id="roadmapsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass border-0 text-white" style="background: #0F172A;">
+            <div class="modal-header border-bottom border-white-10">
+                <h5 class="modal-title">Enrolled Roadmaps</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if enrollments %}
+                <div class="list-group list-group-flush">
+                    {% for enrollment in enrollments %}
+                    <a href="{% url 'roadmap_detail' enrollment.roadmap.slug %}"
+                        class="list-group-item list-group-item-action bg-transparent text-white border-bottom border-white-10 d-flex justify-content-between align-items-center">
+                        <div>
+                            <div class="fw-bold">{{ enrollment.roadmap.title }}</div>
+                            <small class="text-secondary">Stage {{ enrollment.current_stage.order }} of {{
+                                enrollment.roadmap.stages.count }}</small>
+                        </div>
+                        <i class="fas fa-chevron-right text-muted"></i>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-center text-muted py-3">No active enrollments.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bundles Modal -->
+<div class="modal fade" id="bundlesModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass border-0 text-white" style="background: #0F172A;">
+            <div class="modal-header border-bottom border-white-10">
+                <h5 class="modal-title">Purchased Bundles</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if purchased_bundles %}
+                <div class="list-group list-group-flush">
+                    {% for payment in purchased_bundles %}
+                    <div class="list-group-item bg-transparent text-white border-bottom border-white-10">
+                        <div class="fw-bold text-primary">{{ payment.bundle.title }}</div>
+                        <div class="d-flex justify-content-between text-sm mt-1">
+                            <span class="text-muted">{{ payment.created_at|date:"M d, Y" }}</span>
+                            <span class="text-success fw-bold">₹{{ payment.amount|floatformat:0 }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-center text-muted py-3">No bundles purchased yet.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Subscriptions Modal -->
+<div class="modal fade" id="subscriptionsModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content glass border-0 text-white" style="background: #0F172A;">
+            <div class="modal-header border-bottom border-white-10">
+                <h5 class="modal-title">Subscription History</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                    aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {% if subscription_history %}
+                <div class="list-group list-group-flush">
+                    {% for payment in subscription_history %}
+                    <div class="list-group-item bg-transparent text-white border-bottom border-white-10">
+                        <div class="fw-bold text-warning">{{ payment.subscription_plan.name }}</div>
+                        <div class="d-flex justify-content-between text-sm mt-1">
+                            <span class="text-muted">{{ payment.created_at|date:"M d, Y" }}</span>
+                            <span class="text-success fw-bold">₹{{ payment.amount|floatformat:0 }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-center text-muted py-3">No subscriptions found.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Cropper Modal -->

@@ -1,0 +1,3591 @@
+[
+{
+  "model": "core.roadmap",
+  "pk": 43,
+  "fields": {
+    "title": "Web Development",
+    "slug": "web-development",
+    "description": "Master Full Stack Web Development from scratch. Learn HTML, CSS, JavaScript, React, and Django.",
+    "short_description": "",
+    "category": 2,
+    "difficulty": "beginner",
+    "thumbnail": "",
+    "banner": "",
+    "is_premium": true,
+    "price": "10.00",
+    "pdf_file": "roadmaps/pdfs/Aishwarya_xerox___Udyam_Registration_Certificate.pdf",
+    "total_stages": 0,
+    "estimated_hours": 0,
+    "enrolled_count": 0,
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-01-23T01:41:02.411Z",
+    "updated_at": "2026-01-23T08:14:09.608Z"
+  }
+},
+{
+  "model": "core.roadmap",
+  "pk": 44,
+  "fields": {
+    "title": "sdf",
+    "slug": "sdf",
+    "description": "bdvs",
+    "short_description": "svds",
+    "category": 3,
+    "difficulty": "beginner",
+    "thumbnail": "roadmaps/02.jpg",
+    "banner": "",
+    "is_premium": false,
+    "price": "20.00",
+    "pdf_file": "",
+    "total_stages": 0,
+    "estimated_hours": 0,
+    "enrolled_count": 0,
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-01-23T08:16:05.895Z",
+    "updated_at": "2026-01-23T08:18:38.451Z"
+  }
+},
+{
+  "model": "core.roadmap",
+  "pk": 45,
+  "fields": {
+    "title": "Control Systems Learning",
+    "slug": "control-systems-learning",
+    "description": "Master control systems from basic concepts to advanced applications. Learn through real-world examples - from ceiling fans to robotics. Beginner-friendly, concept-first approach with practical focus. Perfect for engineering students and professionals looking to understand control theory and its applications in robotics, automation, and embedded systems.",
+    "short_description": "Master control systems from basics to advanced with real-world examples and practical focus.",
+    "category": 4,
+    "difficulty": "beginner",
+    "thumbnail": "",
+    "banner": "",
+    "is_premium": true,
+    "price": "20.00",
+    "pdf_file": "",
+    "total_stages": 5,
+    "estimated_hours": 80,
+    "enrolled_count": 0,
+    "is_active": true,
+    "is_featured": false,
+    "created_at": "2026-01-23T17:35:20.995Z",
+    "updated_at": "2026-01-24T10:34:27.770Z"
+  }
+},
+{
+  "model": "core.roadmap",
+  "pk": 46,
+  "fields": {
+    "title": "Programming Fundamentals",
+    "slug": "programming-fundamentals",
+    "description": "\n    A complete, step-by-step Programming Fundamentals roadmap for BTech students (all branches, especially CSE beginners).\n    \n    This roadmap starts from absolute zero and gradually moves to an advanced programming mindset.\n    \n    **Focus:**\n    *   Beginner-friendly (no assumption of prior coding knowledge)\n    *   Thinking, not memorizing syntax\n    *   Real-life and logical examples\n    *   Concept over Syntax\n    ",
+    "short_description": "Master the art of thinking like a programmer. A beginner-friendly guide to logic, flow, and efficiency.",
+    "category": 5,
+    "difficulty": "beginner",
+    "thumbnail": "",
+    "banner": "",
+    "is_premium": true,
+    "price": "499.00",
+    "pdf_file": "",
+    "total_stages": 5,
+    "estimated_hours": 40,
+    "enrolled_count": 0,
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-01-25T07:07:40.715Z",
+    "updated_at": "2026-01-25T07:07:40.715Z"
+  }
+},
+{
+  "model": "core.roadmap",
+  "pk": 47,
+  "fields": {
+    "title": "Problem Solving & Logical Thinking",
+    "slug": "problem-solving-logic",
+    "description": "\n    A clear, step-by-step Problem Solving & Logical Thinking roadmap for BTech / CSE beginner students.\n\n    This roadmap helps students think logically before coding, starting from absolute basics and moving to an advanced problem-solving mindset.\n\n    **Focus:**\n    *   Beginner-friendly, zero coding assumption\n    *   Thinking process over syntax\n    *   Simple, relatable examples\n    *   Clear upgrade of thinking ability\n    ",
+    "short_description": "Master the art of solving problems. Learn to break down complex issues, recognize patterns, and build efficient solutions.",
+    "category": 5,
+    "difficulty": "beginner",
+    "thumbnail": "",
+    "banner": "",
+    "is_premium": true,
+    "price": "499.00",
+    "pdf_file": "",
+    "total_stages": 5,
+    "estimated_hours": 30,
+    "enrolled_count": 0,
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-01-25T07:07:40.940Z",
+    "updated_at": "2026-01-25T07:07:40.940Z"
+  }
+},
+{
+  "model": "core.roadmap",
+  "pk": 48,
+  "fields": {
+    "title": "Git & GitHub For Beginners",
+    "slug": "git-github-mastery",
+    "description": "\n    A clear, step-by-step Git & GitHub learning roadmap for BTech / CSE beginner students.\n\n    The roadmap helps students manage, track, and collaborate on code, starting from absolute basics and progressing to real-world usage.\n\n    **Focus:**\n    *   Beginner-friendly (no prior Git knowledge assumed)\n    *   Concept-first, not command-dumping\n    *   Focus on why and when to use Git features\n    *   Practical, student-relevant examples\n    ",
+    "short_description": "Master version control and collaboration. Learn to track changes, work with teams, and contribute to open source.",
+    "category": 5,
+    "difficulty": "beginner",
+    "thumbnail": "",
+    "banner": "",
+    "is_premium": true,
+    "price": "499.00",
+    "pdf_file": "",
+    "total_stages": 5,
+    "estimated_hours": 25,
+    "enrolled_count": 0,
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-01-25T07:07:41.150Z",
+    "updated_at": "2026-01-25T07:07:41.150Z"
+  }
+},
+{
+  "model": "core.roadmap",
+  "pk": 49,
+  "fields": {
+    "title": "Java Backend Development",
+    "slug": "java-backend-mastery",
+    "description": "\n    A complete, step-by-step Java Backend Development roadmap for BTech / CSE students.\n    \n    Starts from absolute basics and progresses to industry-ready backend skills.\n\n    **Focus:**\n    *   Real backend development, not just syntax\n    *   Concept-first, not framework-first\n    *   Why each concept is needed in backend\n    *   Industry-standard practices\n    ",
+    "short_description": "Become an industry-ready Java Backend Engineer. Master Spring Boot, APIs, Databases, and System Design.",
+    "category": 2,
+    "difficulty": "intermediate",
+    "thumbnail": "",
+    "banner": "",
+    "is_premium": true,
+    "price": "699.00",
+    "pdf_file": "",
+    "total_stages": 5,
+    "estimated_hours": 60,
+    "enrolled_count": 0,
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-01-25T07:10:30.385Z",
+    "updated_at": "2026-01-25T07:10:30.385Z"
+  }
+},
+{
+  "model": "core.roadmap",
+  "pk": 50,
+  "fields": {
+    "title": "Python Backend Development",
+    "slug": "python-backend-mastery",
+    "description": "\n    A complete, step-by-step Python Backend Development roadmap for BTech / CSE students.\n    \n    Starts from absolute basics and progresses to industry-ready backend skills.\n\n    **Focus:**\n    *   Real backend development, not just scripting\n    *   Concept-first, not framework-first\n    *   Why each concept is needed in backend\n    *   Industry-standard practices\n    ",
+    "short_description": "Master Python Backend Development. Build robust APIs, work with Databases, and learn Django/FastAPI.",
+    "category": 2,
+    "difficulty": "intermediate",
+    "thumbnail": "",
+    "banner": "",
+    "is_premium": true,
+    "price": "699.00",
+    "pdf_file": "",
+    "total_stages": 5,
+    "estimated_hours": 55,
+    "enrolled_count": 0,
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-01-25T07:11:56.683Z",
+    "updated_at": "2026-01-25T07:11:56.683Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 136,
+  "fields": {
+    "roadmap": 43,
+    "title": "Frontend Fundamentals",
+    "description": "Build the skeleton and skin of websites using HTML and CSS.",
+    "order": 1,
+    "is_free": true,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-23T01:41:02.411Z",
+    "updated_at": "2026-01-23T01:41:02.411Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 137,
+  "fields": {
+    "roadmap": 43,
+    "title": "JavaScript Mastery",
+    "description": "Add interactivity and logic to your web pages.",
+    "order": 2,
+    "is_free": false,
+    "required_xp": 100,
+    "xp_reward": 200,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-23T01:41:02.414Z",
+    "updated_at": "2026-01-23T01:41:02.414Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 138,
+  "fields": {
+    "roadmap": 43,
+    "title": "Backend Development",
+    "description": "Server-side programming, databases, and APIs using Python.",
+    "order": 3,
+    "is_free": false,
+    "required_xp": 300,
+    "xp_reward": 300,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-23T01:41:02.416Z",
+    "updated_at": "2026-01-23T01:41:02.416Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 139,
+  "fields": {
+    "roadmap": 44,
+    "title": "Frontend Fundamentals",
+    "description": "",
+    "order": 1,
+    "is_free": true,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-23T08:18:38.452Z",
+    "updated_at": "2026-01-23T08:18:38.452Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 140,
+  "fields": {
+    "roadmap": 45,
+    "title": "Foundations",
+    "description": "Understand what a system is and why control is needed. Learn through daily-life examples.",
+    "order": 1,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-23T17:35:20.996Z",
+    "updated_at": "2026-01-24T10:34:17.822Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 141,
+  "fields": {
+    "roadmap": 45,
+    "title": "Mathematical Modeling",
+    "description": "Convert real physical systems into simple mathematical form. Understand behavior, not just equations.",
+    "order": 2,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-23T17:49:51.814Z",
+    "updated_at": "2026-01-23T17:49:51.815Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 142,
+  "fields": {
+    "roadmap": 45,
+    "title": "Time Domain Analysis",
+    "description": "Understand how systems behave with time. Predict real-life system responses.",
+    "order": 3,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-23T17:49:51.821Z",
+    "updated_at": "2026-01-23T17:49:51.821Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 143,
+  "fields": {
+    "roadmap": 45,
+    "title": "Frequency Domain Analysis",
+    "description": "Analyze system behavior using frequency. Judge robustness and filters.",
+    "order": 4,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-23T17:49:51.825Z",
+    "updated_at": "2026-01-23T17:49:51.825Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 144,
+  "fields": {
+    "roadmap": 45,
+    "title": "Controllers & Applications",
+    "description": "Connect theory to reality. PID controllers, robotics, and automation.",
+    "order": 5,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-23T17:49:51.828Z",
+    "updated_at": "2026-01-23T17:49:51.828Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 145,
+  "fields": {
+    "roadmap": 46,
+    "title": "Programming Foundations",
+    "description": "Understand how a computer thinks and executes instructions.",
+    "order": 1,
+    "is_free": true,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-25T07:07:40.716Z",
+    "updated_at": "2026-01-25T07:07:40.716Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 146,
+  "fields": {
+    "roadmap": 46,
+    "title": "Logical Thinking & Flow",
+    "description": "Learn how to convert thoughts into logical steps.",
+    "order": 2,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-25T07:07:40.722Z",
+    "updated_at": "2026-01-25T07:07:40.722Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 147,
+  "fields": {
+    "roadmap": 46,
+    "title": "Structured Programming Concepts",
+    "description": "Write clean, readable, and reusable logic.",
+    "order": 3,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-25T07:07:40.725Z",
+    "updated_at": "2026-01-25T07:07:40.725Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 148,
+  "fields": {
+    "roadmap": 46,
+    "title": "Programming Mindset & Efficiency",
+    "description": "Understand performance and problem-solving depth.",
+    "order": 4,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-25T07:07:40.729Z",
+    "updated_at": "2026-01-25T07:07:40.729Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 149,
+  "fields": {
+    "roadmap": 46,
+    "title": "Language Readiness & Next Steps",
+    "description": "Transition to learning any programming language.",
+    "order": 5,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#6366f1",
+    "created_at": "2026-01-25T07:07:40.732Z",
+    "updated_at": "2026-01-25T07:07:40.732Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 150,
+  "fields": {
+    "roadmap": 47,
+    "title": "Problem Understanding",
+    "description": "Learn how to understand a problem clearly.",
+    "order": 1,
+    "is_free": true,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#8b5cf6",
+    "created_at": "2026-01-25T07:07:40.941Z",
+    "updated_at": "2026-01-25T07:07:40.941Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 151,
+  "fields": {
+    "roadmap": 47,
+    "title": "Logical Breakdown",
+    "description": "Learn to convert problems into steps.",
+    "order": 2,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#8b5cf6",
+    "created_at": "2026-01-25T07:07:40.946Z",
+    "updated_at": "2026-01-25T07:07:40.946Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 152,
+  "fields": {
+    "roadmap": 47,
+    "title": "Pattern Recognition",
+    "description": "Start recognizing repeated logic patterns.",
+    "order": 3,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#8b5cf6",
+    "created_at": "2026-01-25T07:07:40.948Z",
+    "updated_at": "2026-01-25T07:07:40.948Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 153,
+  "fields": {
+    "roadmap": 47,
+    "title": "Solution Building",
+    "description": "Build correct and efficient solutions.",
+    "order": 4,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#8b5cf6",
+    "created_at": "2026-01-25T07:07:40.951Z",
+    "updated_at": "2026-01-25T07:07:40.951Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 154,
+  "fields": {
+    "roadmap": 47,
+    "title": "Thinking Like a Problem Solver",
+    "description": "Develop confidence and speed.",
+    "order": 5,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#8b5cf6",
+    "created_at": "2026-01-25T07:07:40.953Z",
+    "updated_at": "2026-01-25T07:07:40.953Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 155,
+  "fields": {
+    "roadmap": 48,
+    "title": "Version Control Foundations",
+    "description": "Understand why version control exists.",
+    "order": 1,
+    "is_free": true,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#f0562e",
+    "created_at": "2026-01-25T07:07:41.151Z",
+    "updated_at": "2026-01-25T07:07:41.151Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 156,
+  "fields": {
+    "roadmap": 48,
+    "title": "Core Git Usage",
+    "description": "Confidently use Git for personal projects.",
+    "order": 2,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#f0562e",
+    "created_at": "2026-01-25T07:07:41.155Z",
+    "updated_at": "2026-01-25T07:07:41.155Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 157,
+  "fields": {
+    "roadmap": 48,
+    "title": "GitHub Basics",
+    "description": "Publish and manage projects online.",
+    "order": 3,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#f0562e",
+    "created_at": "2026-01-25T07:07:41.158Z",
+    "updated_at": "2026-01-25T07:07:41.158Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 158,
+  "fields": {
+    "roadmap": 48,
+    "title": "Collaboration & Team Workflows",
+    "description": "Work safely with others.",
+    "order": 4,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#f0562e",
+    "created_at": "2026-01-25T07:07:41.162Z",
+    "updated_at": "2026-01-25T07:07:41.162Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 159,
+  "fields": {
+    "roadmap": 48,
+    "title": "Real-World & Open-Source Practices",
+    "description": "Follow industry-standard workflows.",
+    "order": 5,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#f0562e",
+    "created_at": "2026-01-25T07:07:41.165Z",
+    "updated_at": "2026-01-25T07:07:41.165Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 160,
+  "fields": {
+    "roadmap": 49,
+    "title": "Backend Foundations",
+    "description": "Understand what backend development actually means.",
+    "order": 1,
+    "is_free": true,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#ef4444",
+    "created_at": "2026-01-25T07:10:30.386Z",
+    "updated_at": "2026-01-25T07:10:30.386Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 161,
+  "fields": {
+    "roadmap": 49,
+    "title": "Core Java for Backend",
+    "description": "Gain Java skills needed for backend.",
+    "order": 2,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#ef4444",
+    "created_at": "2026-01-25T07:10:30.391Z",
+    "updated_at": "2026-01-25T07:10:30.391Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 162,
+  "fields": {
+    "roadmap": 49,
+    "title": "Spring & Spring Boot Basics",
+    "description": "Build real backend services.",
+    "order": 3,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#ef4444",
+    "created_at": "2026-01-25T07:10:30.394Z",
+    "updated_at": "2026-01-25T07:10:30.394Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 163,
+  "fields": {
+    "roadmap": 49,
+    "title": "Database & API Integration",
+    "description": "Connect backend to data.",
+    "order": 4,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#ef4444",
+    "created_at": "2026-01-25T07:10:30.398Z",
+    "updated_at": "2026-01-25T07:10:30.398Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 164,
+  "fields": {
+    "roadmap": 49,
+    "title": "Industry-Ready Backend Skills",
+    "description": "Become job-ready.",
+    "order": 5,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#ef4444",
+    "created_at": "2026-01-25T07:10:30.401Z",
+    "updated_at": "2026-01-25T07:10:30.401Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 165,
+  "fields": {
+    "roadmap": 50,
+    "title": "Backend Foundations",
+    "description": "Understand what backend development actually means.",
+    "order": 1,
+    "is_free": true,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#3b82f6",
+    "created_at": "2026-01-25T07:11:56.684Z",
+    "updated_at": "2026-01-25T07:11:56.684Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 166,
+  "fields": {
+    "roadmap": 50,
+    "title": "Core Python for Backend",
+    "description": "Gain Python skills required for backend.",
+    "order": 2,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#3b82f6",
+    "created_at": "2026-01-25T07:11:56.688Z",
+    "updated_at": "2026-01-25T07:11:56.688Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 167,
+  "fields": {
+    "roadmap": 50,
+    "title": "Python Backend Frameworks",
+    "description": "Build real backend services.",
+    "order": 3,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#3b82f6",
+    "created_at": "2026-01-25T07:11:56.691Z",
+    "updated_at": "2026-01-25T07:11:56.691Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 168,
+  "fields": {
+    "roadmap": 50,
+    "title": "Database & API Integration",
+    "description": "Connect backend to data.",
+    "order": 4,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#3b82f6",
+    "created_at": "2026-01-25T07:11:56.695Z",
+    "updated_at": "2026-01-25T07:11:56.695Z"
+  }
+},
+{
+  "model": "core.stage",
+  "pk": 169,
+  "fields": {
+    "roadmap": 50,
+    "title": "Industry-Ready Python Backend Skills",
+    "description": "Become job-ready.",
+    "order": 5,
+    "is_free": false,
+    "required_xp": 0,
+    "xp_reward": 100,
+    "icon": "fa-book",
+    "color": "#3b82f6",
+    "created_at": "2026-01-25T07:11:56.698Z",
+    "updated_at": "2026-01-25T07:11:56.698Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 407,
+  "fields": {
+    "stage": 136,
+    "title": "HTML Basics",
+    "content": "HTML (HyperText Markup Language) is the standard markup language for documents designed to be displayed in a web browser.\n        \nKey Concepts:\n1. Tags and Elements: Content is wrapped in tags like <h1>, <p>, <div>.\n2. Structure: Every page has <html>, <head>, and <body>.\n3. Attributes: Tags can have attributes like 'class', 'id', 'src', 'href'.\n",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 30,
+    "xp_reward": 20,
+    "created_at": "2026-01-23T01:41:02.412Z",
+    "updated_at": "2026-01-23T01:41:02.412Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 408,
+  "fields": {
+    "stage": 136,
+    "title": "CSS Styling",
+    "content": "CSS (Cascading Style Sheets) describes how HTML elements are to be displayed.\n        \nKey Concepts:\n1. Selectors: Target elements by tag, class (.), or id (#).\n2. Box Model: Content, Padding, Border, Margin.\n3. Flexbox & Grid: Modern layout techniques for responsive design.\n",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 45,
+    "xp_reward": 30,
+    "created_at": "2026-01-23T01:41:02.413Z",
+    "updated_at": "2026-01-23T01:41:02.413Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 409,
+  "fields": {
+    "stage": 136,
+    "title": "Responsive Design",
+    "content": "Responsive design ensures your web pages look good on all devices.\n        \nKey Concepts:\n1. Viewport Meta Tag: Controls layout on mobile browsers.\n2. Media Queries: Apply CSS based on device width (@media).\n3. Fluid Layouts: Using percentages instead of fixed pixels.\n",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 40,
+    "xp_reward": 30,
+    "created_at": "2026-01-23T01:41:02.413Z",
+    "updated_at": "2026-01-23T01:41:02.413Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 410,
+  "fields": {
+    "stage": 137,
+    "title": "Variables and Data Types",
+    "content": "JavaScript is the programming language of the web.\n        \nKey Concepts:\n1. Variables: let, const, var.\n2. Data Types: String, Number, Boolean, Array, Object.\n3. Operators: Arithmetic (+, -), Comparison (===, !==), Logical (&&, ||).\n",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 45,
+    "xp_reward": 40,
+    "created_at": "2026-01-23T01:41:02.415Z",
+    "updated_at": "2026-01-23T01:41:02.415Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 411,
+  "fields": {
+    "stage": 137,
+    "title": "DOM Manipulation",
+    "content": "The DOM (Document Object Model) represents the page so code can change structure, style, and content.\n        \nKey Concepts:\n1. Selecting Elements: document.querySelector(), document.getElementById().\n2. Events: click, submit, change, hover.\n3. Manipulation: element.innerHTML, element.style, element.classList.\n",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 60,
+    "xp_reward": 50,
+    "created_at": "2026-01-23T01:41:02.415Z",
+    "updated_at": "2026-01-23T01:41:02.415Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 412,
+  "fields": {
+    "stage": 137,
+    "title": "Fetch API & Async/Await",
+    "content": "Modern websites need to fetch data from servers without reloading.\n        \nKey Concepts:\n1. Promises: Handling asynchronous operations.\n2. Async/Await: Syntactic sugar for cleaner async code.\n3. Fetch API: Making HTTP requests to APIs.\n",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 60,
+    "xp_reward": 60,
+    "created_at": "2026-01-23T01:41:02.415Z",
+    "updated_at": "2026-01-23T01:41:02.415Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 413,
+  "fields": {
+    "stage": 138,
+    "title": "Introduction to HTTP",
+    "content": "Understanding how the web works is crucial for backend development.\n        \nKey Concepts:\n1. Request/Response Cycle: Client sends request, Server sends response.\n2. HTTP Methods: GET, POST, PUT, DELETE.\n3. Status Codes: 200 (OK), 404 (Not Found), 500 (Server Error).\n",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 30,
+    "xp_reward": 50,
+    "created_at": "2026-01-23T01:41:02.416Z",
+    "updated_at": "2026-01-23T01:41:02.416Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 414,
+  "fields": {
+    "stage": 138,
+    "title": "Databases & SQL",
+    "content": "Databases store application data persistently.\n        \nKey Concepts:\n1. Relational vs NoSQL: Tables vs Documents.\n2. SQL: Structured Query Language for managing data.\n3. ORM: Object-Relational Mapping (interacting with DB using code).\n",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 60,
+    "xp_reward": 60,
+    "created_at": "2026-01-23T01:41:02.417Z",
+    "updated_at": "2026-01-23T01:41:02.417Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 415,
+  "fields": {
+    "stage": 140,
+    "title": "What is a system",
+    "content": "# What is a System\n\n## Simple Meaning\nA system is anything that takes an input, processes it, and gives an output.\n\n## Real-Life Examples\n- **Ceiling Fan**: Input = Regulator position, Output = Fan speed\n- **Air Conditioner**: Input = Temperature setting, Output = Cool air\n- **Water Tank**: Input = Water supply, Output = Water level\n- **DC Motor**: Input = Voltage, Output = Rotation speed\n\n## Key Takeaway\nSystems are everywhere around us! Understanding systems helps us control and improve them.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:35:20.998Z",
+    "updated_at": "2026-01-23T17:35:20.998Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 416,
+  "fields": {
+    "stage": 140,
+    "title": "Why systems need control",
+    "content": "# Why Systems Need Control\n\n## Input and Output\n- **Input**: What we give to the system (the command)\n- **Output**: What we want from the system (the result)\n\n### Example: Fan Control\n- Input: Regulator position (1, 2, 3, 4, 5)\n- Output: Fan speed (slow to fast)\n\n## Why Control Matters\nWithout control:\n- Fan might run too fast or too slow\n- AC might make room too cold or not cold enough\n- Motor might spin unpredictably\n\n**With control, we get the exact output we want!**",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:35:20.998Z",
+    "updated_at": "2026-01-23T17:35:20.998Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 417,
+  "fields": {
+    "stage": 140,
+    "title": "Feedback concept",
+    "content": "# Feedback Concept\n\n## What is Feedback?\nFeedback means **checking the output** and **adjusting the input** based on what we see.\n\n## Example: Thermostat in AC\n1. You set temperature to 24°C (desired output)\n2. AC cools the room\n3. Thermostat **checks actual temperature** (feedback)\n4. If room is 26°C → AC works harder\n5. If room is 23°C → AC reduces cooling  \n6. Result: Room stays at exactly 24°C!\n\n**Key Point**: Feedback = Self-correction",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:35:20.999Z",
+    "updated_at": "2026-01-23T17:35:20.999Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 418,
+  "fields": {
+    "stage": 140,
+    "title": "Open loop vs Closed loop systems",
+    "content": "# Open Loop vs Closed Loop Systems\n\n## Open Loop System\n- **No feedback** - system doesn't check its output\n- Works blindly based on input only\n\n### Example: Washing Machine Timer\n- You set 30 minutes, machine runs for exactly 30 minutes\n- Doesn't check if clothes are actually clean\n\n## Closed Loop System\n- **Has feedback** - system continuously checks output\n- Adjusts itself automatically\n\n### Example: Car Cruise Control\n- You set speed to 100 km/h\n- Car checks actual speed continuously\n- Adjusts throttle to maintain exact speed",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:35:20.999Z",
+    "updated_at": "2026-01-23T17:35:20.999Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 419,
+  "fields": {
+    "stage": 140,
+    "title": "Control system block diagram",
+    "content": "# Control System Block Diagram\n\n## Basic Structure\n```\nInput → [Controller] → [Plant/System] → Output\n                ↑                         |\n                |------ [Feedback] -------\n```\n\n## Components\n- **Input**: What we want the system to do\n- **Controller**: The \"brain\" that makes decisions\n- **Plant**: The actual physical system\n- **Output**: What the system produces\n- **Feedback**: Measures output, sends info back\n\n## Real Example: Driving a Car\n- Input: Where you want to go\n- Controller: You (the driver)\n- Plant: Car\n- Output: Where car actually goes\n- Feedback: Your eyes seeing the road",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:35:21.000Z",
+    "updated_at": "2026-01-23T17:35:21.000Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 420,
+  "fields": {
+    "stage": 140,
+    "title": "Control systems around us",
+    "content": "# Control Systems Around Us\n\n## Everyday Examples\n\n### 1. Lift/Elevator Control\n- Input: Button press (floor number)\n- Control: Lift motor speed and direction\n- Feedback: Position sensors\n- Result: Smooth stop at exact floor\n\n### 2. Mobile Phone Brightness\n- Input: Ambient light setting\n- Control: Screen brightness level\n- Feedback: Light sensor  \n- Result: Screen always readable\n\n### 3. Traffic Signal Timing\n- Input: Time-of-day, traffic density\n- Control: Signal duration\n- Feedback: Vehicle sensors\n- Result: Optimized traffic flow\n\n**Progress:** You can now see control systems everywhere! ✅",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 6,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:35:21.000Z",
+    "updated_at": "2026-01-23T17:35:21.000Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 421,
+  "fields": {
+    "stage": 141,
+    "title": "Why modeling is needed",
+    "content": "# Why Modeling is Needed\n\n## The Journey\nReal System → Math Model → Analysis → Improvement\n\n## Not About Accuracy\nMathematical modeling is NOT about creating perfect equations.\n\n**It's about understanding HOW the system behaves.**\n\n## Why Create Models?\n\n### 1. Predict Behavior\n- How will motor speed change if we increase voltage?\n- Will the system be stable or unstable?\n\n### 2. Design Before Building\n- Test different designs on paper causing zero cost\n- Avoid building bad designs\n\n**Key Mindset**: A simple model that explains behavior is better than a complex one that confuses.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.816Z",
+    "updated_at": "2026-01-23T17:49:51.816Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 422,
+  "fields": {
+    "stage": 141,
+    "title": "Modeling of electrical systems",
+    "content": "# Modeling of Electrical Systems\n\n## R, L, C Circuits as Systems\n\n### Components\n- **Resistor (R)**: Resists current (like friction)\n- **Inductor (L)**: Opposes change in current (inertia)\n- **Capacitor (C)**: Opposes change in voltage (spring)\n\n## Voltage In → Current Out Concept\n\n### RC Circuit Example\n- Apply voltage suddenly\n- Capacitor charges gradually (exponentially)\n- **Current decreases over time**\n\n**Focus**: We need to understand the pattern of change (exponential rise/decay), not just derivation.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.817Z",
+    "updated_at": "2026-01-23T17:49:51.817Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 423,
+  "fields": {
+    "stage": 141,
+    "title": "Modeling of mechanical systems",
+    "content": "# Modeling of Mechanical Systems\n\n## Mass–Spring–Damper System\n\n### Three Components\n1. **Mass (M)**: Inertia (resists acceleration)\n2. **Spring (K)**: Elasticity (stores energy)\n3. **Damper (B)**: Friction (dissipates energy)\n\n## Force In → Motion Out\n\n### Example: Car Suspension\n1. Hit a bump (Force Input)\n2. Spring compresses\n3. Damper reduces oscillation\n4. Car settles smoothly\n\n**Analogy**:\n- Force = Voltage\n- Velocity = Current\n- Mass = Inductance\n- Spring = Capacitance\n- Damper = Resistance",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.818Z",
+    "updated_at": "2026-01-23T17:49:51.818Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 424,
+  "fields": {
+    "stage": 141,
+    "title": "Differential equations basics",
+    "content": "# Differential Equations Basics\n\n## Dynamic Systems\nA differential equation describes **how something changes with time**.\n\n### Meaning of Order\n- **First Order**: One energy storage (e.g., RC circuit). Smooth response.\n- **Second Order**: Two energy storages (e.g., Mass-Spring). Can oscillate.\n\n**Don't Fear Math**: Computers solve the equations. We just need to understand what \"Order\" means for system behavior.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.819Z",
+    "updated_at": "2026-01-23T17:49:51.819Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 425,
+  "fields": {
+    "stage": 141,
+    "title": "Transfer function concept",
+    "content": "# Transfer Function Concept\n\n## The Idea\nTransfer Function = Output / Input (in s-domain)\n\nIt effectively tells you **how the system transforms any input into output**.\n\n## Poles and Zeros (Simple View)\n- **Poles**: Natural frequencies (resonance)\n- **Zeros**: Frequencies that get blocked\n\n**Power**: One simple equation (like `1/(s+1)`) describes the entire system's behavior for ANY input!",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.819Z",
+    "updated_at": "2026-01-23T17:49:51.819Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 426,
+  "fields": {
+    "stage": 141,
+    "title": "Block diagram algebra",
+    "content": "# Block Diagram Algebra\n\n## Visual Simplification\n\nBlock diagrams let you **see** system structure without intense math.\n\n### Connections\n1. **Series**: Multiply blocks (G1 × G2)\n2. **Parallel**: Add blocks (G1 + G2)\n3. **Feedback**: Loop formula (G / 1+GH)\n\n**Usage**: Engineers use these to sketch complex systems and identify feedback loops quickly.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 6,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.820Z",
+    "updated_at": "2026-01-23T17:49:51.820Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 427,
+  "fields": {
+    "stage": 141,
+    "title": "Signal flow graph basics",
+    "content": "# Signal Flow Graph Basics\n\n## Road Maps for Signals\nLike block diagrams but cleaner for very complex systems with multiple overlapping loops.\n\n### Mason's Gain Formula\nA systematic \"recipe\" to find the total transfer function by tracing paths and loops.\n\n**When to use**: For complex multi-loop systems where block diagram reduction gets messy.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 7,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.820Z",
+    "updated_at": "2026-01-23T17:49:51.820Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 428,
+  "fields": {
+    "stage": 142,
+    "title": "Standard test signals",
+    "content": "# Standard Test Signals\n\n## Three Main Signals\n1. **Step Input**: Sudden change (Switch ON). Tests basic response.\n2. **Ramp Input**: Constant increase (Gas pedal). Tests tracking.\n3. **Impulse Input**: Sudden shock (Hammer hit). Tests natural behavior.\n\n**Insight**: If we obtain the Step Response, we can predict the response to any other signal!",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.822Z",
+    "updated_at": "2026-01-23T17:49:51.822Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 429,
+  "fields": {
+    "stage": 142,
+    "title": "Time response characteristics",
+    "content": "# Time Response Characteristics\n\n## Transient vs Steady State\n- **Transient**: Temporary behavior right after input (overshoot, oscillation).\n- **Steady State**: Final behavior (constant value).\n\n**Goal**: Fast transient response with minimal overshoot, and accurate steady state.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.823Z",
+    "updated_at": "2026-01-23T17:49:51.823Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 430,
+  "fields": {
+    "stage": 142,
+    "title": "First order systems",
+    "content": "# First Order Systems\n\n## Behavior\n- **Exponential Rise**: Starts fast, slows down.\n- **No Overshoot**: Smoothly approaches target.\n- **Time Constant (τ)**: Time to reach 63% of final value.\n\n**Examples**: Room heating, RC circuit.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.823Z",
+    "updated_at": "2026-01-23T17:49:51.823Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 431,
+  "fields": {
+    "stage": 142,
+    "title": "Second order systems",
+    "content": "# Second Order Systems\n\n## Behavior\nCan oscillate because energy swaps between two storage elements (like Mass & Spring).\n\n### Three Types\n1. **Underdamped**: Overshoots and oscillates (Bouncy).\n2. **Critically Damped**: Fastest rise with NO overshoot (Ideal).\n3. **Overdamped**: Slow and sluggish (Heavy).\n\n**Trade-off**: Speed vs Smoothness.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.824Z",
+    "updated_at": "2026-01-23T17:49:51.824Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 432,
+  "fields": {
+    "stage": 142,
+    "title": "Stability interpretation",
+    "content": "# Stability Interpretation\n\n## Simple Definitions\n- **Stable**: Returns to equilibrium after disturbance (Ball in bowl).\n- **Unstable**: Runs away or explodes (Ball on hill).\n- **Marginally Stable**: Oscillates forever (Pendulum in vacuum).\n\n**Rule**: Stability is the #1 requirement. An unstable system is dangerous and useless.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.824Z",
+    "updated_at": "2026-01-23T17:49:51.824Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 433,
+  "fields": {
+    "stage": 142,
+    "title": "Overshoot, rise time, settling time",
+    "content": "# Performance Metrics\n\n## Definitions\n1. **Rise Time**: How fast it gets to target (Speed).\n2. **Overshoot**: How much it goes past target (Bounciness).\n3. **Settling Time**: How long until it stops moving (Total time).\n\n**Constraint**: You can't have it all. Fast rise usually means more overshoot!",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 6,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.825Z",
+    "updated_at": "2026-01-23T17:49:51.825Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 434,
+  "fields": {
+    "stage": 143,
+    "title": "Why frequency analysis is needed",
+    "content": "# Why Frequency Analysis?\n\n## Seeing Vibrations and Noise\nTime domain shows *when* things happen. Frequency domain shows *how fast* things happen (oscillations).\n\n**Usage**:\n- Design filters to block noise (high freq).\n- Avoid resonance (system shaking itself apart).\n- Analyze stability margins easily.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.826Z",
+    "updated_at": "2026-01-23T17:49:51.826Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 435,
+  "fields": {
+    "stage": 143,
+    "title": "Frequency response concept",
+    "content": "# Frequency Response Concept\n\n## How System Reacts to Frequencies\n- **Low Freq**: System follows input well (Gain ≈ 1).\n- **High Freq**: System can't keep up (Gain decreases).\n\n**Bandwidth**: The range of frequencies a system can follow accurately. Higher bandwidth = Faster system.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.826Z",
+    "updated_at": "2026-01-23T17:49:51.826Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 436,
+  "fields": {
+    "stage": 143,
+    "title": "Bode plots",
+    "content": "# Bode Plots\n\n## The Engineer's X-Ray\nTwo graphs that describe the system completely:\n1. **Magnitude Plot**: Amplification vs Frequency.\n2. **Phase Plot**: Delay vs Frequency.\n\n**Slope**: Tells you the system order (-20dB/dec = 1st order, -40dB/dec = 2nd order).",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.827Z",
+    "updated_at": "2026-01-23T17:49:51.827Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 437,
+  "fields": {
+    "stage": 143,
+    "title": "Nyquist plot",
+    "content": "# Nyquist Plot\n\n## Stability Radar\nPlots the loop response on a complex plane.\n\n### The Rule\n- Avoid the point **(-1, 0)**.\n- If the curve encircles (-1, 0), the system is **Unstable**.\n- Distance from (-1, 0) tells you how stable (robust) the system is.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.827Z",
+    "updated_at": "2026-01-23T17:49:51.827Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 438,
+  "fields": {
+    "stage": 143,
+    "title": "Gain margin & phase margin",
+    "content": "# Gain & Phase Margin\n\n## Safety Buffers\n- **Gain Margin**: How much gain we can add before instability.\n- **Phase Margin**: How much delay we can tolerate before instability.\n\n**Design Goal**: We want healthy margins so the system works even if components age or conditions change.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.828Z",
+    "updated_at": "2026-01-23T17:49:51.828Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 439,
+  "fields": {
+    "stage": 144,
+    "title": "PID controller concept",
+    "content": "# PID Controller\n\n## The Universal Solution\n- **P (Proportional)**: Reacts to current error. \"Push harder if far away.\"\n- **I (Integral)**: Reacts to past error accumulation. \"Fix the tiny remaining gap.\"\n- **D (Derivative)**: Reacts to rate of change. \"Slow down, we're approaching fast!\"\n\n**Together**: Fast, accurate, and stable control.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.829Z",
+    "updated_at": "2026-01-23T17:49:51.829Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 440,
+  "fields": {
+    "stage": 144,
+    "title": "Tuning basics",
+    "content": "# PID Tuning\n\n## Finding the Sweet Spot\nAdjusting Kp, Ki, and Kd gains.\n\n1. Increase **P** until it responds fast (but oscillates).\n2. Add **D** to stop the oscillation (smooth it out).\n3. Add **I** to remove the final small error.\n\n**Art vs Science**: Real tuning often involves \"feeling\" the system response.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.829Z",
+    "updated_at": "2026-01-23T17:49:51.829Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 441,
+  "fields": {
+    "stage": 144,
+    "title": "Control systems in robotics",
+    "content": "# Control in Robotics\n\n## Applications\n- **Speed Control**: Maintain wheel speed uphill/downhill.\n- **Position Control**: Move robot arm to exact XYZ coordinates.\n- **Balance**: Keep Segway/Drone upright (Inverted Pendulum).\n\n**Robots are basically multiple control loops working together!**",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.830Z",
+    "updated_at": "2026-01-23T17:49:51.830Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 442,
+  "fields": {
+    "stage": 144,
+    "title": "Control in automation & industries",
+    "content": "# Industrial Automation\n\n## Process Control\n- **Temperature**: Ovens, chemical reactors.\n- **Flow/Level**: Water treatment, oil pipelines.\n- **Pressure**: Boilers, hydraulics.\n\n**PLC (Programmable Logic Controller)**: The industrial computer that runs these PID loops 24/7.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.830Z",
+    "updated_at": "2026-01-23T17:49:51.830Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 443,
+  "fields": {
+    "stage": 144,
+    "title": "Embedded & real-time control",
+    "content": "# Embedded & Real-Time Control\n\n## Microcontrollers\nImplementing control logic on chips (Arduino, ESP32, STM32).\n\n## The Loop\n1. Read Sensors\n2. Calculate Error\n3. Compute PID Output\n4. Write to Actuators (Motors/Heaters)\n5. Repeat (1000 times per second!)\n\n**Real-Time**: Completing this loop reliably within a strict time deadline.",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 10,
+    "xp_reward": 10,
+    "created_at": "2026-01-23T17:49:51.831Z",
+    "updated_at": "2026-01-23T17:49:51.831Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 444,
+  "fields": {
+    "stage": 145,
+    "title": "What programming actually means",
+    "content": "# What programming actually means\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.718Z",
+    "updated_at": "2026-01-25T07:07:40.718Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 445,
+  "fields": {
+    "stage": 145,
+    "title": "How a computer executes instructions step by step",
+    "content": "# How a computer executes instructions step by step\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.718Z",
+    "updated_at": "2026-01-25T07:07:40.718Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 446,
+  "fields": {
+    "stage": 145,
+    "title": "Variables and data types (real-life analogy)",
+    "content": "# Variables and data types (real-life analogy)\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.719Z",
+    "updated_at": "2026-01-25T07:07:40.719Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 447,
+  "fields": {
+    "stage": 145,
+    "title": "Input and output concepts",
+    "content": "# Input and output concepts\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.720Z",
+    "updated_at": "2026-01-25T07:07:40.720Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 448,
+  "fields": {
+    "stage": 145,
+    "title": "Conditional thinking (if–else logic)",
+    "content": "# Conditional thinking (if–else logic)\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.720Z",
+    "updated_at": "2026-01-25T07:07:40.720Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 449,
+  "fields": {
+    "stage": 145,
+    "title": "Looping concept (repetition logic)",
+    "content": "# Looping concept (repetition logic)\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 6,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.721Z",
+    "updated_at": "2026-01-25T07:07:40.721Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 450,
+  "fields": {
+    "stage": 145,
+    "title": "Writing first logic-based programs",
+    "content": "# Writing first logic-based programs\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 7,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.721Z",
+    "updated_at": "2026-01-25T07:07:40.721Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 451,
+  "fields": {
+    "stage": 146,
+    "title": "Problem understanding before coding",
+    "content": "# Problem understanding before coding\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.722Z",
+    "updated_at": "2026-01-25T07:07:40.722Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 452,
+  "fields": {
+    "stage": 146,
+    "title": "Breaking problems into smaller steps",
+    "content": "# Breaking problems into smaller steps\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.723Z",
+    "updated_at": "2026-01-25T07:07:40.723Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 453,
+  "fields": {
+    "stage": 146,
+    "title": "Flowcharts and decision making",
+    "content": "# Flowcharts and decision making\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.723Z",
+    "updated_at": "2026-01-25T07:07:40.723Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 454,
+  "fields": {
+    "stage": 146,
+    "title": "Pseudocode writing",
+    "content": "# Pseudocode writing\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.724Z",
+    "updated_at": "2026-01-25T07:07:40.724Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 455,
+  "fields": {
+    "stage": 146,
+    "title": "Common beginner logic mistakes",
+    "content": "# Common beginner logic mistakes\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.724Z",
+    "updated_at": "2026-01-25T07:07:40.724Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 456,
+  "fields": {
+    "stage": 147,
+    "title": "Functions and modular thinking",
+    "content": "# Functions and modular thinking\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.725Z",
+    "updated_at": "2026-01-25T07:07:40.725Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 457,
+  "fields": {
+    "stage": 147,
+    "title": "Code reusability concepts",
+    "content": "# Code reusability concepts\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.726Z",
+    "updated_at": "2026-01-25T07:07:40.726Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 458,
+  "fields": {
+    "stage": 147,
+    "title": "Importance of naming and readability",
+    "content": "# Importance of naming and readability\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.726Z",
+    "updated_at": "2026-01-25T07:07:40.726Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 459,
+  "fields": {
+    "stage": 147,
+    "title": "Avoiding duplicate logic",
+    "content": "# Avoiding duplicate logic\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.728Z",
+    "updated_at": "2026-01-25T07:07:40.728Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 460,
+  "fields": {
+    "stage": 147,
+    "title": "Introduction to debugging mindset",
+    "content": "# Introduction to debugging mindset\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.728Z",
+    "updated_at": "2026-01-25T07:07:40.728Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 461,
+  "fields": {
+    "stage": 148,
+    "title": "How programs scale with input size",
+    "content": "# How programs scale with input size\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.730Z",
+    "updated_at": "2026-01-25T07:07:40.730Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 462,
+  "fields": {
+    "stage": 148,
+    "title": "Basic intuition of time complexity (no math)",
+    "content": "# Basic intuition of time complexity (no math)\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.730Z",
+    "updated_at": "2026-01-25T07:07:40.730Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 463,
+  "fields": {
+    "stage": 148,
+    "title": "Choosing the right logic approach",
+    "content": "# Choosing the right logic approach\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.731Z",
+    "updated_at": "2026-01-25T07:07:40.731Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 464,
+  "fields": {
+    "stage": 148,
+    "title": "Debugging strategies",
+    "content": "# Debugging strategies\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.731Z",
+    "updated_at": "2026-01-25T07:07:40.731Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 465,
+  "fields": {
+    "stage": 148,
+    "title": "Thinking like a programmer, not a learner",
+    "content": "# Thinking like a programmer, not a learner\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.731Z",
+    "updated_at": "2026-01-25T07:07:40.731Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 466,
+  "fields": {
+    "stage": 149,
+    "title": "How programming concepts remain same across languages",
+    "content": "# How programming concepts remain same across languages\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.732Z",
+    "updated_at": "2026-01-25T07:07:40.732Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 467,
+  "fields": {
+    "stage": 149,
+    "title": "Mapping fundamentals to Python / C / Java",
+    "content": "# Mapping fundamentals to Python / C / Java\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.733Z",
+    "updated_at": "2026-01-25T07:07:40.733Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 468,
+  "fields": {
+    "stage": 149,
+    "title": "How to approach a new programming language",
+    "content": "# How to approach a new programming language\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.733Z",
+    "updated_at": "2026-01-25T07:07:40.733Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 469,
+  "fields": {
+    "stage": 149,
+    "title": "Common mistakes while switching languages",
+    "content": "# Common mistakes while switching languages\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.734Z",
+    "updated_at": "2026-01-25T07:07:40.734Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 470,
+  "fields": {
+    "stage": 149,
+    "title": "Preparing for real projects",
+    "content": "# Preparing for real projects\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.734Z",
+    "updated_at": "2026-01-25T07:07:40.734Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 471,
+  "fields": {
+    "stage": 150,
+    "title": "Reading a problem correctly",
+    "content": "# Reading a problem correctly\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.943Z",
+    "updated_at": "2026-01-25T07:07:40.943Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 472,
+  "fields": {
+    "stage": 150,
+    "title": "Identifying inputs and outputs",
+    "content": "# Identifying inputs and outputs\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.943Z",
+    "updated_at": "2026-01-25T07:07:40.943Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 473,
+  "fields": {
+    "stage": 150,
+    "title": "Understanding constraints",
+    "content": "# Understanding constraints\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.944Z",
+    "updated_at": "2026-01-25T07:07:40.944Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 474,
+  "fields": {
+    "stage": 150,
+    "title": "Common mistakes while reading questions",
+    "content": "# Common mistakes while reading questions\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.945Z",
+    "updated_at": "2026-01-25T07:07:40.945Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 475,
+  "fields": {
+    "stage": 150,
+    "title": "Real-life problem examples",
+    "content": "# Real-life problem examples\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.945Z",
+    "updated_at": "2026-01-25T07:07:40.945Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 476,
+  "fields": {
+    "stage": 151,
+    "title": "Breaking problems into smaller parts",
+    "content": "# Breaking problems into smaller parts\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.946Z",
+    "updated_at": "2026-01-25T07:07:40.946Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 477,
+  "fields": {
+    "stage": 151,
+    "title": "Step-by-step thinking",
+    "content": "# Step-by-step thinking\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.947Z",
+    "updated_at": "2026-01-25T07:07:40.947Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 478,
+  "fields": {
+    "stage": 151,
+    "title": "Flowchart-based logic",
+    "content": "# Flowchart-based logic\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.947Z",
+    "updated_at": "2026-01-25T07:07:40.948Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 479,
+  "fields": {
+    "stage": 151,
+    "title": "Writing logic in simple words",
+    "content": "# Writing logic in simple words\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.948Z",
+    "updated_at": "2026-01-25T07:07:40.948Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 480,
+  "fields": {
+    "stage": 152,
+    "title": "Identifying similar problems",
+    "content": "# Identifying similar problems\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.949Z",
+    "updated_at": "2026-01-25T07:07:40.949Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 481,
+  "fields": {
+    "stage": 152,
+    "title": "Reusing logic ideas",
+    "content": "# Reusing logic ideas\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.950Z",
+    "updated_at": "2026-01-25T07:07:40.950Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 482,
+  "fields": {
+    "stage": 152,
+    "title": "Common problem-solving patterns",
+    "content": "# Common problem-solving patterns\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.950Z",
+    "updated_at": "2026-01-25T07:07:40.950Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 483,
+  "fields": {
+    "stage": 152,
+    "title": "Avoiding overthinking",
+    "content": "# Avoiding overthinking\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.951Z",
+    "updated_at": "2026-01-25T07:07:40.951Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 484,
+  "fields": {
+    "stage": 153,
+    "title": "Trying multiple solution approaches",
+    "content": "# Trying multiple solution approaches\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.952Z",
+    "updated_at": "2026-01-25T07:07:40.952Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 485,
+  "fields": {
+    "stage": 153,
+    "title": "Tracing logic manually",
+    "content": "# Tracing logic manually\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.952Z",
+    "updated_at": "2026-01-25T07:07:40.952Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 486,
+  "fields": {
+    "stage": 153,
+    "title": "Handling edge cases",
+    "content": "# Handling edge cases\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.953Z",
+    "updated_at": "2026-01-25T07:07:40.953Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 487,
+  "fields": {
+    "stage": 153,
+    "title": "Debugging logic errors",
+    "content": "# Debugging logic errors\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.953Z",
+    "updated_at": "2026-01-25T07:07:40.953Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 488,
+  "fields": {
+    "stage": 154,
+    "title": "Choosing the best approach",
+    "content": "# Choosing the best approach\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.954Z",
+    "updated_at": "2026-01-25T07:07:40.954Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 489,
+  "fields": {
+    "stage": 154,
+    "title": "Logical optimization (no math)",
+    "content": "# Logical optimization (no math)\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.955Z",
+    "updated_at": "2026-01-25T07:07:40.955Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 490,
+  "fields": {
+    "stage": 154,
+    "title": "Time-aware thinking",
+    "content": "# Time-aware thinking\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.955Z",
+    "updated_at": "2026-01-25T07:07:40.955Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 491,
+  "fields": {
+    "stage": 154,
+    "title": "Applying logic across subjects and languages",
+    "content": "# Applying logic across subjects and languages\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:40.956Z",
+    "updated_at": "2026-01-25T07:07:40.956Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 492,
+  "fields": {
+    "stage": 155,
+    "title": "What problem Git actually solves",
+    "content": "# What problem Git actually solves\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.152Z",
+    "updated_at": "2026-01-25T07:07:41.152Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 493,
+  "fields": {
+    "stage": 155,
+    "title": "Local code history concept",
+    "content": "# Local code history concept\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.153Z",
+    "updated_at": "2026-01-25T07:07:41.153Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 494,
+  "fields": {
+    "stage": 155,
+    "title": "Repository meaning",
+    "content": "# Repository meaning\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.154Z",
+    "updated_at": "2026-01-25T07:07:41.154Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 495,
+  "fields": {
+    "stage": 155,
+    "title": "Commit as a save point",
+    "content": "# Commit as a save point\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.154Z",
+    "updated_at": "2026-01-25T07:07:41.154Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 496,
+  "fields": {
+    "stage": 155,
+    "title": "Basic Git workflow (edit → save → commit)",
+    "content": "# Basic Git workflow (edit → save → commit)\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.155Z",
+    "updated_at": "2026-01-25T07:07:41.155Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 497,
+  "fields": {
+    "stage": 156,
+    "title": "Initializing a repository",
+    "content": "# Initializing a repository\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.156Z",
+    "updated_at": "2026-01-25T07:07:41.156Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 498,
+  "fields": {
+    "stage": 156,
+    "title": "Tracking file changes",
+    "content": "# Tracking file changes\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.156Z",
+    "updated_at": "2026-01-25T07:07:41.156Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 499,
+  "fields": {
+    "stage": 156,
+    "title": "Understanding commit history",
+    "content": "# Understanding commit history\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.157Z",
+    "updated_at": "2026-01-25T07:07:41.157Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 500,
+  "fields": {
+    "stage": 156,
+    "title": "Undoing mistakes safely",
+    "content": "# Undoing mistakes safely\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.157Z",
+    "updated_at": "2026-01-25T07:07:41.157Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 501,
+  "fields": {
+    "stage": 156,
+    "title": "Ignoring unnecessary files",
+    "content": "# Ignoring unnecessary files\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.158Z",
+    "updated_at": "2026-01-25T07:07:41.158Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 502,
+  "fields": {
+    "stage": 157,
+    "title": "What GitHub is and how it works with Git",
+    "content": "# What GitHub is and how it works with Git\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.159Z",
+    "updated_at": "2026-01-25T07:07:41.159Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 503,
+  "fields": {
+    "stage": 157,
+    "title": "Creating repositories on GitHub",
+    "content": "# Creating repositories on GitHub\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.160Z",
+    "updated_at": "2026-01-25T07:07:41.160Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 504,
+  "fields": {
+    "stage": 157,
+    "title": "Pushing local code to GitHub",
+    "content": "# Pushing local code to GitHub\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.160Z",
+    "updated_at": "2026-01-25T07:07:41.160Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 505,
+  "fields": {
+    "stage": 157,
+    "title": "Pulling updates",
+    "content": "# Pulling updates\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.161Z",
+    "updated_at": "2026-01-25T07:07:41.161Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 506,
+  "fields": {
+    "stage": 157,
+    "title": "README basics",
+    "content": "# README basics\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.161Z",
+    "updated_at": "2026-01-25T07:07:41.161Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 507,
+  "fields": {
+    "stage": 158,
+    "title": "Branching concept",
+    "content": "# Branching concept\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.162Z",
+    "updated_at": "2026-01-25T07:07:41.162Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 508,
+  "fields": {
+    "stage": 158,
+    "title": "Merging changes",
+    "content": "# Merging changes\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.163Z",
+    "updated_at": "2026-01-25T07:07:41.163Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 509,
+  "fields": {
+    "stage": 158,
+    "title": "Resolving conflicts (conceptual)",
+    "content": "# Resolving conflicts (conceptual)\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.163Z",
+    "updated_at": "2026-01-25T07:07:41.163Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 510,
+  "fields": {
+    "stage": 158,
+    "title": "Pull requests workflow",
+    "content": "# Pull requests workflow\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.164Z",
+    "updated_at": "2026-01-25T07:07:41.164Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 511,
+  "fields": {
+    "stage": 158,
+    "title": "Code review basics",
+    "content": "# Code review basics\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.164Z",
+    "updated_at": "2026-01-25T07:07:41.164Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 512,
+  "fields": {
+    "stage": 159,
+    "title": "GitHub issues & project boards",
+    "content": "# GitHub issues & project boards\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.165Z",
+    "updated_at": "2026-01-25T07:07:41.165Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 513,
+  "fields": {
+    "stage": 159,
+    "title": "Open-source contribution flow",
+    "content": "# Open-source contribution flow\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.166Z",
+    "updated_at": "2026-01-25T07:07:41.166Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 514,
+  "fields": {
+    "stage": 159,
+    "title": "Commit message best practices",
+    "content": "# Commit message best practices\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.166Z",
+    "updated_at": "2026-01-25T07:07:41.166Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 515,
+  "fields": {
+    "stage": 159,
+    "title": "Repository hygiene",
+    "content": "# Repository hygiene\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.166Z",
+    "updated_at": "2026-01-25T07:07:41.166Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 516,
+  "fields": {
+    "stage": 159,
+    "title": "Common Git mistakes students make",
+    "content": "# Common Git mistakes students make\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 15,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:07:41.167Z",
+    "updated_at": "2026-01-25T07:07:41.167Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 517,
+  "fields": {
+    "stage": 160,
+    "title": "What backend development is",
+    "content": "# What backend development is\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.388Z",
+    "updated_at": "2026-01-25T07:10:30.388Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 518,
+  "fields": {
+    "stage": 160,
+    "title": "Client–server architecture",
+    "content": "# Client–server architecture\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.389Z",
+    "updated_at": "2026-01-25T07:10:30.389Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 519,
+  "fields": {
+    "stage": 160,
+    "title": "How requests and responses work",
+    "content": "# How requests and responses work\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.389Z",
+    "updated_at": "2026-01-25T07:10:30.389Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 520,
+  "fields": {
+    "stage": 160,
+    "title": "Role of backend in real applications",
+    "content": "# Role of backend in real applications\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.390Z",
+    "updated_at": "2026-01-25T07:10:30.390Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 521,
+  "fields": {
+    "stage": 160,
+    "title": "Java role in backend systems",
+    "content": "# Java role in backend systems\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.390Z",
+    "updated_at": "2026-01-25T07:10:30.390Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 522,
+  "fields": {
+    "stage": 161,
+    "title": "Core Java revision (classes, objects, OOPS)",
+    "content": "# Core Java revision (classes, objects, OOPS)\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.392Z",
+    "updated_at": "2026-01-25T07:10:30.392Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 523,
+  "fields": {
+    "stage": 161,
+    "title": "Exception handling",
+    "content": "# Exception handling\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.392Z",
+    "updated_at": "2026-01-25T07:10:30.392Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 524,
+  "fields": {
+    "stage": 161,
+    "title": "Collections framework",
+    "content": "# Collections framework\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.393Z",
+    "updated_at": "2026-01-25T07:10:30.393Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 525,
+  "fields": {
+    "stage": 161,
+    "title": "Java I/O basics",
+    "content": "# Java I/O basics\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.393Z",
+    "updated_at": "2026-01-25T07:10:30.393Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 526,
+  "fields": {
+    "stage": 161,
+    "title": "Writing clean and readable Java code",
+    "content": "# Writing clean and readable Java code\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.394Z",
+    "updated_at": "2026-01-25T07:10:30.394Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 527,
+  "fields": {
+    "stage": 162,
+    "title": "Why Spring framework exists",
+    "content": "# Why Spring framework exists\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.395Z",
+    "updated_at": "2026-01-25T07:10:30.395Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 528,
+  "fields": {
+    "stage": 162,
+    "title": "Dependency injection concept",
+    "content": "# Dependency injection concept\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.396Z",
+    "updated_at": "2026-01-25T07:10:30.396Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 529,
+  "fields": {
+    "stage": 162,
+    "title": "Spring Boot basics",
+    "content": "# Spring Boot basics\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.396Z",
+    "updated_at": "2026-01-25T07:10:30.396Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 530,
+  "fields": {
+    "stage": 162,
+    "title": "Creating REST APIs",
+    "content": "# Creating REST APIs\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.397Z",
+    "updated_at": "2026-01-25T07:10:30.397Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 531,
+  "fields": {
+    "stage": 162,
+    "title": "Handling HTTP requests",
+    "content": "# Handling HTTP requests\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.397Z",
+    "updated_at": "2026-01-25T07:10:30.397Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 532,
+  "fields": {
+    "stage": 162,
+    "title": "Basic error handling",
+    "content": "# Basic error handling\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 6,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.397Z",
+    "updated_at": "2026-01-25T07:10:30.397Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 533,
+  "fields": {
+    "stage": 163,
+    "title": "SQL basics",
+    "content": "# SQL basics\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.399Z",
+    "updated_at": "2026-01-25T07:10:30.399Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 534,
+  "fields": {
+    "stage": 163,
+    "title": "Connecting Java backend to database",
+    "content": "# Connecting Java backend to database\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.399Z",
+    "updated_at": "2026-01-25T07:10:30.399Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 535,
+  "fields": {
+    "stage": 163,
+    "title": "CRUD operations",
+    "content": "# CRUD operations\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.399Z",
+    "updated_at": "2026-01-25T07:10:30.399Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 536,
+  "fields": {
+    "stage": 163,
+    "title": "ORM concept (JPA/Hibernate – concept level)",
+    "content": "# ORM concept (JPA/Hibernate – concept level)\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.400Z",
+    "updated_at": "2026-01-25T07:10:30.400Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 537,
+  "fields": {
+    "stage": 163,
+    "title": "Data validation",
+    "content": "# Data validation\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.400Z",
+    "updated_at": "2026-01-25T07:10:30.400Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 538,
+  "fields": {
+    "stage": 164,
+    "title": "Authentication & authorization basics",
+    "content": "# Authentication & authorization basics\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.402Z",
+    "updated_at": "2026-01-25T07:10:30.402Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 539,
+  "fields": {
+    "stage": 164,
+    "title": "Backend security concepts",
+    "content": "# Backend security concepts\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.402Z",
+    "updated_at": "2026-01-25T07:10:30.402Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 540,
+  "fields": {
+    "stage": 164,
+    "title": "API best practices",
+    "content": "# API best practices\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.402Z",
+    "updated_at": "2026-01-25T07:10:30.402Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 541,
+  "fields": {
+    "stage": 164,
+    "title": "Logging & exception handling",
+    "content": "# Logging & exception handling\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.403Z",
+    "updated_at": "2026-01-25T07:10:30.403Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 542,
+  "fields": {
+    "stage": 164,
+    "title": "Basic deployment concept",
+    "content": "# Basic deployment concept\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.403Z",
+    "updated_at": "2026-01-25T07:10:30.403Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 543,
+  "fields": {
+    "stage": 164,
+    "title": "Common mistakes Java backend beginners make",
+    "content": "# Common mistakes Java backend beginners make\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 6,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:10:30.404Z",
+    "updated_at": "2026-01-25T07:10:30.404Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 544,
+  "fields": {
+    "stage": 165,
+    "title": "What backend development is",
+    "content": "# What backend development is\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.686Z",
+    "updated_at": "2026-01-25T07:11:56.686Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 545,
+  "fields": {
+    "stage": 165,
+    "title": "Client–server architecture",
+    "content": "# Client–server architecture\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.686Z",
+    "updated_at": "2026-01-25T07:11:56.686Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 546,
+  "fields": {
+    "stage": 165,
+    "title": "How HTTP request–response works",
+    "content": "# How HTTP request–response works\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.687Z",
+    "updated_at": "2026-01-25T07:11:56.687Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 547,
+  "fields": {
+    "stage": 165,
+    "title": "Role of backend in real applications",
+    "content": "# Role of backend in real applications\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.687Z",
+    "updated_at": "2026-01-25T07:11:56.687Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 548,
+  "fields": {
+    "stage": 165,
+    "title": "Where Python is used in backend systems",
+    "content": "# Where Python is used in backend systems\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.688Z",
+    "updated_at": "2026-01-25T07:11:56.688Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 549,
+  "fields": {
+    "stage": 166,
+    "title": "Python data types & control flow (revision)",
+    "content": "# Python data types & control flow (revision)\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.689Z",
+    "updated_at": "2026-01-25T07:11:56.689Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 550,
+  "fields": {
+    "stage": 166,
+    "title": "Functions & modular coding",
+    "content": "# Functions & modular coding\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.689Z",
+    "updated_at": "2026-01-25T07:11:56.689Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 551,
+  "fields": {
+    "stage": 166,
+    "title": "OOPS concepts in Python",
+    "content": "# OOPS concepts in Python\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.690Z",
+    "updated_at": "2026-01-25T07:11:56.690Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 552,
+  "fields": {
+    "stage": 166,
+    "title": "Exception handling",
+    "content": "# Exception handling\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.690Z",
+    "updated_at": "2026-01-25T07:11:56.690Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 553,
+  "fields": {
+    "stage": 166,
+    "title": "Writing clean, readable Python code",
+    "content": "# Writing clean, readable Python code\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.691Z",
+    "updated_at": "2026-01-25T07:11:56.691Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 554,
+  "fields": {
+    "stage": 167,
+    "title": "Why frameworks are needed in backend",
+    "content": "# Why frameworks are needed in backend\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.692Z",
+    "updated_at": "2026-01-25T07:11:56.692Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 555,
+  "fields": {
+    "stage": 167,
+    "title": "Django vs FastAPI (when to use which)",
+    "content": "# Django vs FastAPI (when to use which)\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.693Z",
+    "updated_at": "2026-01-25T07:11:56.693Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 556,
+  "fields": {
+    "stage": 167,
+    "title": "Creating REST APIs",
+    "content": "# Creating REST APIs\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.693Z",
+    "updated_at": "2026-01-25T07:11:56.693Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 557,
+  "fields": {
+    "stage": 167,
+    "title": "URL routing & request handling",
+    "content": "# URL routing & request handling\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.694Z",
+    "updated_at": "2026-01-25T07:11:56.694Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 558,
+  "fields": {
+    "stage": 167,
+    "title": "Basic error handling",
+    "content": "# Basic error handling\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.694Z",
+    "updated_at": "2026-01-25T07:11:56.694Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 559,
+  "fields": {
+    "stage": 168,
+    "title": "SQL basics",
+    "content": "# SQL basics\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.695Z",
+    "updated_at": "2026-01-25T07:11:56.695Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 560,
+  "fields": {
+    "stage": 168,
+    "title": "Database integration with Python",
+    "content": "# Database integration with Python\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.696Z",
+    "updated_at": "2026-01-25T07:11:56.696Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 561,
+  "fields": {
+    "stage": 168,
+    "title": "CRUD operations",
+    "content": "# CRUD operations\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.696Z",
+    "updated_at": "2026-01-25T07:11:56.696Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 562,
+  "fields": {
+    "stage": 168,
+    "title": "ORM concept (Django ORM / SQLAlchemy – concept level)",
+    "content": "# ORM concept (Django ORM / SQLAlchemy – concept level)\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.697Z",
+    "updated_at": "2026-01-25T07:11:56.697Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 563,
+  "fields": {
+    "stage": 168,
+    "title": "Input validation & data integrity",
+    "content": "# Input validation & data integrity\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.697Z",
+    "updated_at": "2026-01-25T07:11:56.697Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 564,
+  "fields": {
+    "stage": 169,
+    "title": "Authentication & authorization basics",
+    "content": "# Authentication & authorization basics\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 1,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.698Z",
+    "updated_at": "2026-01-25T07:11:56.698Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 565,
+  "fields": {
+    "stage": 169,
+    "title": "Backend security concepts",
+    "content": "# Backend security concepts\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 2,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.699Z",
+    "updated_at": "2026-01-25T07:11:56.699Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 566,
+  "fields": {
+    "stage": 169,
+    "title": "API best practices",
+    "content": "# API best practices\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 3,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.699Z",
+    "updated_at": "2026-01-25T07:11:56.699Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 567,
+  "fields": {
+    "stage": 169,
+    "title": "Logging & error monitoring",
+    "content": "# Logging & error monitoring\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 4,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.700Z",
+    "updated_at": "2026-01-25T07:11:56.700Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 568,
+  "fields": {
+    "stage": 169,
+    "title": "Basic deployment concepts",
+    "content": "# Basic deployment concepts\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 5,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.700Z",
+    "updated_at": "2026-01-25T07:11:56.700Z"
+  }
+},
+{
+  "model": "core.topic",
+  "pk": 569,
+  "fields": {
+    "stage": 169,
+    "title": "Common mistakes Python backend beginners make",
+    "content": "# Common mistakes Python backend beginners make\n\nContent coming soon...",
+    "content_type": "text",
+    "video_url": "",
+    "resource_url": "",
+    "order": 6,
+    "duration_minutes": 20,
+    "xp_reward": 10,
+    "created_at": "2026-01-25T07:11:56.701Z",
+    "updated_at": "2026-01-25T07:11:56.701Z"
+  }
+},
+{
+  "model": "core.roadmapcategory",
+  "pk": 2,
+  "fields": {
+    "name": "backend development",
+    "slug": "backend-development",
+    "description": "",
+    "icon": "fa-route",
+    "color": "#6366f1",
+    "order": 1
+  }
+},
+{
+  "model": "core.roadmapcategory",
+  "pk": 3,
+  "fields": {
+    "name": "CSE / IT / Software",
+    "slug": "cse-it-software",
+    "description": "Comprehensive roadmaps for Computer Science, IT, and Software Engineering.",
+    "icon": "fa-laptop-code",
+    "color": "#6366f1",
+    "order": 0
+  }
+},
+{
+  "model": "core.roadmapcategory",
+  "pk": 4,
+  "fields": {
+    "name": "Engineering",
+    "slug": "engineering",
+    "description": "Engineering and technical courses",
+    "icon": "fa-route",
+    "color": "#6366f1",
+    "order": 0
+  }
+},
+{
+  "model": "core.roadmapcategory",
+  "pk": 5,
+  "fields": {
+    "name": "Computer Science",
+    "slug": "computer-science",
+    "description": "",
+    "icon": "fa-laptop-code",
+    "color": "#10b981",
+    "order": 0
+  }
+}
+]

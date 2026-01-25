@@ -85,14 +85,42 @@ def initiate_payment(request, item_type, item_id):
         try:
             coupon = Coupon.objects.get(code=coupon_code)
             if coupon.is_valid():
-                discount = (price * coupon.discount_percent) / 100
-                final_amount = price - discount
-                # Update usage
-                coupon.used_count += 1
-                coupon.save()
+                # Restriction Logic
+                is_restricted = (
+                    coupon.valid_for_plans.exists() or 
+                    coupon.valid_for_roadmaps.exists() or 
+                    coupon.valid_for_bundles.exists()
+                )
+                
+                is_valid_for_item = True
+                
+                if is_restricted:
+                    is_valid_for_item = False
+                    
+                    if plan:
+                        if coupon.valid_for_plans.filter(id=plan.id).exists():
+                            is_valid_for_item = True
+                    elif roadmap:
+                        if coupon.valid_for_roadmaps.filter(id=roadmap.id).exists():
+                            is_valid_for_item = True
+                    elif bundle:
+                        if coupon.valid_for_bundles.filter(id=bundle.id).exists():
+                            is_valid_for_item = True
+                
+                if is_valid_for_item:
+                    discount = (price * coupon.discount_percent) / 100
+                    final_amount = price - discount
+                    # Update usage
+                    coupon.used_count += 1
+                    coupon.save()
+                else:
+                    coupon = None # Invalid for this item
+                    messages.warning(request, 'Coupon is not valid for this item.')
             else:
+                 coupon = None
                  messages.warning(request, 'Coupon is invalid or expired.')
         except Coupon.DoesNotExist:
+            coupon = None
             messages.warning(request, 'Coupon code not found.')
 
     # Create payment record
@@ -119,6 +147,23 @@ def initiate_payment(request, item_type, item_id):
     return_url = request.build_absolute_uri(f'/payments/callback/{payment.id}/')
     notify_url = request.build_absolute_uri(f'/payments/webhook/')
     
+
+    # Check for 0 amount - Bypass Payment Gateway
+    if final_amount <= 0:
+        payment.status = 'success'
+        payment.save()
+        
+        # Determine success message prefix based on item type
+        msg_prefix = ""
+        if plan:
+            msg_prefix = f"Subscription to {plan.name} active!"
+        elif roadmap:
+            msg_prefix = f"Permanently unlocked: {roadmap.title}"
+        elif bundle:
+            msg_prefix = f"Bundle unlocked: {bundle.title}"
+            
+        return process_successful_payment(request, payment, msg_prefix)
+
     # Create Cashfree order
     cashfree = CashfreePayment()
     result = cashfree.create_order(
@@ -163,24 +208,53 @@ def apply_coupon(request):
     # Generic Item Handling
     item_type = data.get('item_type') # plan, roadmap, bundle
     item_id = data.get('item_id')
+    
+    plan = None
+    roadmap = None
+    bundle = None
     price = 0
     
     try:
         if item_type == 'plan':
-            item = SubscriptionPlan.objects.get(id=item_id)
-            price = item.price
+            plan = SubscriptionPlan.objects.get(id=item_id)
+            price = plan.price
         elif item_type == 'roadmap':
-            item = Roadmap.objects.get(id=item_id)
-            price = item.price
+            roadmap = Roadmap.objects.get(id=item_id)
+            price = roadmap.price
         elif item_type == 'bundle':
-            item = RoadmapBundle.objects.get(id=item_id)
-            price = item.price
+            bundle = RoadmapBundle.objects.get(id=item_id)
+            price = bundle.price
         else:
             return JsonResponse({'valid': False, 'message': 'Invalid item type.'})
 
         coupon = Coupon.objects.get(code=code)
         
         if coupon.is_valid():
+            # Restriction Logic
+            is_restricted = (
+                coupon.valid_for_plans.exists() or 
+                coupon.valid_for_roadmaps.exists() or 
+                coupon.valid_for_bundles.exists()
+            )
+            
+            is_valid_for_item = True
+            
+            if is_restricted:
+                is_valid_for_item = False # Default to false if restricted
+                
+                if plan:
+                    if coupon.valid_for_plans.filter(id=plan.id).exists():
+                        is_valid_for_item = True
+                elif roadmap:
+                    if coupon.valid_for_roadmaps.filter(id=roadmap.id).exists():
+                        is_valid_for_item = True
+                elif bundle:
+                    if coupon.valid_for_bundles.filter(id=bundle.id).exists():
+                        is_valid_for_item = True
+            
+            if not is_valid_for_item:
+                return JsonResponse({'valid': False, 'message': 'This coupon is not valid for this item.'})
+
             discount_amount = (price * coupon.discount_percent) / 100
             final_price = price - discount_amount
             return JsonResponse({
@@ -220,32 +294,16 @@ def payment_callback(request, payment_id):
             payment.payment_id = status_result.get('cf_order_id', '')
             payment.save()
             
-            # Activate Access
+            # Determine success message based on item type
+            msg = ""
             if payment.subscription_plan:
-                activate_subscription(request.user, payment.subscription_plan)
                 msg = f"Subscription to {payment.subscription_plan.name} active!"
             elif payment.roadmap:
-                UserRoadmapEnrollment.objects.get_or_create(user=request.user, roadmap=payment.roadmap)
                 msg = f"Permanently unlocked: {payment.roadmap.title}"
             elif payment.bundle:
-                for rm in payment.bundle.roadmaps.all():
-                    UserRoadmapEnrollment.objects.get_or_create(user=request.user, roadmap=rm)
                 msg = f"Bundle unlocked: {payment.bundle.title}"
             
-            # Send Receipt Email
-            try:
-                send_mail(
-                    subject='Payment Successful - 99Roadmap',
-                    message=f"Hi {request.user.first_name},\n\nYour payment of ₹{payment.amount} was successful!\nOrder ID: {payment.order_id}\n\n{msg}\n\nThank you for learning with us.\n\nBest,\n99Roadmap Team",
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[request.user.email],
-                    fail_silently=True,
-                )
-            except Exception as e:
-                print(f"Error sending receipt: {e}")
-
-            messages.success(request, f'Payment successful! {msg}')
-            return redirect('dashboard')
+            return process_successful_payment(request, payment, msg)
         
         elif order_status in ['ACTIVE', 'PENDING']:
             payment.status = 'pending'
@@ -261,6 +319,34 @@ def payment_callback(request, payment_id):
         messages.error(request, 'Unable to verify payment status.')
     
     return redirect('subscription_plans')
+
+
+def process_successful_payment(request, payment, msg):
+    """Helper to process successful payment, activate items, send email, and redirect"""
+    
+    # Activate Access
+    if payment.subscription_plan:
+        activate_subscription(request.user, payment.subscription_plan)
+    elif payment.roadmap:
+        UserRoadmapEnrollment.objects.get_or_create(user=request.user, roadmap=payment.roadmap)
+    elif payment.bundle:
+        for rm in payment.bundle.roadmaps.all():
+            UserRoadmapEnrollment.objects.get_or_create(user=request.user, roadmap=rm)
+    
+    # Send Receipt Email
+    try:
+        send_mail(
+            subject='Payment Successful - 99Roadmap',
+            message=f"Hi {request.user.first_name},\n\nYour order of ₹{payment.amount} was successful!\nOrder ID: {payment.order_id}\n\n{msg}\n\nThank you for learning with us.\n\nBest,\n99Roadmap Team",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[request.user.email],
+            fail_silently=True,
+        )
+    except Exception as e:
+        print(f"Error sending receipt: {e}")
+
+    messages.success(request, f'Success! {msg}')
+    return redirect('dashboard')
 
 
 @csrf_exempt
