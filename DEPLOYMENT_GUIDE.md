@@ -184,11 +184,11 @@ server {
     location = /favicon.ico { access_log off; log_not_found off; }
     
     location /static/ {
-        root /var/www/Divakar/staticfiles;
+        alias /var/www/Divakar/staticfiles/;
     }
 
     location /media/ {
-        root /var/www/Divakar/media;
+        alias /var/www/Divakar/media/;
     }
 
     location / {
