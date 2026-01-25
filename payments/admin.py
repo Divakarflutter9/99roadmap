@@ -12,6 +12,7 @@ class CouponAdmin(admin.ModelAdmin):
     list_filter = ['active', 'valid_to']
     search_fields = ['code']
     list_editable = ['active']
+    filter_horizontal = ['valid_for_plans', 'valid_for_roadmaps', 'valid_for_bundles']
     
     def is_valid_now(self, obj):
         return obj.is_valid()
