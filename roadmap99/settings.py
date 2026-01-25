@@ -136,6 +136,8 @@ if not DEBUG:
     SECURE_HSTS_PRELOAD = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
     
+    CSRF_TRUSTED_ORIGINS = ['https://99roadmap.droptechie.com']
+    
     # Logging for Production
     LOGGING = {
         'version': 1,
