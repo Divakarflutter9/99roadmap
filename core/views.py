@@ -508,7 +508,16 @@ def stage_detail_view(request, roadmap_slug, stage_order):
     
     if not user_has_access:
         # Check subscription
-        user_has_access = getattr(request.user, 'has_active_subscription', lambda: False)()
+        has_subscription = getattr(request.user, 'has_active_subscription', lambda: False)()
+        
+        # Check for direct purchase
+        has_purchase = Payment.objects.filter(
+            user=request.user,
+            roadmap=roadmap,
+            status='success'
+        ).exists()
+        
+        user_has_access = has_subscription or has_purchase
     
     if not user_has_access:
         messages.warning(request, 'This stage requires a subscription. Please subscribe to continue.')
@@ -554,7 +563,16 @@ def topic_view(request, topic_id):
     # Check access
     user_has_access = not roadmap.is_premium or stage.is_free
     if not user_has_access:
-        user_has_access = getattr(request.user, 'has_active_subscription', lambda: False)()
+        has_subscription = getattr(request.user, 'has_active_subscription', lambda: False)()
+        
+        # Check for direct purchase
+        has_purchase = Payment.objects.filter(
+            user=request.user,
+            roadmap=roadmap,
+            status='success'
+        ).exists()
+        
+        user_has_access = has_subscription or has_purchase
     
     if not user_has_access:
         messages.warning(request, 'You need a subscription to access this content.')
