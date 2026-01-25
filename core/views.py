@@ -724,6 +724,19 @@ def quiz_view(request, quiz_id=None, stage_id=None):
         messages.warning(request, 'You need a subscription to take this quiz.')
         return redirect('roadmap_detail', slug=roadmap.slug)
     
+    
+    # Check if all topics in the stage are completed
+    total_topics = stage.topics.count()
+    completed_topics = UserTopicProgress.objects.filter(
+        user=request.user,
+        topic__stage=stage,
+        is_completed=True
+    ).count()
+    
+    if completed_topics < total_topics:
+        messages.warning(request, f'You must complete all {total_topics} topics in this stage before taking the quiz.')
+        return redirect('stage_detail', roadmap_slug=roadmap.slug, stage_order=stage.order)
+
     if request.method == 'POST':
         form = QuizSubmissionForm(quiz, request.POST)
         if form.is_valid():
