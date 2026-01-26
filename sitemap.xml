@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Static Pages -->
+    <url>
+        <loc>https://99roadmap.droptechie.com/</loc>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+    <url>
+        <loc>https://99roadmap.droptechie.com/roadmaps/</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://99roadmap.droptechie.com/contact/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <url>
+        <loc>https://99roadmap.droptechie.com/faq/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://99roadmap.droptechie.com/terms/</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://99roadmap.droptechie.com/privacy/</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://99roadmap.droptechie.com/refund-policy/</loc>
+        <changefreq>yearly</changefreq>
+        <priority>0.3</priority>
+    </url>
+    <url>
+        <loc>https://99roadmap.droptechie.com/leaderboard/</loc>
+        <changefreq>daily</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Note: Dynamic Roadmap URLs should be added here dynamically or manually -->
+    <!-- Example: -->
+    <!-- 
+    <url>
+        <loc>https://99roadmap.droptechie.com/roadmap/python-backend/</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url> 
+    -->
+</urlset>
