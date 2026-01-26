@@ -88,6 +88,39 @@ class User(AbstractUser):
     
     def get_short_name(self):
         return self.full_name.split()[0] if self.full_name else ''
+    
+    def is_google_user(self):
+        """Check if user signed up via Google OAuth"""
+        try:
+            return self.socialaccount_set.filter(provider='google').exists()
+        except:
+            return False
+    
+    def kyc_completed(self):
+        """Check if KYC (profile setup) is complete"""
+        # KYC requires: LinkedIn or GitHub + Future Goals
+        has_social = bool(self.linkedin_profile or self.github_profile)
+        has_goals = bool(self.future_goals)
+        return has_social and has_goals
+    
+    def kyc_progress_percentage(self):
+        """Calculate KYC completion percentage"""
+        # Step 1: Basic Registration (always done if logged in) - 33%
+        # Step 2: Social Profiles (LinkedIn or GitHub) - 66%  
+        # Step 3: Future Goals - 100%
+        
+        if not self.is_google_user():
+            return 100  # Manual users don't need KYC
+        
+        progress = 33  # Already registered
+        
+        if self.linkedin_profile or self.github_profile:
+            progress = 66
+        
+        if self.future_goals:
+            progress = 100
+        
+        return progress
 
 
 class RoadmapCategory(models.Model):

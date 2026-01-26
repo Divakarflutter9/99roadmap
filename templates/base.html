@@ -578,6 +578,74 @@
             }
         });
     </script>
+
+    <!-- KYC Completion Popup for Google Users -->
+    {% if user.is_authenticated and user.is_google_user and not user.kyc_completed %}
+    <div class="modal fade" id="kycModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
+        data-bs-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass border-0 text-white"
+                style="background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px);">
+                <div class="modal-header border-bottom border-white-10">
+                    <h5 class="modal-title">
+                        <i class="fas fa-user-check text-warning me-2"></i>
+                        Complete Your Profile
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-4">
+                    <div class="text-center mb-4">
+                        <div class="w-20 h-20 rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 flex items-center justify-center mx-auto mb-3"
+                            style="width: 80px; height: 80px; background: linear-gradient(135deg, #fbbf24, #ea580c); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                            <i class="fas fa-exclamation text-white" style="font-size: 2rem;"></i>
+                        </div>
+                        <h6 class="text-white mb-2">Profile Incomplete</h6>
+                        <p class="text-secondary text-sm mb-0">
+                            To access roadmaps, please complete your profile setup:
+                        </p>
+                    </div>
+
+                    <div class="bg-dark rounded p-3 mb-3">
+                        <div class="d-flex align-items-center gap-3 mb-2">
+                            <i
+                                class="fas {% if user.linkedin_profile or user.github_profile %}fa-check-circle text-success{% else %}fa-circle text-muted{% endif %}"></i>
+                            <span class="text-sm">Add LinkedIn or GitHub profile</span>
+                        </div>
+                        <div class="d-flex align-items-center gap-3">
+                            <i
+                                class="fas {% if user.future_goals %}fa-check-circle text-success{% else %}fa-circle text-muted{% endif %}"></i>
+                            <span class="text-sm">Share your future goals</span>
+                        </div>
+                    </div>
+
+                    <div class="progress" style="height: 8px; background: rgba(255,255,255,0.1);">
+                        <div class="progress-bar bg-warning" role="progressbar"
+                            style="width: {{ user.kyc_progress_percentage }}%;"
+                            aria-valuenow="{{ user.kyc_progress_percentage }}" aria-valuemin="0" aria-valuemax="100">
+                        </div>
+                    </div>
+                    <p class="text-center text-xs text-muted mt-2">{{ user.kyc_progress_percentage }}% Complete</p>
+                </div>
+                <div class="modal-footer border-top border-white-10">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Later</button>
+                    <a href="{% url 'profile' %}" class="btn btn-warning btn-sm">
+                        <i class="fas fa-arrow-right me-1"></i> Complete KYC
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-show KYC modal on page load
+        document.addEventListener('DOMContentLoaded', function () {
+            const kycModal = new bootstrap.Modal(document.getElementById('kycModal'));
+            kycModal.show();
+        });
+    </script>
+    {% endif %}
+
 </body>
 
 </html>

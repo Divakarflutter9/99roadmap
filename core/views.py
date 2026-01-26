@@ -294,6 +294,8 @@ def profile_view(request):
         'stats': stats,
         'purchased_bundles': purchased_bundles,
         'subscription_history': subscription_history,
+        'is_google_user': request.user.is_google_user(),
+        'kyc_required': request.user.is_google_user() and not request.user.kyc_completed(),
     }
     return render(request, 'profile/profile.html', context)
 
@@ -466,6 +468,11 @@ def roadmap_detail_view(request, slug):
     user_has_access = False
     
     if request.user.is_authenticated:
+        # KYC Check: Google users must complete profile
+        if request.user.is_google_user() and not request.user.kyc_completed():
+            messages.warning(request, 'Please complete your profile to access roadmaps.')
+            return redirect('profile')
+        
         enrollment, created = UserRoadmapEnrollment.objects.get_or_create(
             user=request.user,
             roadmap=roadmap
@@ -502,6 +509,11 @@ def stage_detail_view(request, roadmap_slug, stage_order):
     
     roadmap = get_object_or_404(Roadmap, slug=roadmap_slug, is_active=True)
     stage = get_object_or_404(Stage, roadmap=roadmap, order=stage_order)
+    
+    # KYC Check: Google users must complete profile
+    if request.user.is_google_user() and not request.user.kyc_completed():
+        messages.warning(request, 'Please complete your profile to access roadmaps.')
+        return redirect('profile')
     
     # Check access
     user_has_access = not roadmap.is_premium or stage.is_free
@@ -559,6 +571,11 @@ def topic_view(request, topic_id):
     topic = get_object_or_404(Topic, id=topic_id)
     stage = topic.stage
     roadmap = stage.roadmap
+    
+    # KYC Check: Google users must complete profile
+    if request.user.is_google_user() and not request.user.kyc_completed():
+        messages.warning(request, 'Please complete your profile to access roadmaps.')
+        return redirect('profile')
     
     # Check access
     user_has_access = not roadmap.is_premium or stage.is_free
