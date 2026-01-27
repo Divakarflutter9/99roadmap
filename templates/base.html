@@ -580,7 +580,7 @@
     </script>
 
     <!-- KYC Completion Popup for Google Users -->
-    {% if user.is_authenticated and user.is_google_user and not user.kyc_completed %}
+    {% if user.is_authenticated and user.is_google_user and not user.kyc_completed and request.path != '/profile/' %}
     <div class="modal fade" id="kycModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
         data-bs-keyboard="false">
         <div class="modal-dialog modal-dialog-centered">
