@@ -90,6 +90,21 @@ DATABASES = {
     )
 }
 
+# Cache Configuration (Database-backed, can upgrade to Redis later)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cache_table',
+        'TIMEOUT': 300,  # 5 minutes default
+        'OPTIONS': {
+            'MAX_ENTRIES': 1000
+        }
+    }
+}
+
+# Session caching for better performance
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'
+
 # Custom User Model
 AUTH_USER_MODEL = 'core.User'
 

@@ -333,14 +333,14 @@ def dashboard_view(request):
     enrollments = UserRoadmapEnrollment.objects.filter(user=request.user).select_related('roadmap', 'current_stage')
     
     # Get recent activity
-    recent_topics_qs = UserTopicProgress.objects.filter(user=request.user, is_completed=True).order_by('-completed_at')
-    recent_quizzes_qs = UserQuizAttempt.objects.filter(user=request.user).order_by('-started_at')
+    recent_topics_qs = UserTopicProgress.objects.filter(user=request.user, is_completed=True).select_related('topic__stage__roadmap').order_by('-completed_at')
+    recent_quizzes_qs = UserQuizAttempt.objects.filter(user=request.user).select_related('quiz__stage__roadmap').order_by('-started_at')
     
     recent_topics = recent_topics_qs[:5]
     recent_quizzes = recent_quizzes_qs[:5]
     
     # Get recommended roadmaps
-    recommended = Roadmap.objects.filter(is_active=True).exclude(
+    recommended = Roadmap.objects.filter(is_active=True).select_related('category').exclude(
         id__in=enrollments.values_list('roadmap_id', flat=True)
     )[:3]
 
@@ -424,7 +424,7 @@ def dashboard_view(request):
 def roadmap_list_view(request):
     """List all roadmaps with filtering"""
     
-    roadmaps = Roadmap.objects.filter(is_active=True)
+    roadmaps = Roadmap.objects.filter(is_active=True).select_related('category')
     categories = RoadmapCategory.objects.all()
     
     # Filtering
@@ -507,8 +507,8 @@ def roadmap_detail_view(request, slug):
 def stage_detail_view(request, roadmap_slug, stage_order):
     """Stage detail with topics"""
     
-    roadmap = get_object_or_404(Roadmap, slug=roadmap_slug, is_active=True)
-    stage = get_object_or_404(Stage, roadmap=roadmap, order=stage_order)
+    roadmap = get_object_or_404(Roadmap.objects.select_related('category'), slug=roadmap_slug, is_active=True)
+    stage = get_object_or_404(Stage.objects.select_related('roadmap'), roadmap=roadmap, order=stage_order)
     
     # KYC Check: Google users must complete profile
     if request.user.is_google_user() and not request.user.kyc_completed():
@@ -535,8 +535,8 @@ def stage_detail_view(request, roadmap_slug, stage_order):
         messages.warning(request, 'This stage requires a subscription. Please subscribe to continue.')
         return redirect('roadmap_detail', slug=roadmap_slug)
     
-    topics = stage.topics.all()
-    quizzes = stage.quizzes.all()
+    topics = stage.topics.prefetch_related('resources').all()
+    quizzes = stage.quizzes.prefetch_related('questions__options').all()
     
     # Get user progress
     completed_topics = UserTopicProgress.objects.filter(
@@ -568,7 +568,7 @@ def topic_view(request, topic_id):
     # Local import to avoid circular dependency
     from ai_assistant.views import has_ai_access
     
-    topic = get_object_or_404(Topic, id=topic_id)
+    topic = get_object_or_404(Topic.objects.select_related('stage__roadmap').prefetch_related('resources'), id=topic_id)
     stage = topic.stage
     roadmap = stage.roadmap
     
@@ -602,8 +602,8 @@ def topic_view(request, topic_id):
     )
     
     # Get next and previous topics
-    next_topic = Topic.objects.filter(stage=stage, order__gt=topic.order).first()
-    prev_topic = Topic.objects.filter(stage=stage, order__lt=topic.order).last()
+    next_topic = Topic.objects.filter(stage=stage, order__gt=topic.order).select_related('stage').first()
+    prev_topic = Topic.objects.filter(stage=stage, order__lt=topic.order).select_related('stage').last()
     
     # Check AI access
     is_ai_locked = not has_ai_access(request.user, roadmap.id)
