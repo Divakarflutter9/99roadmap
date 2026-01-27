@@ -432,5 +432,22 @@
                 sendAIMessage();
             }
         });
+
+        // Mobile Toggle for AI Sidebar
+        const aiToggleBtn = document.getElementById('aiToggleBtn');
+        const aiSidebar = document.querySelector('.ai-sidebar-container');
+
+        if (aiToggleBtn && aiSidebar) {
+            aiToggleBtn.addEventListener('click', function () {
+                aiToggleBtn.classList.toggle('active');
+                aiSidebar.classList.toggle('show');
+            });
+        }
     </script>
+
+    <!-- Mobile AI Toggle Button -->
+    <button id="aiToggleBtn" class="ai-toggle-btn animate-bounce-in">
+        <i class="fas fa-robot"></i>
+    </button>
+
     {% endblock %}
