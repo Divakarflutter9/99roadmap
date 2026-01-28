@@ -228,11 +228,16 @@
             top: auto;
             z-index: 1;
             /* Normal z-index */
-            transform: none;
-            /* No hiding */
+            transform: none !important;
+            /* Force visible */
+            visibility: visible !important;
+            /* Override main.css hidden */
             transition: none;
             margin-top: 3rem;
             /* Spacing from content */
+            animation: none !important;
+            /* Disable slide-in animation on mobile */
+            opacity: 1 !important;
         }
 
         .ai-sidebar-container.show {
