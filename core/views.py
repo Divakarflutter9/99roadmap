@@ -557,7 +557,7 @@ def stage_detail_view(request, roadmap_slug, stage_order):
         messages.warning(request, 'This stage requires a subscription. Please subscribe to continue.')
         return redirect('roadmap_detail', slug=roadmap_slug)
     
-    topics = stage.topics.prefetch_related('resources').all()
+    topics = stage.topics.all()
     quizzes = stage.quizzes.prefetch_related('questions__options').all()
     
     # Get user progress
@@ -590,7 +590,7 @@ def topic_view(request, topic_id):
     # Local import to avoid circular dependency
     from ai_assistant.views import has_ai_access
     
-    topic = get_object_or_404(Topic.objects.select_related('stage__roadmap').prefetch_related('resources'), id=topic_id)
+    topic = get_object_or_404(Topic.objects.select_related('stage__roadmap'), id=topic_id)
     stage = topic.stage
     roadmap = stage.roadmap
     
