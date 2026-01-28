@@ -448,12 +448,34 @@ def roadmap_list_view(request):
     page = request.GET.get('page')
     roadmaps_page = paginator.get_page(page)
     
+    # Access Check Data
+    purchased_roadmap_ids = set()
+    user_has_subscription = False
+    
+    if request.user.is_authenticated:
+        # Get directly purchased roadmaps
+        purchased_roadmap_ids = set(
+            Payment.objects.filter(
+                user=request.user, 
+                roadmap__isnull=False, 
+                status='success'
+            ).values_list('roadmap_id', flat=True)
+        )
+        
+        # Check subscription
+        try:
+            user_has_subscription = request.user.subscription.is_active()
+        except (AttributeError, UserSubscription.DoesNotExist):
+            user_has_subscription = False
+
     context = {
         'roadmaps': roadmaps_page,
         'categories': categories,
         'selected_category': category_slug,
         'selected_difficulty': difficulty,
         'search_query': search,
+        'purchased_roadmap_ids': purchased_roadmap_ids,
+        'user_has_subscription': user_has_subscription,
     }
     return render(request, 'roadmaps/list.html', context)
 

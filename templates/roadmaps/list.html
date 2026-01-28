@@ -49,7 +49,7 @@
         <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem;">
             {% for roadmap in roadmaps %}
             <!-- Roadmap Card -->
-            <div class="roadmap-card" onclick="window.location.href='{% url 'roadmap_detail' roadmap.slug %}'">
+            <div class="roadmap-card">
 
                 <!-- Badge -->
                 {% if roadmap.is_premium %}
@@ -90,10 +90,22 @@
                     </p>
                     {% endif %}
 
-                    <div class="mt-auto pt-3 border-top w-100 d-flex justify-between text-muted"
+                    <div class="mt-auto pt-3 border-top w-100 d-flex justify-between text-muted mb-3"
                         style="font-size: 0.85rem;">
                         <span><i class="far fa-clock me-1"></i> {{ roadmap.estimated_hours }}h</span>
                         <span><i class="fas fa-layer-group me-1"></i> {{ roadmap.total_stages }} Stages</span>
+                    </div>
+
+                    <!-- Action Button -->
+                    <div class="d-grid w-100">
+                        {% if user_has_subscription or not roadmap.is_premium or roadmap.id in purchased_roadmap_ids %}
+                        <a href="{% url 'roadmap_detail' roadmap.slug %}" class="btn btn-primary"
+                            style="justify-content: center;">Open Roadmap</a>
+                        {% else %}
+                        <button
+                            onclick="openPurchaseModal('{{ roadmap.title|escapejs }}', '{% url 'initiate_payment' 'roadmap' roadmap.id %}')"
+                            class="btn btn-primary" style="justify-content: center;">Open Roadmap</button>
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -135,4 +147,54 @@
 
     </div>
 </div>
+
+<!-- Purchase Modal -->
+<div id="purchaseModal"
+    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center;">
+    <div
+        style="background: #1e293b; padding: 2rem; border-radius: 1rem; max-width: 400px; width: 90%; text-align: center; border: 1px solid var(--border-light); position: relative;">
+        <!-- Close Button -->
+        <button onclick="closePurchaseModal()"
+            style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 1.25rem;">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <div
+            style="width: 60px; height: 60px; background: rgba(99, 102, 241, 0.2); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem;">
+            <i class="fas fa-lock fa-lg"></i>
+        </div>
+
+        <h3 class="text-white mb-2">Unlock Roadmap</h3>
+        <p class="text-secondary mb-4">You need to purchase <strong id="modalRoadmapTitle" class="text-white"></strong>
+            to access this content.</p>
+
+        <div class="d-grid gap-2">
+            <a id="modalBuyLink" href="#" class="btn btn-primary w-100">Buy Now</a>
+            <button onclick="closePurchaseModal()" class="btn btn-secondary w-100">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openPurchaseModal(title, buyUrl) {
+        document.getElementById('modalRoadmapTitle').textContent = title;
+        document.getElementById('modalBuyLink').href = buyUrl;
+
+        const modal = document.getElementById('purchaseModal');
+        modal.style.display = 'flex';
+        // Add fade in effect if desired, but simple display flex is robust
+    }
+
+    function closePurchaseModal() {
+        document.getElementById('purchaseModal').style.display = 'none';
+    }
+
+    // Close on click outside
+    window.onclick = function (event) {
+        const modal = document.getElementById('purchaseModal');
+        if (event.target == modal) {
+            closePurchaseModal();
+        }
+    }
+</script>
 {% endblock %}
