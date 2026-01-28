@@ -39,11 +39,13 @@ class CustomSocialAccountAdapter(DefaultSocialAccountAdapter):
             
             if picture_url and not user.profile_image:
                 try:
-                    response = requests.get(picture_url)
+                    # Add timeout to prevent 502s if connection hangs
+                    response = requests.get(picture_url, timeout=4)
                     if response.status_code == 200:
                         filename = f"google_{user.id}.jpg"
                         user.profile_image.save(filename, ContentFile(response.content), save=True)
                 except Exception as e:
+                    # Log error but don't fail login
                     print(f"Error saving profile image: {e}")
                     
         return user
