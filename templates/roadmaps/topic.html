@@ -191,14 +191,20 @@
     @media (max-width: 992px) {
         .topic-layout {
             grid-template-columns: 1fr !important;
+            overflow-x: hidden;
+            /* Prevent grid overflow */
         }
 
         .ai-sidebar-container {
             display: block !important;
             position: relative;
             margin-top: 3rem;
-            width: 100%;
+            width: auto;
+            /* Allow auto width to respect padding */
+            max-width: 100%;
             z-index: 1;
+            overflow-x: hidden;
+            /* Safety catch */
             /* Force Visibility Overrides */
             animation: none !important;
             opacity: 1 !important;
@@ -212,8 +218,23 @@
             /* Reset sticky positioning on mobile to prevent movement */
             position: static !important;
             top: auto !important;
-            width: 100% !important;
+            width: auto !important;
+            /* Allow natural block width */
             max-width: 100% !important;
+        }
+
+        .topic-container {
+            width: auto !important;
+            max-width: 100% !important;
+            padding: 1rem 0 !important;
+            /* Safety padding */
+            overflow-x: hidden;
+        }
+
+        .topic-card-content {
+            width: auto !important;
+            max-width: 100% !important;
+            padding: 1.5rem !important;
         }
     }
 
