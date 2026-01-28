@@ -71,6 +71,10 @@ body {
   background-color: var(--bg-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* Prevent horizontal scroll */
+  width: 100%;
+  position: relative;
 }
 
 /* === TYPOGRAPHY === */
