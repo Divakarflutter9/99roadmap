@@ -220,61 +220,42 @@
         }
 
         .ai-sidebar-container {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            position: relative;
+            /* Default placement */
+            bottom: auto;
+            left: auto;
+            right: auto;
             top: auto;
-            z-index: 1000;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
+            z-index: 1;
+            /* Normal z-index */
+            transform: none;
+            /* No hiding */
+            transition: none;
+            margin-top: 3rem;
+            /* Spacing from content */
         }
 
         .ai-sidebar-container.show {
-            transform: translateY(0);
+            transform: none;
         }
 
         .ai-sidebar {
-            height: 60vh;
-            border-radius: 20px 20px 0 0;
+            height: 600px;
+            /* Fixed height for scrolling */
+            max-height: 80vh;
+            border-radius: var(--radius-xl);
+            /* Match desktop radius */
         }
 
         .ai-toggle-btn {
-            display: flex;
-            /* Show toggle button on mobile */
+            display: none !important;
+            /* Hide toggle button as it is always visible */
         }
     }
 
-    /* Toggle Button Styles */
+    /* Toggle Button Styles - Legacy/Desktop hidden */
     .ai-toggle-btn {
         display: none;
-        /* Hidden on desktop */
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        width: 60px;
-        height: 60px;
-        background: var(--primary);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
-        z-index: 999;
-        font-size: 1.5rem;
-        cursor: pointer;
-        align-items: center;
-        justify-content: center;
-        transition: transform 0.2s, background 0.2s;
-    }
-
-    .ai-toggle-btn:hover {
-        transform: scale(1.1);
-        background: var(--primary-dark);
-    }
-
-    .ai-toggle-btn.active i {
-        transform: rotate(45deg);
-        /* Optional: change icon state */
     }
 </style>
 
@@ -409,83 +390,89 @@
         </div>
     </div>
 
+
+
     <script>
-        function sendAIMessage() {
-            const input = document.getElementById('ai-input');
-            const box = document.getElementById('ai-chat-box');
-            const message = input.value.trim();
+        document.addEventListener('DOMContentLoaded', function () {
+            // Function to send AI message
+            window.sendAIMessage = function () {
+                const input = document.getElementById('ai-input');
+                const box = document.getElementById('ai-chat-box');
+                const message = input.value.trim();
 
-            if (!message) return;
+                if (!message) return;
 
-            // Add user message
-            box.innerHTML += `<div class="message user animate-fade-in-up">${message}</div>`;
-            input.value = '';
-            box.scrollTop = box.scrollHeight;
+                // Add user message
+                box.innerHTML += `<div class="message user animate-fade-in-up">${message}</div>`;
+                input.value = '';
+                box.scrollTop = box.scrollHeight;
 
-            // Show typing indicator
-            const loadingId = 'loading-' + Date.now();
-            box.innerHTML += `
-            <div id="${loadingId}" class="message ai flex items-center gap-2">
-                <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
-                <span>Thinking...</span>
-            </div>`;
-            box.scrollTop = box.scrollHeight;
+                // Show typing indicator
+                const loadingId = 'loading-' + Date.now();
+                box.innerHTML += `
+                <div id="${loadingId}" class="message ai flex items-center gap-2">
+                    <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
+                    <span>Thinking...</span>
+                </div>`;
+                box.scrollTop = box.scrollHeight;
 
-            fetch('{% url "ai_ask" %}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token }}'
-                },
-                body: JSON.stringify({
-                    message: message,
-                    stage_id: '{{ stage.id }}', // Context
-                    roadmap_id: '{{ roadmap.id }}'
+                fetch('{% url "ai_ask" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        stage_id: '{{ stage.id }}', // Context
+                        roadmap_id: '{{ roadmap.id }}'
+                    })
                 })
-            })
-                .then(res => res.json())
-                .then(data => {
-                    document.getElementById(loadingId).remove();
-                    if (data.success) {
-                        // Convert newlines to <br> for simple formatting
-                        const formatted = data.response.replace(/\n/g, '<br>');
-                        box.innerHTML += `<div class="message ai animate-fade-in">${formatted}</div>`;
-                    } else {
-                        box.innerHTML += `<div class="message ai text-danger">Error: ${data.error}</div>`;
+                    .then(res => res.json())
+                    .then(data => {
+                        document.getElementById(loadingId)?.remove();
+                        if (data.success) {
+                            const formatted = data.response.replace(/\n/g, '<br>');
+                            box.innerHTML += `<div class="message ai animate-fade-in">${formatted}</div>`;
+                        } else {
+                            box.innerHTML += `<div class="message ai text-danger">Error: ${data.error}</div>`;
+                        }
+                        box.scrollTop = box.scrollHeight;
+                    })
+                    .catch(err => {
+                        document.getElementById(loadingId)?.remove();
+                        box.innerHTML += `<div class="message ai text-danger">Network Connection Error</div>`;
+                        box.scrollTop = box.scrollHeight;
+                    });
+            };
+
+            // Allow Enter key to send (Shift+Enter for new line)
+            const aiInput = document.getElementById('ai-input');
+            if (aiInput) {
+                aiInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        sendAIMessage();
                     }
-                    box.scrollTop = box.scrollHeight;
-                })
-                .catch(err => {
-                    const loader = document.getElementById(loadingId);
-                    if (loader) loader.remove();
-                    box.innerHTML += `<div class="message ai text-danger">Network Connection Error</div>`;
-                    box.scrollTop = box.scrollHeight;
                 });
-        }
+            }
 
-        // Allow Enter key to send (Shift+Enter for new line)
-        document.getElementById('ai-input').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendAIMessage();
+            // Mobile Toggle for AI Sidebar
+            const aiToggleBtn = document.getElementById('aiToggleBtn');
+            const aiSidebar = document.querySelector('.ai-sidebar-container');
+
+            if (aiToggleBtn && aiSidebar) {
+                console.log("AI Toggle Button found");
+                aiToggleBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log("AI Toggle Clicked");
+                    aiToggleBtn.classList.toggle('active');
+                    aiSidebar.classList.toggle('show');
+                });
+            } else {
+                console.log("AI Toggle Elements NOT found");
             }
         });
-
-        // Mobile Toggle for AI Sidebar
-        const aiToggleBtn = document.getElementById('aiToggleBtn');
-        const aiSidebar = document.querySelector('.ai-sidebar-container');
-
-        if (aiToggleBtn && aiSidebar) {
-            aiToggleBtn.addEventListener('click', function () {
-                aiToggleBtn.classList.toggle('active');
-                aiSidebar.classList.toggle('show');
-            });
-        }
     </script>
-
-    <!-- Mobile AI Toggle Button -->
-    <button id="aiToggleBtn" class="ai-toggle-btn animate-bounce-in">
-        <i class="fas fa-robot"></i>
-    </button>
 
     {% endblock %}
