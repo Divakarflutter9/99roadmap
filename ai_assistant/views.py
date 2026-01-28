@@ -38,48 +38,10 @@ def has_ai_access(user, roadmap_id=None):
         print("DEBUG: No Subscription Found")
     
     # 2. Check Contextual Access (if roadmap_id provided)
+    # UPDATE: Roadmap purchase no longer grants AI access. 
+    # AI is exclusive to Subscriptions.
     if roadmap_id:
-        try:
-            # Check if user owns this roadmap (or has access via bundle)
-            enrollment = UserRoadmapEnrollment.objects.filter(user=user, roadmap__id=roadmap_id).first()
-            
-            if enrollment:
-                print(f"DEBUG: Enrollment found for {enrollment.roadmap.title}. Is Premium: {enrollment.roadmap.is_premium}")
-                
-                # If roadmap is free, access is restricted to subscribers (unless logic changes)
-                if not enrollment.roadmap.is_premium:
-                    print("DEBUG: Roadmap is Free -> No AI Access unless Subscribed")
-                    return False
-                
-                # If roadmap is Premium, we MUST verify purchase (Payment)
-                # Enrollment alone is NOT enough because it auto-creates on view
-                
-                # Check for direct roadmap purchase
-                has_payment = Payment.objects.filter(
-                    user=user, 
-                    status='success',
-                    roadmap=enrollment.roadmap
-                ).exists()
-                
-                if has_payment:
-                    print("DEBUG: Found direct Roadmap Payment -> Access Granted")
-                    return True
-                    
-                # Check for bundle purchase containing this roadmap
-                has_bundle_payment = Payment.objects.filter(
-                    user=user,
-                    status='success',
-                    bundle__roadmaps=enrollment.roadmap
-                ).exists()
-                
-                if has_bundle_payment:
-                    print("DEBUG: Found Bundle Payment -> Access Granted")
-                    return True
-                    
-                print("DEBUG: No Payment found for Premium Roadmap -> Access Denied")
-                
-        except Exception as e:
-            print(f"DEBUG: Enrollment check error: {e}")
+        print(f"DEBUG: Roadmap {roadmap_id} provided, but AI is Subscription-only.")
 
     print("DEBUG: Access Denied -> False")
     return False
