@@ -537,3 +537,30 @@ class SiteSetting(models.Model):
     class Meta:
         verbose_name = "Site Setting"
         verbose_name_plural = "Site Settings"
+
+
+class WeeklyGoal(models.Model):
+    """User's weekly learning goal"""
+    
+    TARGET_TYPE_CHOICES = [
+        ('topics', 'Topics Completed'),
+    ]
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='weekly_goals')
+    target_type = models.CharField(max_length=20, choices=TARGET_TYPE_CHOICES, default='topics')
+    target_value = models.PositiveIntegerField(default=5)
+    
+    start_date = models.DateField()
+    end_date = models.DateField()
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+        
+    def __str__(self):
+        return f"{self.user.email} - Goal: {self.target_value} {self.target_type}"
+    
+    def is_active(self):
+        today = timezone.now().date()
+        return self.start_date <= today <= self.end_date

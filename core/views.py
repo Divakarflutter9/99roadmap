@@ -26,10 +26,42 @@ from reportlab.lib.colors import Color
 from .models import (
     User, UserGamification, Roadmap, RoadmapCategory, Stage, Topic, Quiz,
     QuizQuestion, QuizOption, UserRoadmapEnrollment, UserTopicProgress,
-    UserQuizAttempt, XPTransaction
+    UserQuizAttempt, XPTransaction, WeeklyGoal
 )
 from payments.models import UserSubscription, Payment
-from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserAvatarForm, QuizSubmissionForm
+from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserAvatarForm, QuizSubmissionForm, WeeklyGoalForm
+
+# ... (Authentication Views) ...
+
+@login_required
+@require_POST
+def set_weekly_goal(request):
+    """Set a new weekly learning goal"""
+    form = WeeklyGoalForm(request.POST)
+    if form.is_valid():
+        target = form.cleaned_data['target_value']
+        today = timezone.now().date()
+        end_date = today + timezone.timedelta(days=7)
+        
+        # Deactivate any existing active goals
+        WeeklyGoal.objects.filter(
+            user=request.user, 
+            end_date__gte=today
+        ).delete()
+        
+        # Create new goal
+        WeeklyGoal.objects.create(
+            user=request.user,
+            target_value=target,
+            start_date=today,
+            end_date=end_date
+        )
+        messages.success(request, f"Weekly goal set: Complete {target} topics in 7 days. Good luck!")
+    else:
+        messages.error(request, "Invalid goal. Please try again.")
+        
+    return redirect('dashboard')
+
 
 
 # ==================== Authentication Views ====================
@@ -371,6 +403,28 @@ def dashboard_view(request):
     # Fallback if no data
     if not skill_list:
         skill_list.append({'label': 'No Data', 'percentage': 0})
+        
+    # --- Weekly Goal Logic ---
+    today = timezone.now().date()
+    weekly_goal = WeeklyGoal.objects.filter(user=request.user, end_date__gte=today).first()
+    weekly_goal_progress = 0
+    weekly_goal_percent = 0
+    weekly_goal_form = None
+    
+    if weekly_goal:
+        # Calculate progress
+        completed_since_start = UserTopicProgress.objects.filter(
+            user=request.user,
+            is_completed=True,
+            completed_at__date__gte=weekly_goal.start_date,
+            completed_at__date__lte=weekly_goal.end_date
+        ).count()
+        weekly_goal_progress = completed_since_start
+        weekly_goal_percent = int((completed_since_start / weekly_goal.target_value) * 100)
+        if weekly_goal_percent > 100:
+            weekly_goal_percent = 100
+    else:
+        weekly_goal_form = WeeklyGoalForm()
     
     # 2. Daily Goals (Dynamic)
     today = timezone.now().date()
@@ -415,6 +469,10 @@ def dashboard_view(request):
         'daily_progress_percent': daily_progress_percent,
         'leaderboard_top': leaderboard_top,
         'badges': badges,
+        'weekly_goal': weekly_goal,
+        'weekly_goal_progress': weekly_goal_progress,
+        'weekly_goal_percent': weekly_goal_percent,
+        'weekly_goal_form': weekly_goal_form,
     }
     return render(request, 'dashboard.html', context)
 

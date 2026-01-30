@@ -5,7 +5,26 @@ Forms for 99Roadmap Platform
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import authenticate
-from .models import User, UserTopicProgress
+from .models import User, UserTopicProgress, WeeklyGoal
+
+class WeeklyGoalForm(forms.ModelForm):
+    """Form to set weekly goals"""
+    
+    target_value = forms.IntegerField(
+        label="Topics to Complete this Week",
+        min_value=1,
+        max_value=50,
+        initial=5,
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'e.g. 5'
+        })
+    )
+    
+    class Meta:
+        model = WeeklyGoal
+        fields = ['target_value']
+
 from django.core.exceptions import ValidationError
 
 

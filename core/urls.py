@@ -17,6 +17,7 @@ urlpatterns = [
     # Home & Dashboard
     path('', views.home_view, name='home'),
     path('dashboard/', views.dashboard_view, name='dashboard'),
+    path('set-goal/', views.set_weekly_goal, name='set_weekly_goal'),
     
     # Roadmaps
     path('roadmaps/', views.roadmap_list_view, name='roadmap_list'),
