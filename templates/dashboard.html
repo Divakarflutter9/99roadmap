@@ -14,6 +14,30 @@
                 Keep it up to earn more XP.</p>
         </div>
         <div class="col-lg-4">
+            <!-- Weekly Goal Widget (Top) -->
+            <div class="glass glass-bordered p-3 rounded-lg d-flex align-items-center justify-content-between mb-3">
+                <div class="flex-grow-1">
+                    <div class="text-xs text-uppercase text-secondary fw-bold mb-1">Weekly Goal</div>
+
+                    {% if weekly_goal %}
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="progress flex-grow-1" style="height: 6px; background: rgba(255,255,255,0.1);">
+                            <div class="progress-bar bg-success" role="progressbar"
+                                style="width: {{ weekly_goal_percent }}%"></div>
+                        </div>
+                        <span class="text-xs text-white">{{ weekly_goal_progress }}/{{ weekly_goal.target_value
+                            }}</span>
+                    </div>
+                    {% else %}
+                    <form action="{% url 'set_weekly_goal' %}" method="POST" class="d-flex gap-2 align-items-center">
+                        {% csrf_token %}
+                        {{ weekly_goal_form.target_value }}
+                        <button type="submit" class="btn btn-primary btn-xs px-2">Set</button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+
             <!-- Daily Progress Widget -->
             <div class="glass glass-bordered p-3 rounded-lg d-flex align-items-center justify-content-between">
                 <div>
@@ -23,7 +47,7 @@
                             style="width: {{ daily_progress_percent }}%"></div>
                     </div>
                 </div>
-                <div class="text-end">
+                <div class="text-end ps-3">
                     <div class="text-xl fw-bold text-white">{{ daily_completed_count }}/{{ daily_total_count }}</div>
                     <div class="text-xs text-success">Goals</div>
                 </div>
@@ -167,44 +191,6 @@
         <!-- Right Column: Sidebar Widgets -->
         <div class="col-lg-4">
 
-            <!-- Weekly Goal Widget -->
-            <div class="glass glass-bordered p-4 rounded-lg mb-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h6 class="text-uppercase text-secondary fw-bold text-xs mb-0">Weekly Goal</h6>
-                    {% if weekly_goal %}
-                    <span class="badge bg-primary rounded-pill">{{ weekly_goal.target_value }} Topics</span>
-                    {% endif %}
-                </div>
-
-                {% if weekly_goal %}
-                <div class="mb-2">
-                    <div class="d-flex justify-content-between text-sm mb-1">
-                        <span class="text-white">Progress</span>
-                        <span class="text-primary">{{ weekly_goal_progress }} / {{ weekly_goal.target_value }}</span>
-                    </div>
-                    <div class="progress bg-dark" style="height: 8px;">
-                        <div class="progress-bar bg-success" role="progressbar"
-                            style="width: {{ weekly_goal_percent }}%"></div>
-                    </div>
-                </div>
-                <!-- Calculate Days Left -->
-                {% with weekly_goal.end_date|timeuntil:today as days_left %}
-                <!-- Simple check for now, can be improved with custom template tag or view logic -->
-                <p class="text-xs text-muted mb-0 mt-2">
-                    <i class="far fa-clock me-1"></i> Ends: {{ weekly_goal.end_date|date:"M d" }}
-                </p>
-                {% endwith %}
-
-                {% else %}
-                <p class="text-sm text-secondary mb-3">Set a target for how many topics you want to finish this week.
-                </p>
-                <form action="{% url 'set_weekly_goal' %}" method="POST" class="d-flex gap-2">
-                    {% csrf_token %}
-                    {{ weekly_goal_form.target_value }}
-                    <button type="submit" class="btn btn-primary btn-sm px-3">Set</button>
-                </form>
-                {% endif %}
-            </div>
 
             <!-- Daily Goals Widget -->
             <div class="glass glass-bordered p-4 rounded-lg mb-4">
