@@ -243,10 +243,44 @@ class QuizQuestionAdmin(admin.ModelAdmin):
 
 @admin.register(UserRoadmapEnrollment)
 class UserRoadmapEnrollmentAdmin(admin.ModelAdmin):
-    list_display = ['user', 'roadmap', 'enrolled_at', 'progress_bar', 'current_stage', 'completed_at']
+    list_display = ['user', 'roadmap', 'enrolled_at', 'amount_paid', 'coupon_used', 'progress_bar']
     list_filter = ['enrolled_at', 'roadmap']
     search_fields = ['user__email', 'user__full_name', 'roadmap__title']
     readonly_fields = ['enrolled_at', 'last_accessed']
+    
+    def get_payment(self, obj):
+        """Helper to find payment for this enrollment"""
+        from payments.models import Payment
+        # 1. Check direct roadmap purchase
+        payment = Payment.objects.filter(
+            user=obj.user,
+            roadmap=obj.roadmap,
+            status='success'
+        ).order_by('-created_at').first()
+        
+        if payment:
+            return payment
+            
+        # 2. Check bundle purchase containing this roadmap
+        return Payment.objects.filter(
+            user=obj.user,
+            bundle__roadmaps=obj.roadmap,
+            status='success'
+        ).order_by('-created_at').first()
+
+    def amount_paid(self, obj):
+        payment = self.get_payment(obj)
+        if payment:
+            return f"₹{payment.amount}"
+        return "Free/Manual"
+    amount_paid.short_description = 'Paid'
+
+    def coupon_used(self, obj):
+        payment = self.get_payment(obj)
+        if payment and payment.coupon:
+            return f"{payment.coupon.code} (-{payment.coupon.discount_percent}%)"
+        return "-"
+    coupon_used.short_description = 'Coupon'
     
     def progress_bar(self, obj):
         percentage = obj.get_progress_percentage()
