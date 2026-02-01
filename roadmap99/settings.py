@@ -245,9 +245,12 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+# Celery Configuration
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-db'
+CELERY_TIMEZONE = TIME_ZONE
+
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 # Important: Tell allauth that the user model has no username field
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
