@@ -252,17 +252,16 @@ CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'django-db'
 CELERY_TIMEZONE = TIME_ZONE
 
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
-# New AllAuth Settings
+# AllAuth Settings
 ACCOUNT_LOGIN_METHODS = {'email'}
-ACCOUNT_SIGNUP_FIELDS = ['email', 'password'] # Simplified fields
+ACCOUNT_SIGNUP_FIELDS = ['email', 'password1'] # Using 'password1' as required by recent Allauth versions
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 # Important: Tell allauth that the user model has no username field
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 SOCIALACCOUNT_ADAPTER = 'core.adapter.CustomSocialAccountAdapter'
 LOGIN_REDIRECT_URL = 'dashboard'
 SOCIALACCOUNT_LOGIN_ON_GET = True
+
 
 # Celery Configuration
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://127.0.0.1:6379/0')
