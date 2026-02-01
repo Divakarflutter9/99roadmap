@@ -104,6 +104,7 @@ def register_view(request):
                 print(f"Error sending welcome email: {e}")
             
             # Auto-login and redirect
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
             messages.success(request, f'Registration successful! Welcome to 99Roadmap.')
             return redirect('dashboard')
@@ -581,6 +582,60 @@ def roadmap_detail_view(request, slug):
         'user_has_access': user_has_access,
     }
     return render(request, 'roadmaps/detail.html', context)
+
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+from .models import Giveaway, GiveawayParticipation
+import json
+
+@login_required
+def api_check_giveaway(request):
+    """Check if there is an active giveaway for this user"""
+    # Find active giveaway
+    active_giveaway = Giveaway.objects.filter(is_active=True).first()
+    
+    if not active_giveaway:
+        return JsonResponse({'active': False})
+        
+    # Check if user already responded
+    has_responded = GiveawayParticipation.objects.filter(
+        user=request.user, 
+        giveaway=active_giveaway
+    ).exists()
+    
+    if has_responded:
+        return JsonResponse({'active': False, 'reason': 'already_responded'})
+        
+    return JsonResponse({
+        'active': True,
+        'giveaway': {
+            'id': active_giveaway.id,
+            'title': active_giveaway.title,
+            'image_url': active_giveaway.image.url if active_giveaway.image else '',
+        }
+    })
+
+@login_required
+@require_POST
+def api_submit_giveaway_response(request):
+    """Submit interested/not interested response"""
+    try:
+        data = json.loads(request.body)
+        giveaway_id = data.get('giveaway_id')
+        status = data.get('status') # INTERESTED or NOT_INTERESTED
+        
+        giveaway = Giveaway.objects.get(id=giveaway_id)
+        
+        GiveawayParticipation.objects.create(
+            user=request.user,
+            giveaway=giveaway,
+            status=status
+        )
+        
+        return JsonResponse({'success': True})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': str(e)})
 
 
 @login_required

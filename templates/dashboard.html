@@ -335,4 +335,162 @@
         width: 1rem;
     }
 </style>
+
+<!-- Giveaway Modal -->
+<div id="giveawayModal" class="modal-overlay" style="display: none;">
+    <div class="modal-glass p-0 overflow-hidden text-center position-relative">
+        <div class="position-absolute top-0 end-0 p-3 z-10">
+            <button onclick="closeGiveawayModal()" class="btn btn-sm btn-circle bg-black-50 text-white border-0"><i
+                    class="fas fa-times"></i></button>
+        </div>
+
+        <div class="giveaway-image-container position-relative">
+            <img id="giveawayImage" src="" alt="Giveaway" class="img-fluid w-100"
+                style="max-height: 300px; object-fit: cover;">
+            <div class="position-absolute bottom-0 start-0 w-100 bg-gradient-to-t p-4 pt-5">
+                <h3 id="giveawayTitle" class="text-white fw-bold text-shadow mb-0">Special Giveaway!</h3>
+            </div>
+        </div>
+
+        <div class="p-4">
+            <p class="text-secondary mb-4">You've unlocked a chance to participate in our exclusive giveaway!</p>
+            <div class="d-flex gap-3 justify-content-center">
+                <button onclick="submitGiveawayResponse('NOT_INTERESTED')" class="btn btn-outline-white px-4">Not
+                    Interested</button>
+                <button onclick="submitGiveawayResponse('INTERESTED')"
+                    class="btn btn-primary px-5 hover-lift fw-bold">I'm Interested! 🎁</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(5px);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+    }
+
+    .modal-glass {
+        background: rgba(30, 30, 40, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        width: 90%;
+        max-width: 500px;
+        animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-circle {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .bg-black-50 {
+        background: rgba(0, 0, 0, 0.5);
+    }
+
+    .bg-gradient-to-t {
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    }
+
+    .text-shadow {
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideUp {
+        from {
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('payment_success') === 'true') {
+            checkGiveaway();
+        }
+    });
+
+    let currentGiveawayId = null;
+
+    function checkGiveaway() {
+        fetch('/api/check-giveaway/')
+            .then(response => response.json())
+            .then(data => {
+                if (data.active) {
+                    currentGiveawayId = data.giveaway.id;
+                    document.getElementById('giveawayTitle').textContent = data.giveaway.title;
+                    document.getElementById('giveawayImage').src = data.giveaway.image_url;
+                    document.getElementById('giveawayModal').style.display = 'flex';
+                }
+            })
+            .catch(err => console.error('Error checking giveaway:', err));
+    }
+
+    function closeGiveawayModal() {
+        document.getElementById('giveawayModal').style.display = 'none';
+        // Clean URL
+        const url = new URL(window.location);
+        url.searchParams.delete('payment_success');
+        window.history.replaceState({}, '', url);
+    }
+
+    function submitGiveawayResponse(status) {
+        if (!currentGiveawayId) return;
+
+        fetch('/api/submit-giveaway-response/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                giveaway_id: currentGiveawayId,
+                status: status
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    closeGiveawayModal();
+                    if (status === 'INTERESTED') {
+                        // Optional: Show success toast
+                        alert("Thanks! We've noted your interest.");
+                    }
+                }
+            });
+    }
+</script>
+
 {% endblock %}

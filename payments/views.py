@@ -346,7 +346,7 @@ def process_successful_payment(request, payment, msg):
         print(f"Error sending receipt: {e}")
 
     messages.success(request, f'Success! {msg}')
-    return redirect('dashboard')
+    return redirect('/dashboard/?payment_success=true')
 
 
 @csrf_exempt

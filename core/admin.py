@@ -10,7 +10,7 @@ from nested_admin import NestedModelAdmin, NestedTabularInline
 from .models import (
     User, RoadmapCategory, Roadmap, Stage, Topic, Quiz, QuizQuestion, QuizOption, RoadmapBundle,
     UserRoadmapEnrollment, UserTopicProgress, UserQuizAttempt, UserGamification, XPTransaction,
-    SiteSetting
+    SiteSetting, BroadcastEmail, ProgressEmailCampaign, Giveaway, GiveawayParticipation
 )
 from payments.models import UserSubscription
 
@@ -364,6 +364,76 @@ class XPTransactionAdmin(admin.ModelAdmin):
         )
     amount_display.short_description = 'XP'
 
+    amount_display.short_description = 'XP'
+
+
+@admin.register(BroadcastEmail)
+class BroadcastEmailAdmin(admin.ModelAdmin):
+    list_display = ['subject', 'recipients_count', 'sent_at', 'created_at', 'status_badge']
+    readonly_fields = ['sent_at', 'recipients_count']
+    actions = ['send_email_to_recent_users']
+    
+    def status_badge(self, obj):
+        if obj.sent_at:
+            return format_html('<span style="color:green; font-weight:bold;">Sent</span>')
+        return format_html('<span style="color:orange; font-weight:bold;">Draft</span>')
+    status_badge.short_description = 'Status'
+    
+    def send_email_to_recent_users(self, request, queryset):
+        """Action to send email to recent 200 users"""
+        from .tasks import send_broadcast_email_task
+        
+        count = 0
+        for email_obj in queryset:
+            if email_obj.sent_at:
+                self.message_user(request, f"Skipped '{email_obj.subject}' - Already sent.", level='WARNING')
+                continue
+            
+            # Use .delay() to send to Celery
+            send_broadcast_email_task.delay(email_obj.id)
+            count += 1
+            
+        if count > 0:
+            self.message_user(request, f"Started background process for {count} broadcast(s). They will be sent shortly.")
+        else:
+            self.message_user(request, "No eligible broadcasts selected.", level='WARNING')
+
+    send_email_to_recent_users.short_description = "Send to Recent 200 Users (Async)"
+
+
+@admin.register(ProgressEmailCampaign)
+class ProgressEmailCampaignAdmin(admin.ModelAdmin):
+    list_display = ['__str__', 'subject', 'recipients_count', 'sent_at', 'status_badge']
+    readonly_fields = ['sent_at', 'recipients_count']
+    actions = ['send_reminders']
+    
+    def status_badge(self, obj):
+        if obj.sent_at:
+            return format_html('<span style="color:green; font-weight:bold;">Sent</span>')
+        return format_html('<span style="color:orange; font-weight:bold;">Draft</span>')
+    status_badge.short_description = 'Status'
+    
+    def send_reminders(self, request, queryset):
+        """Send personalized progress emails to subscribed/enrolled users"""
+        from .tasks import send_progress_reminder_task
+        
+        count = 0
+        for campaign in queryset:
+            if campaign.sent_at:
+                self.message_user(request, f"Skipped - Already sent.", level='WARNING')
+                continue
+            
+            # Use .delay() to send to Celery
+            send_progress_reminder_task.delay(campaign.id)
+            count += 1
+            
+        if count > 0:
+            self.message_user(request, f"Started background process for {count} campaign(s).")
+        else:
+            self.message_user(request, "No eligible campaigns selected.", level='WARNING')
+            
+    send_reminders.short_description = "Send Personalized Progress Emails (Async)"
+
 
 # Register remaining models
 admin.site.register(QuizOption)
@@ -372,3 +442,14 @@ admin.site.register(QuizOption)
 admin.site.site_header = "99Roadmap Admin"
 admin.site.site_title = "99Roadmap Admin Portal"
 admin.site.index_title = "Welcome to 99Roadmap Administration"
+
+@admin.register(Giveaway)
+class GiveawayAdmin(admin.ModelAdmin):
+    list_display = ['title', 'is_active', 'created_at']
+    list_filter = ['is_active']
+
+@admin.register(GiveawayParticipation)
+class GiveawayParticipationAdmin(admin.ModelAdmin):
+    list_display = ['user', 'giveaway', 'status', 'responded_at']
+    list_filter = ['status', 'giveaway']
+    readonly_fields = ['responded_at']

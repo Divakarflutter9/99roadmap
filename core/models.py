@@ -539,6 +539,41 @@ class SiteSetting(models.Model):
         verbose_name_plural = "Site Settings"
 
 
+
+class BroadcastEmail(models.Model):
+    """Admin broadcast emails to users"""
+    
+    subject = models.CharField(max_length=200)
+    message = models.TextField('Message (HTML supported)')
+    created_at = models.DateTimeField(auto_now_add=True)
+    sent_at = models.DateTimeField(null=True, blank=True)
+    recipients_count = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['-created_at']
+        
+    def __str__(self):
+        return f"{self.subject} ({self.created_at.strftime('%Y-%m-%d')})"
+
+
+
+class ProgressEmailCampaign(models.Model):
+    """Campaign to send progress reminders to users"""
+    
+    subject = models.CharField(max_length=200, default="Your Learning Progress Update 🚀")
+    intro_message = models.TextField('Intro Message', blank=True, help_text="Optional custom message at the top")
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    sent_at = models.DateTimeField(null=True, blank=True)
+    recipients_count = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['-created_at']
+        
+    def __str__(self):
+        return f"Progress Campaign ({self.created_at.strftime('%Y-%m-%d')})"
+
+
 class WeeklyGoal(models.Model):
     """User's weekly learning goal"""
     
@@ -564,3 +599,33 @@ class WeeklyGoal(models.Model):
     def is_active(self):
         today = timezone.now().date()
         return self.start_date <= today <= self.end_date
+
+
+class Giveaway(models.Model):
+    """Post-purchase giveaway campaign"""
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='giveaways/')
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+
+class GiveawayParticipation(models.Model):
+    """User response to a giveaway"""
+    STATUS_CHOICES = (
+        ('INTERESTED', 'Interested'),
+        ('NOT_INTERESTED', 'Not Interested'),
+    )
+    
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    giveaway = models.ForeignKey(Giveaway, on_delete=models.CASCADE)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES)
+    responded_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'giveaway')
+
+    def __str__(self):
+        return f"{self.user.email} - {self.status}"

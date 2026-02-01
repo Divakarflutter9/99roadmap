@@ -43,4 +43,8 @@ urlpatterns = [
     path('terms/', views.terms_view, name='terms'),
     path('privacy/', views.privacy_view, name='privacy'),
     path('refund-policy/', views.refund_policy_view, name='refund_policy'),
+    
+    # API
+    path('api/check-giveaway/', views.api_check_giveaway, name='api_check_giveaway'),
+    path('api/submit-giveaway-response/', views.api_submit_giveaway_response, name='api_submit_giveaway_response'),
 ]

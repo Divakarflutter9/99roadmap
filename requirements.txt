@@ -40,3 +40,6 @@ psycopg2-binary==2.9.9
 mysqlclient==2.2.4
 PyJWT==2.8.0
 cryptography==42.0.5
+celery>=5.3.6
+redis>=5.0.1
+django-celery-results>=2.5.1

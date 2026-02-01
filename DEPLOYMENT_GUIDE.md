@@ -4,6 +4,58 @@ This guide will help you deploy **99Roadmap** to your VPS at `/var/www/Divakar/`
 
 ---
 
+## 📌 Phase 0: High Concurrency Setup (Required for 1000+ Users)
+As of the latest update, the system uses **Celery + Redis** to handle large email blasts without freezing.
+
+**1. Install Redis:**
+```bash
+sudo apt update
+sudo apt install redis-server -y
+sudo systemctl enable redis-server
+sudo systemctl start redis-server
+```
+
+**2. Configure Celery Service:**
+We need to run Celery alongside Gunicorn.
+
+Create service file:
+```bash
+sudo nano /etc/systemd/system/celery-roadmap99.service
+```
+
+Paste this (adjusting paths if needed):
+```ini
+[Unit]
+Description=Celery Service for 99Roadmap
+After=network.target
+
+[Service]
+Type=forking
+User=root
+Group=www-data
+EnvironmentFile=/etc/environment
+WorkingDirectory=/var/www/Divakar
+ExecStart=/var/www/Divakar/venv/bin/celery -A roadmap99 multi start worker1 \
+  --pidfile=/var/run/celery/%n.pid \
+  --logfile=/var/log/celery/%n%I.log \
+  --loglevel=INFO
+ExecStop=/var/www/Divakar/venv/bin/celery multi stopwait worker1 \
+  --pidfile=/var/run/celery/%n.pid
+
+[Install]
+WantedBy=multi-user.target
+```
+
+**3. Start Celery:**
+```bash
+sudo mkdir -p /var/run/celery /var/log/celery
+sudo chown -R root:www-data /var/run/celery /var/log/celery
+sudo systemctl enable celery-roadmap99
+sudo systemctl start celery-roadmap99
+```
+
+---
+
 ## 📌 Phase 1: Server Preparation
 
 **1. Login to your VPS:**
