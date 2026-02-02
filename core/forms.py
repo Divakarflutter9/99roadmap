@@ -180,7 +180,7 @@ class UserProfileForm(forms.ModelForm):
     
     class Meta:
         model = User
-        fields = ['full_name', 'phone', 'study_type', 'branch', 'year', 'college', 'bio', 'profile_image', 'linkedin_profile', 'github_profile', 'future_goals']
+        fields = ['full_name', 'phone', 'study_type', 'branch', 'year', 'college', 'bio', 'profile_image', 'future_goals']
         widgets = {
             'full_name': forms.TextInput(attrs={'class': 'form-control'}),
             'phone': forms.TextInput(attrs={'class': 'form-control'}),
@@ -189,7 +189,6 @@ class UserProfileForm(forms.ModelForm):
             'year': forms.NumberInput(attrs={'class': 'form-control', 'min': 1, 'max': 6}),
             'college': forms.TextInput(attrs={'class': 'form-control'}),
             'bio': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
-            'github_profile': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://github.com/...'}),
             'future_goals': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'What are your career goals? e.g. Become a Full Stack Developer'}),
         }
 

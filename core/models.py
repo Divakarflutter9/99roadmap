@@ -98,24 +98,19 @@ class User(AbstractUser):
     
     def kyc_completed(self):
         """Check if KYC (profile setup) is complete"""
-        # KYC requires: LinkedIn or GitHub + Future Goals
-        has_social = bool(self.linkedin_profile or self.github_profile)
-        has_goals = bool(self.future_goals)
-        return has_social and has_goals
+        # KYC requires: Future Goals only (Socials made optional)
+        return bool(self.future_goals)
     
     def kyc_progress_percentage(self):
         """Calculate KYC completion percentage"""
-        # Step 1: Basic Registration (always done if logged in) - 33%
-        # Step 2: Social Profiles (LinkedIn or GitHub) - 66%  
-        # Step 3: Future Goals - 100%
+        # Step 1: Basic Registration (always done if logged in) - 50%
+        # Step 2: Future Goals - 100%
         
         if not self.is_google_user():
-            return 100  # Manual users don't need KYC
+            # For manual users (likely admin/testing), if they have goals, it's 100%
+            return 100 if self.future_goals else 50
         
-        progress = 33  # Already registered
-        
-        if self.linkedin_profile or self.github_profile:
-            progress = 66
+        progress = 50  # Already registered
         
         if self.future_goals:
             progress = 100

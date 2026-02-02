@@ -428,6 +428,8 @@
                             </div>
                         </div>
 
+                        <!-- Socials Section Hidden
+                    <div class="col-lg-6">
                         <h4 class="h6 text-uppercase text-secondary font-bold tracking-wider mb-3 mt-4">Socials</h4>
                         <div class="form-section mt-0">
                             <div class="mb-3">
@@ -442,49 +444,52 @@
                             </div>
                         </div>
                     </div>
+                    -->
 
-                    <!-- Right Column: Education & Goals -->
-                    <div class="col-lg-6">
-                        <h4 class="h6 text-uppercase text-secondary font-bold tracking-wider mb-3">Education</h4>
-                        <div class="form-section mt-0">
-                            <div class="row g-2 mb-3">
-                                <div class="col-6">
-                                    <label class="text-sm text-dim mb-1">College</label>
-                                    {{ form.college|add_class:"form-control bg-dark border-white-10 text-white" }}
+                        <!-- Right Column: Education & Goals -->
+                        <div class="col-lg-6">
+                            <h4 class="h6 text-uppercase text-secondary font-bold tracking-wider mb-3">Education</h4>
+                            <div class="form-section mt-0">
+                                <div class="row g-2 mb-3">
+                                    <div class="col-6">
+                                        <label class="text-sm text-dim mb-1">College</label>
+                                        {{ form.college|add_class:"form-control bg-dark border-white-10 text-white" }}
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="text-sm text-dim mb-1">Type</label>
+                                        {{ form.study_type|add_class:"form-control bg-dark border-white-10 text-white"
+                                        }}
+                                    </div>
                                 </div>
-                                <div class="col-6">
-                                    <label class="text-sm text-dim mb-1">Type</label>
-                                    {{ form.study_type|add_class:"form-control bg-dark border-white-10 text-white" }}
+                                <div class="row g-2 mb-0">
+                                    <div class="col-8">
+                                        <label class="text-sm text-dim mb-1">Branch</label>
+                                        {{ form.branch|add_class:"form-control bg-dark border-white-10 text-white" }}
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="text-sm text-dim mb-1">Year</label>
+                                        {{ form.year|add_class:"form-control bg-dark border-white-10 text-white" }}
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row g-2 mb-0">
-                                <div class="col-8">
-                                    <label class="text-sm text-dim mb-1">Branch</label>
-                                    {{ form.branch|add_class:"form-control bg-dark border-white-10 text-white" }}
-                                </div>
-                                <div class="col-4">
-                                    <label class="text-sm text-dim mb-1">Year</label>
-                                    {{ form.year|add_class:"form-control bg-dark border-white-10 text-white" }}
-                                </div>
-                            </div>
-                        </div>
 
-                        <h4 class="h6 text-uppercase text-secondary font-bold tracking-wider mb-3 mt-4">Future Goals
-                        </h4>
-                        <div class="form-section mt-0">
-                            <label class="text-sm text-dim mb-1">What are your aspirations? <span
-                                    class="text-success">*</span></label>
-                            {{ form.future_goals|add_class:"form-control bg-dark border-white-10 text-white" }}
-                            <div class="text-xs text-muted mt-2">Required for profile verification</div>
+                            <h4 class="h6 text-uppercase text-secondary font-bold tracking-wider mb-3 mt-4">Future Goals
+                            </h4>
+                            <div class="form-section mt-0">
+                                <label class="text-sm text-dim mb-1">What are your aspirations? <span
+                                        class="text-success">*</span></label>
+                                {{ form.future_goals|add_class:"form-control bg-dark border-white-10 text-white" }}
+                                <div class="text-xs text-muted mt-2">Required for profile verification</div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="text-center mt-5">
-                    <button type="submit" class="btn btn-primary px-5 py-3 fw-bold shadow-lg hover-lift rounded-pill">
-                        Save & Update Profile
-                    </button>
-                </div>
+                    <div class="text-center mt-5">
+                        <button type="submit"
+                            class="btn btn-primary px-5 py-3 fw-bold shadow-lg hover-lift rounded-pill">
+                            Save & Update Profile
+                        </button>
+                    </div>
             </form>
         </div>
     </div>
