@@ -38,10 +38,28 @@ def has_ai_access(user, roadmap_id=None):
         print("DEBUG: No Subscription Found")
     
     # 2. Check Contextual Access (if roadmap_id provided)
-    # UPDATE: Roadmap purchase no longer grants AI access. 
-    # AI is exclusive to Subscriptions.
     if roadmap_id:
-        print(f"DEBUG: Roadmap {roadmap_id} provided, but AI is Subscription-only.")
+        try:
+            roadmap = Roadmap.objects.get(id=roadmap_id)
+            
+            # Case A: Free Roadmap
+            if not roadmap.is_premium:
+                print(f"DEBUG: Roadmap {roadmap_id} is Free -> Access Granted")
+                return True
+                
+            # Case B: Purchased Roadmap
+            has_purchase = Payment.objects.filter(
+                user=user,
+                roadmap=roadmap,
+                status='success'
+            ).exists()
+            
+            if has_purchase:
+                print(f"DEBUG: Roadmap {roadmap_id} Purchased -> Access Granted")
+                return True
+                
+        except Roadmap.DoesNotExist:
+            print(f"DEBUG: Roadmap {roadmap_id} not found")
 
     print("DEBUG: Access Denied -> False")
     return False
