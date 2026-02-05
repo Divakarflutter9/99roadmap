@@ -16,6 +16,8 @@ from datetime import timedelta
 from django.core.mail import send_mail
 import uuid
 
+from django.db.models import Sum, Count
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import SubscriptionPlan, UserSubscription, Payment, Coupon
 from .cashfree import CashfreePayment
 from core.models import User, Roadmap, RoadmapBundle, UserRoadmapEnrollment
@@ -390,3 +392,33 @@ def has_active_subscription(self):
         return False
 
 User.has_active_subscription = has_active_subscription
+
+
+@user_passes_test(lambda u: u.is_superuser or u.is_staff)
+def manager_panel_view(request):
+    """Admin-only Payment Manager Panel"""
+    
+    # Overview Stats
+    total_users = User.objects.count()
+    total_revenue = Payment.objects.filter(status='success').aggregate(Sum('amount'))['amount__sum'] or 0
+    active_subscriptions = UserSubscription.objects.filter(status='active').count()
+    
+    # Recent Payments (last 50)
+    recent_payments = Payment.objects.select_related('user', 'subscription_plan', 'roadmap', 'bundle').order_by('-created_at')[:50]
+    
+    # Enrollments (last 50)
+    enrollments = UserRoadmapEnrollment.objects.select_related('user', 'roadmap').order_by('-enrolled_at')[:50]
+    
+    # Users List (last 50, showing new users first)
+    users_list = User.objects.order_by('-date_joined')[:50]
+    
+    context = {
+        'total_users': total_users,
+        'total_revenue': total_revenue,
+        'active_subscriptions': active_subscriptions,
+        'recent_payments': recent_payments,
+        'enrollments': enrollments,
+        'users_list': users_list,
+    }
+    return render(request, 'payments/manager_panel.html', context)
+

@@ -1,0 +1,288 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Payment Manager - 99Roadmap{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <div>
+            <h1 class="display-5 fw-bold text-white mb-1">Payment Manager</h1>
+            <p class="text-secondary mb-0">Overview of platform performance and transactions</p>
+        </div>
+        <span class="badge bg-danger fs-6 px-3 py-2"><i class="fas fa-user-shield me-2"></i>Admin Area</span>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-5">
+        <!-- Total Revenue -->
+        <div class="col-md-4">
+            <div
+                class="card bg-dark border-secondary h-100 shadow-lg position-relative overflow-hidden group hover-scale">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="bg-success bg-opacity-10 p-3 rounded-circle">
+                            <i class="fas fa-coins text-success fs-3"></i>
+                        </div>
+                        <span class="badge bg-success bg-opacity-10 text-success">Total Revenue</span>
+                    </div>
+                    <h2 class="display-6 fw-bold text-white mb-0">₹{{ total_revenue|floatformat:2 }}</h2>
+                    <p class="text-secondary small mt-2 mb-0">Lifetime earnings</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Users -->
+        <div class="col-md-4">
+            <div
+                class="card bg-dark border-secondary h-100 shadow-lg position-relative overflow-hidden group hover-scale">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="bg-primary bg-opacity-10 p-3 rounded-circle">
+                            <i class="fas fa-users text-primary fs-3"></i>
+                        </div>
+                        <span class="badge bg-primary bg-opacity-10 text-primary">Total Users</span>
+                    </div>
+                    <h2 class="display-6 fw-bold text-white mb-0">{{ total_users }}</h2>
+                    <p class="text-secondary small mt-2 mb-0">Registered learners</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Active Subscriptions -->
+        <div class="col-md-4">
+            <div
+                class="card bg-dark border-secondary h-100 shadow-lg position-relative overflow-hidden group hover-scale">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div class="bg-warning bg-opacity-10 p-3 rounded-circle">
+                            <i class="fas fa-crown text-warning fs-3"></i>
+                        </div>
+                        <span class="badge bg-warning bg-opacity-10 text-warning">Active Subs</span>
+                    </div>
+                    <h2 class="display-6 fw-bold text-white mb-0">{{ active_subscriptions }}</h2>
+                    <p class="text-secondary small mt-2 mb-0">Currently paying users</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <!-- Recent Payments -->
+        <div class="col-lg-8">
+            <div class="card bg-dark border-secondary shadow-lg">
+                <div
+                    class="card-header bg-transparent border-secondary py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text-white"><i class="fas fa-receipt me-2 text-info"></i>Recent Payments</h5>
+                    <span class="badge bg-secondary">Last 50</span>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-dark table-hover mb-0 align-middle">
+                            <thead class="bg-black bg-opacity-25 text-secondary text-uppercase small">
+                                <tr>
+                                    <th class="ps-4">User</th>
+                                    <th>Item</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for payment in recent_payments %}
+                                <tr>
+                                    <td class="ps-4">
+                                        <div class="d-flex align-items-center">
+                                            <div class="avatar-sm bg-secondary rounded-circle me-2 d-flex align-items-center justify-content-center text-white fw-bold"
+                                                style="width: 32px; height: 32px; font-size: 12px;">
+                                                {{ payment.user.get_short_name|slice:":2"|upper }}
+                                            </div>
+                                            <div>
+                                                <div class="fw-medium text-white">{{ payment.user.full_name }}</div>
+                                                <div class="text-secondary small" style="font-size: 0.75rem;">{{
+                                                    payment.user.email }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        {% if payment.subscription_plan %}
+                                        <span class="badge bg-warning text-dark"><i class="fas fa-crown me-1"></i> {{
+                                            payment.subscription_plan.name }}</span>
+                                        {% elif payment.roadmap %}
+                                        <span class="badge bg-info text-dark"><i class="fas fa-map me-1"></i> {{
+                                            payment.roadmap.title|truncatechars:15 }}</span>
+                                        {% elif payment.bundle %}
+                                        <span class="badge bg-purple text-white" style="background-color: #8b5cf6;"><i
+                                                class="fas fa-layer-group me-1"></i> {{
+                                            payment.bundle.title|truncatechars:15 }}</span>
+                                        {% else %}
+                                        <span class="badge bg-secondary">Unknown</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="fw-bold text-white">₹{{ payment.amount|floatformat:0 }}</td>
+                                    <td>
+                                        {% if payment.status == 'success' %}
+                                        <span class="badge bg-success bg-opacity-10 text-success px-2 py-1"><i
+                                                class="fas fa-check-circle me-1"></i>Success</span>
+                                        {% elif payment.status == 'pending' %}
+                                        <span class="badge bg-warning bg-opacity-10 text-warning px-2 py-1"><i
+                                                class="fas fa-clock me-1"></i>Pending</span>
+                                        {% elif payment.status == 'failed' %}
+                                        <span class="badge bg-danger bg-opacity-10 text-danger px-2 py-1"><i
+                                                class="fas fa-times-circle me-1"></i>Failed</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-secondary small">{{ payment.created_at|date:"M d, H:i" }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center py-4 text-secondary">No recent payments found.
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Enrollments -->
+        <div class="col-lg-4">
+            <div class="card bg-dark border-secondary shadow-lg h-100">
+                <div class="card-header bg-transparent border-secondary py-3">
+                    <h5 class="mb-0 text-white"><i class="fas fa-user-graduate me-2 text-warning"></i>New Enrollments
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        {% for enrollment in enrollments|slice:":8" %}
+                        <div class="list-group-item bg-transparent border-secondary px-4 py-3">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <div class="bg-dark border border-secondary rounded p-2 me-3 text-center"
+                                        style="width: 40px; height: 40px;">
+                                        <i class="fas fa-graduation-cap text-warning"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-0 text-white font-size-sm">{{ enrollment.user.full_name }}</h6>
+                                        <p class="mb-0 text-secondary small">Enrolled in <span class="text-info">{{
+                                                enrollment.roadmap.title|truncatechars:15 }}</span></p>
+                                    </div>
+                                </div>
+                                <small class="text-secondary">{{ enrollment.enrolled_at|timesince }} ago</small>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="p-4 text-center text-secondary">No enrollments yet.</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent border-secondary text-center">
+                    <small class="text-secondary">Showing last 8 enrollments</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Users List -->
+    <div class="card bg-dark border-secondary shadow-lg">
+        <div class="card-header bg-transparent border-secondary py-3 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0 text-white"><i class="fas fa-users me-2 text-primary"></i>Registered Users</h5>
+            <div class="d-flex gap-2">
+                <input type="text" class="form-control form-control-sm bg-black border-secondary text-white"
+                    placeholder="Search users..." style="max-width: 200px;">
+                <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-dark table-hover mb-0 align-middle">
+                    <thead class="bg-black bg-opacity-25 text-secondary text-uppercase small">
+                        <tr>
+                            <th class="ps-4">Name</th>
+                            <th>Email</th>
+                            <th>Joined</th>
+                            <th>Status</th>
+                            <th>Phone</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users_list %}
+                        <tr>
+                            <td class="ps-4">
+                                <div class="fw-medium text-white">{{ user.full_name }}</div>
+                            </td>
+                            <td class="text-secondary">{{ user.email }}</td>
+                            <td class="text-secondary small">{{ user.date_joined|date:"M d, Y" }}</td>
+                            <td>
+                                {% if user.is_active %}
+                                <span class="badge bg-success bg-opacity-10 text-success">Active</span>
+                                {% else %}
+                                <span class="badge bg-danger bg-opacity-10 text-danger">Inactive</span>
+                                {% endif %}
+                                {% if user.is_staff %}
+                                <span class="badge bg-purple text-white ms-1"
+                                    style="background-color: #8b5cf6;">Staff</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-secondary small">{{ user.phone|default:"-" }}</td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-sm btn-outline-secondary"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer bg-transparent border-secondary">
+            <!-- Simple Pagination Placeholder -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination pagination-sm justify-content-end mb-0">
+                    <li class="page-item disabled"><a class="page-link bg-dark border-secondary text-secondary"
+                            href="#">Previous</a></li>
+                    <li class="page-item active"><a class="page-link bg-primary border-primary text-white"
+                            href="#">1</a></li>
+                    <li class="page-item"><a class="page-link bg-dark border-secondary text-white" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link bg-dark border-secondary text-white" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link bg-dark border-secondary text-white" href="#">Next</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hover-scale {
+        transition: transform 0.2s;
+    }
+
+    .hover-scale:hover {
+        transform: translateY(-5px);
+    }
+
+    .card {
+        border-radius: 12px;
+    }
+
+    .table-dark {
+        --bs-table-bg: transparent;
+        --bs-table-hover-bg: rgba(255, 255, 255, 0.05);
+    }
+
+    .form-control::placeholder {
+        color: #6c757d;
+    }
+
+    .form-control:focus {
+        background-color: #000;
+        color: #fff;
+        border-color: #6366f1;
+        box-shadow: none;
+    }
+</style>
+{% endblock %}
