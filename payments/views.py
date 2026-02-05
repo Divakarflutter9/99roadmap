@@ -15,6 +15,7 @@ from django.utils import timezone
 from datetime import timedelta
 from django.core.mail import send_mail
 import uuid
+from decimal import Decimal
 
 from django.db.models import Sum, Count
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -400,7 +401,13 @@ def manager_panel_view(request):
     
     # Overview Stats
     total_users = User.objects.count()
-    total_revenue = Payment.objects.filter(status='success').aggregate(Sum('amount'))['amount__sum'] or 0
+    gross_revenue = Payment.objects.filter(status='success').aggregate(Sum('amount'))['amount__sum'] or Decimal('0.00')
+    
+    # Commission Calculation (1.6%)
+    commission_rate = Decimal('0.016')
+    commission_amount = gross_revenue * commission_rate
+    net_revenue = gross_revenue - commission_amount
+    
     active_subscriptions = UserSubscription.objects.filter(status='active').count()
     
     # Recent Payments (last 50)
@@ -414,7 +421,9 @@ def manager_panel_view(request):
     
     context = {
         'total_users': total_users,
-        'total_revenue': total_revenue,
+        'total_revenue': net_revenue, # Displaying Net Revenue as requested
+        'gross_revenue': gross_revenue,
+        'commission_amount': commission_amount,
         'active_subscriptions': active_subscriptions,
         'recent_payments': recent_payments,
         'enrollments': enrollments,

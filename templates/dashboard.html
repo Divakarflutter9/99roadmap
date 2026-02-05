@@ -25,8 +25,7 @@
                             <div class="progress-bar bg-success" role="progressbar"
                                 style="width: {{ weekly_goal_percent }}%"></div>
                         </div>
-                        <span class="text-xs text-white">{{ weekly_goal_progress }}/{{ weekly_goal.target_value
-                            }}</span>
+                        <span class="text-xs text-white">{{ weekly_goal_progress }}/{{ weekly_goal.target_value}}</span>
                     </div>
                     {% else %}
                     <form action="{% url 'set_weekly_goal' %}" method="POST" class="d-flex gap-2 align-items-center">
