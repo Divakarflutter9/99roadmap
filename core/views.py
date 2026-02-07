@@ -480,6 +480,7 @@ def dashboard_view(request):
 
 # ==================== Roadmap Views ====================
 
+@login_required
 def roadmap_list_view(request):
     """List all roadmaps with filtering"""
     
@@ -511,21 +512,20 @@ def roadmap_list_view(request):
     purchased_roadmap_ids = set()
     user_has_subscription = False
     
-    if request.user.is_authenticated:
-        # Get directly purchased roadmaps
-        purchased_roadmap_ids = set(
-            Payment.objects.filter(
-                user=request.user, 
-                roadmap__isnull=False, 
-                status='success'
-            ).values_list('roadmap_id', flat=True)
-        )
-        
-        # Check subscription
-        try:
-            user_has_subscription = request.user.subscription.is_active()
-        except (AttributeError, UserSubscription.DoesNotExist):
-            user_has_subscription = False
+    # Get directly purchased roadmaps
+    purchased_roadmap_ids = set(
+        Payment.objects.filter(
+            user=request.user, 
+            roadmap__isnull=False, 
+            status='success'
+        ).values_list('roadmap_id', flat=True)
+    )
+    
+    # Check subscription
+    try:
+        user_has_subscription = request.user.subscription.is_active()
+    except (AttributeError, UserSubscription.DoesNotExist):
+        user_has_subscription = False
 
     context = {
         'roadmaps': roadmaps_page,
@@ -539,6 +539,7 @@ def roadmap_list_view(request):
     return render(request, 'roadmaps/list.html', context)
 
 
+@login_required
 def roadmap_detail_view(request, slug):
     """Roadmap detail page"""
     
@@ -548,32 +549,31 @@ def roadmap_detail_view(request, slug):
     enrollment = None
     user_has_access = False
     
-    if request.user.is_authenticated:
-        # KYC Check: Google users must complete profile
-        if request.user.is_google_user() and not request.user.kyc_completed():
-            messages.warning(request, 'Please complete your profile to access roadmaps.')
-            return redirect('profile')
+    # KYC Check: Google users must complete profile
+    if request.user.is_google_user() and not request.user.kyc_completed():
+        messages.warning(request, 'Please complete your profile to access roadmaps.')
+        return redirect('profile')
+    
+    enrollment, created = UserRoadmapEnrollment.objects.get_or_create(
+        user=request.user,
+        roadmap=roadmap
+    )
+    
+    # Check if user has access (subscribed or free content)
+    if not roadmap.is_premium:
+        user_has_access = True
+    else:
+        # Check subscription (will implement in payments app)
+        has_subscription = getattr(request.user, 'has_active_subscription', lambda: False)()
         
-        enrollment, created = UserRoadmapEnrollment.objects.get_or_create(
+        # Check for direct purchase
+        has_purchase = Payment.objects.filter(
             user=request.user,
-            roadmap=roadmap
-        )
+            roadmap=roadmap,
+            status='success'
+        ).exists()
         
-        # Check if user has access (subscribed or free content)
-        if not roadmap.is_premium:
-            user_has_access = True
-        else:
-            # Check subscription (will implement in payments app)
-            has_subscription = getattr(request.user, 'has_active_subscription', lambda: False)()
-            
-            # Check for direct purchase
-            has_purchase = Payment.objects.filter(
-                user=request.user,
-                roadmap=roadmap,
-                status='success'
-            ).exists()
-            
-            user_has_access = has_subscription or has_purchase
+        user_has_access = has_subscription or has_purchase
     
     
     # Upsell Data: Get the first active monthly plan
