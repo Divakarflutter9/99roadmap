@@ -268,3 +268,12 @@ Your site should now be live at `http://your_server_ip`.
 sudo apt install certbot python3-certbot-nginx
 sudo certbot --nginx -d your_domain.com
 ```
+
+## 🔧 Troubleshooting
+
+### Git Error: "detected dubious ownership"
+If you see this error when pulling code:
+```bash
+git config --global --add safe.directory /var/www/Divakar
+```
+Then try `git pull origin main` again.

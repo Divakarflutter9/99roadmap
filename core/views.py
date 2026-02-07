@@ -575,11 +575,16 @@ def roadmap_detail_view(request, slug):
             
             user_has_access = has_subscription or has_purchase
     
+    
+    # Upsell Data: Get the first active monthly plan
+    monthly_plan = SubscriptionPlan.objects.filter(is_active=True, duration_type='monthly').first()
+
     context = {
         'roadmap': roadmap,
         'stages': stages,
         'enrollment': enrollment,
         'user_has_access': user_has_access,
+        'monthly_plan': monthly_plan,
     }
     return render(request, 'roadmaps/detail.html', context)
 
