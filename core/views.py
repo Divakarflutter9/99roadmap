@@ -28,7 +28,7 @@ from .models import (
     QuizQuestion, QuizOption, UserRoadmapEnrollment, UserTopicProgress,
     UserQuizAttempt, XPTransaction, WeeklyGoal
 )
-from payments.models import UserSubscription, Payment
+from payments.models import UserSubscription, Payment, SubscriptionPlan
 from .forms import UserRegistrationForm, UserLoginForm, UserProfileForm, UserAvatarForm, QuizSubmissionForm, WeeklyGoalForm
 
 # ... (Authentication Views) ...
