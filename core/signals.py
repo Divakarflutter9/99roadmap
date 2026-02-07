@@ -1,6 +1,34 @@
 from django.dispatch import receiver
 from allauth.account.signals import user_signed_up
 from allauth.socialaccount.models import SocialAccount
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.conf import settings
+
+@receiver(user_signed_up)
+def send_welcome_email(request, user, **kwargs):
+    """
+    Send welcome email with coupon code
+    """
+    try:
+        subject = "🎉 You are a Lucky Winner! 50% OFF Inside"
+        from_email = settings.DEFAULT_FROM_EMAIL
+        to = user.email
+        
+        context = {
+            'user': user,
+            'site_url': settings.SITE_URL,
+        }
+        
+        html_content = render_to_string('emails/welcome_coupon.html', context)
+        text_content = "Congratulations! You are a lucky winner. Use code LUCKY50 for 50% off."
+        
+        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+        print(f"Welcome email sent to {to}")
+    except Exception as e:
+        print(f"Failed to send welcome email: {e}")
 
 @receiver(user_signed_up)
 def populate_profile(request, user, **kwargs):

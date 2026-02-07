@@ -133,7 +133,7 @@ Paste this content (I've pre-filled your DB details):
 ```ini
 DEBUG=False
 SECRET_KEY=django-insecure-99roadmap-prod-key-change-this-to-something-secret-99
-ALLOWED_HOSTS=99roadmap.droptechie.com,194.163.173.57
+ALLOWED_HOSTS=99roadmap.fastcopies.in,173.249.38.225
 # MySQL Database (Server)
 DATABASE_URL=mysql://root:PhaniUddagiri%402005@127.0.0.1:3306/roadmap99
 
@@ -155,7 +155,7 @@ EMAIL_HOST_USER=99roadmap@gmail.com
 EMAIL_HOST_PASSWORD=YOUR_EMAIL_PASSWORD
 
 # Site URL
-SITE_URL=http://99roadmap.droptechie.com
+SITE_URL=http://99roadmap.fastcopies.in
 ```
 *Press `Ctrl+X`, then `Y`, then `Enter` to save.*
 
@@ -231,7 +231,7 @@ Paste this:
 ```nginx
 server {
     listen 80;
-    server_name 99roadmap.droptechie.com 194.163.173.57;
+    server_name 99roadmap.fastcopies.in 173.249.38.225;
 
     location = /favicon.ico { access_log off; log_not_found off; }
     

@@ -9,4 +9,4 @@ Disallow: /_nested_admin/
 Disallow: /email-verification/
 Disallow: /password-reset/
 
-Sitemap: https://99roadmap.droptechie.com/sitemap.xml
+Sitemap: https://99roadmap.fastcopies.in/sitemap.xml

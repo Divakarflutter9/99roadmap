@@ -18,7 +18,7 @@ def fix_site():
     try:
         site = Site.objects.get(id=1)
         print("Site ID 1 exists. Updating...")
-        site.domain = '99roadmap.droptechie.com'
+        site.domain = '99roadmap.fastcopies.in'
         site.name = '99Roadmap'
         site.save()
         print("Updated Site ID 1.")
@@ -36,10 +36,10 @@ def fix_site():
             # Try to delete and recreate ID 1? Or update?
             # Creating ID 1 explicitly
             print("Creating Site ID 1...")
-            Site.objects.create(id=1, domain='99roadmap.droptechie.com', name='99Roadmap')
+            Site.objects.create(id=1, domain='99roadmap.fastcopies.in', name='99Roadmap')
         else:
             print("No sites found. Creating Site ID 1...")
-            Site.objects.create(id=1, domain='99roadmap.droptechie.com', name='99Roadmap')
+            Site.objects.create(id=1, domain='99roadmap.fastcopies.in', name='99Roadmap')
             
     print("Site configuration fixed.")
     print(f"Current Site: {Site.objects.get(id=1).domain}")

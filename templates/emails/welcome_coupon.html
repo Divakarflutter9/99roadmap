@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .lucky-text {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .coupon-box {
+            background: #f0f4f8;
+            border: 2px dashed #764ba2;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            display: inline-block;
+        }
+
+        .coupon-code {
+            font-size: 32px;
+            color: #764ba2;
+            font-weight: bold;
+            letter-spacing: 2px;
+            display: block;
+            margin: 10px 0;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #ff6b6b;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 18px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .header {
+                padding: 30px 15px;
+            }
+
+            .coupon-code {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 Congratulations!</h1>
+        </div>
+        <div class="content">
+            <p class="lucky-text">You are one of our lucky users!</p>
+            <p style="color: #666; font-size: 16px; line-height: 1.6;">
+                Welcome to 99Roadmap. We're thrilled to have you here. <br>
+                To celebrate, we've unlocked an exclusive offer just for you.
+            </p>
+
+            <div class="coupon-box">
+                <span style="color: #666; font-size: 14px; text-transform: uppercase; letter-spacing: 1px;">Use Coupon
+                    Code</span>
+                <span class="coupon-code">LUCKY50</span>
+                <span style="color: #4cd964; font-weight: bold; font-size: 14px;">50% OFF EVERYTHING</span>
+            </div>
+
+            <p style="color: #888; font-size: 14px; margin-bottom: 30px;">
+                Hurry up! This offer is valid for a limited time only. Don't miss out on premium roadmaps at half the
+                price!
+            </p>
+
+            <a href="{{ site_url }}" class="cta-button">Claim Offer Now</a>
+        </div>
+        <div class="footer">
+            <p>&copy; 2024 99Roadmap. All rights reserved.</p>
+            <p>If you have any questions, reply to this email.</p>
+        </div>
+    </div>
+</body>
+
+</html>

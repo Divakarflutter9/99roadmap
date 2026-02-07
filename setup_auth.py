@@ -27,7 +27,7 @@ def setup_auth():
     print("\n1. Configuring Site...")
     # Ensure Site(id=1) exists and is correct
     site, created = Site.objects.get_or_create(id=1)
-    site.domain = '99roadmap.droptechie.com'
+    site.domain = '99roadmap.fastcopies.in'
     site.name = '99Roadmap'
     site.save()
     print(f"   Success: Site configured as {site.domain}")
