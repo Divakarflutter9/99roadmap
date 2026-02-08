@@ -1,0 +1,19 @@
+[Unit]
+Description=Celery Service for 99Roadmap
+After=network.target
+
+[Service]
+Type=forking
+User=root
+Group=www-data
+EnvironmentFile=/var/www/Divakar/.env
+WorkingDirectory=/var/www/Divakar
+ExecStart=/var/www/Divakar/venv/bin/celery -A roadmap99 multi start worker1 \
+  --pidfile=/var/run/celery/%n.pid \
+  --logfile=/var/log/celery/%n%I.log \
+  --loglevel=INFO
+ExecStop=/var/www/Divakar/venv/bin/celery multi stopwait worker1 \
+  --pidfile=/var/run/celery/%n.pid
+
+[Install]
+WantedBy=multi-user.target
