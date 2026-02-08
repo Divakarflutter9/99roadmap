@@ -5,11 +5,11 @@ After=network.target
 [Service]
 User=root
 Group=www-data
-WorkingDirectory=/var/www/99roadmap
-ExecStart=/var/www/99roadmap/venv/bin/gunicorn \
+WorkingDirectory=/var/www/Divakar
+ExecStart=/var/www/Divakar/venv/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
-          --bind unix:/var/www/99roadmap/99roadmap.sock \
+          --bind unix:/var/www/Divakar/roadmap99.sock \
           roadmap99.wsgi:application
 
 [Install]
