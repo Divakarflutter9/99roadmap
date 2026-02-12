@@ -98,14 +98,8 @@
 
                     <!-- Action Button -->
                     <div class="d-grid w-100">
-                        {% if user_has_subscription or not roadmap.is_premium or roadmap.id in purchased_roadmap_ids %}
                         <a href="{% url 'roadmap_detail' roadmap.slug %}" class="btn btn-primary"
                             style="justify-content: center;">Open Roadmap</a>
-                        {% else %}
-                        <button
-                            onclick="openPurchaseModal('{{ roadmap.title|escapejs }}', '{% url 'initiate_payment' 'roadmap' roadmap.id %}')"
-                            class="btn btn-primary" style="justify-content: center;">Open Roadmap</button>
-                        {% endif %}
                     </div>
                 </div>
             </div>

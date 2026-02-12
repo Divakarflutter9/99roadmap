@@ -4,348 +4,404 @@
 {% block title %}{{ roadmap.title }} - 99Roadmap{% endblock %}
 
 {% block content %}
-<style>
-    /* Hero Section */
-    .roadmap-hero {
-        padding: 5rem 0 3rem;
-        background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 70%);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .roadmap-hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        z-index: -1;
-    }
-
-    .roadmap-pill {
-        background: rgba(99, 102, 241, 0.1);
-        color: #818cf8;
-        padding: 6px 16px;
-        border-radius: 99px;
-        font-size: 0.8rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        border: 1px solid rgba(99, 102, 241, 0.2);
-    }
-
-    /* Progress Bar */
-    .progress-glass {
-        height: 8px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 4px;
-        overflow: hidden;
-        backdrop-filter: blur(4px);
-    }
-
-    .progress-glass-bar {
-        height: 100%;
-        background: var(--gradient-primary);
-        box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
-        transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Stage Timeline */
-    .timeline {
-        position: relative;
-        padding-left: 2rem;
-    }
-
-    .timeline::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 2rem;
-        bottom: 0;
-        width: 2px;
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    /* Stage Card */
-    .stage-card {
-        background: rgba(30, 41, 59, 0.4);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        border-radius: var(--radius-lg);
-        padding: 1.5rem;
-        margin-bottom: 2rem;
-        position: relative;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-    }
-
-    /* Connector Dot */
-    .stage-card::before {
-        content: '';
-        position: absolute;
-        left: -33px;
-        /* Adjusted for padding-left: 2rem + 1px border */
-        top: 2rem;
-        flex-shrink: 0;
-        width: 14px;
-        height: 14px;
-        background: #0f172a;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        z-index: 2;
-        box-shadow: 0 0 0 4px #0f111a;
-    }
-
-    /* Active/Completed States */
-    .stage-card.active {
-        border-color: var(--primary);
-        background: rgba(30, 41, 59, 0.6);
-        box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
-    }
-
-    .stage-card.active::before {
-        background: var(--primary);
-        border-color: var(--primary);
-        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
-    }
-
-    .stage-card.completed::before {
-        background: var(--success);
-        border-color: var(--success);
-    }
-
-    .stage-card:hover {
-        transform: translateX(5px);
-        background: rgba(30, 41, 59, 0.7);
-    }
-
-    /* Sidebar Pricing */
-    .pricing-glass {
-        background: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.6) 100%);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: var(--radius-xl);
-        padding: 2rem;
-        position: sticky;
-        top: 2rem;
-        backdrop-filter: blur(20px);
-    }
-
-    .pulse-btn {
-        animation: pulse-glow 2s infinite;
-    }
-
-    @keyframes pulse-glow {
-        0% {
-            box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+<div id="roadmap-main-content">
+    <style>
+        /* Hero Section */
+        .roadmap-hero {
+            padding: 5rem 0 3rem;
+            background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 70%);
+            position: relative;
+            overflow: hidden;
         }
 
-        70% {
-            box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+        .roadmap-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%236366f1' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
         }
 
-        100% {
-            box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+        .roadmap-pill {
+            background: rgba(99, 102, 241, 0.1);
+            color: #818cf8;
+            padding: 6px 16px;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border: 1px solid rgba(99, 102, 241, 0.2);
         }
-    }
-</style>
 
-<!-- Hero Section -->
-<div class="roadmap-hero">
-    <div class="container container-lg">
-        <div class="grid grid-3" style="grid-template-columns: 2fr 1fr; gap: 2rem;">
-            <div>
-                <div class="flex items-center gap-3 mb-4 animate-fade-in-up">
-                    <span class="roadmap-pill">{{ roadmap.category.name|default:"General" }}</span>
-                    <span class="text-sm text-secondary font-bold tracking-wide uppercase">
-                        <i class="fas fa-signal me-1"></i> {{ roadmap.get_difficulty_display }}
-                    </span>
-                    <span class="text-sm text-secondary font-bold tracking-wide uppercase">
-                        <i class="far fa-clock me-1"></i> {{ roadmap.estimated_hours }}h Est.
-                    </span>
-                </div>
+        /* Progress Bar */
+        .progress-glass {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            backdrop-filter: blur(4px);
+        }
 
-                <h1 class="display-4 font-bold text-white mb-4 animate-fade-in-up delay-100">{{ roadmap.title }}</h1>
-                <p class="text-lg text-muted mb-5 animate-fade-in-up delay-200"
-                    style="max-width: 650px; line-height: 1.6;">
-                    {{ roadmap.description }}
-                </p>
+        .progress-glass-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-                {% if enrollment %}
-                <div class="animate-fade-in-up delay-300 p-4 glass"
-                    style="border-radius: var(--radius-md); max-width: 500px;">
-                    <div class="flex-between text-sm mb-2">
-                        <span class="text-white font-bold">Your Progress</span>
-                        <span class="text-primary font-bold">{{ enrollment.get_progress_percentage }}%</span>
+        /* Stage Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 2rem;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Stage Card */
+        .stage-card {
+            background: rgba(30, 41, 59, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Connector Dot */
+        .stage-card::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            /* Adjusted for padding-left: 2rem + 1px border */
+            top: 2rem;
+            flex-shrink: 0;
+            width: 14px;
+            height: 14px;
+            background: #0f172a;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 0 4px #0f111a;
+        }
+
+        /* Active/Completed States */
+        .stage-card.active {
+            border-color: var(--primary);
+            background: rgba(30, 41, 59, 0.6);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+        }
+
+        .stage-card.active::before {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+        }
+
+        .stage-card.completed::before {
+            background: var(--success);
+            border-color: var(--success);
+        }
+
+        .stage-card:hover {
+            transform: translateX(5px);
+            background: rgba(30, 41, 59, 0.7);
+        }
+
+        /* Sidebar Pricing */
+        .pricing-glass {
+            background: linear-gradient(180deg, rgba(30, 41, 59, 0.6) 0%, rgba(15, 23, 42, 0.6) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-xl);
+            padding: 2rem;
+            position: sticky;
+            top: 2rem;
+            backdrop-filter: blur(20px);
+        }
+
+        .pulse-btn {
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(99, 102, 241, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(99, 102, 241, 0);
+            }
+        }
+    </style>
+
+    <!-- Hero Section -->
+    <div class="roadmap-hero">
+        <div class="container container-lg">
+            <div class="grid grid-3" style="grid-template-columns: 2fr 1fr; gap: 2rem;">
+                <div>
+                    <div class="flex items-center gap-3 mb-4 animate-fade-in-up">
+                        <span class="roadmap-pill">{{ roadmap.category.name|default:"General" }}</span>
+                        <span class="text-sm text-secondary font-bold tracking-wide uppercase">
+                            <i class="fas fa-signal me-1"></i> {{ roadmap.get_difficulty_display }}
+                        </span>
+                        <span class="text-sm text-secondary font-bold tracking-wide uppercase">
+                            <i class="far fa-clock me-1"></i> {{ roadmap.estimated_hours }}h Est.
+                        </span>
                     </div>
-                    <div class="progress-glass">
-                        <div class="progress-glass-bar" style="width: {{ enrollment.get_progress_percentage }}%;"></div>
-                    </div>
 
-                    {% if enrollment.current_stage %}
-                    <div class="mt-4">
-                        <a href="{% url 'stage_detail' roadmap.slug enrollment.current_stage.order %}"
-                            class="btn btn-primary w-100">
-                            <i class="fas fa-play me-2"></i> Continue: {{ enrollment.current_stage.title }}
-                        </a>
+                    <h1 class="display-4 font-bold text-white mb-4 animate-fade-in-up delay-100">{{ roadmap.title }}
+                    </h1>
+                    <p class="text-lg text-muted mb-5 animate-fade-in-up delay-200"
+                        style="max-width: 650px; line-height: 1.6;">
+                        {{ roadmap.description }}
+                    </p>
+
+                    {% if enrollment %}
+                    <div class="animate-fade-in-up delay-300 p-4 glass"
+                        style="border-radius: var(--radius-md); max-width: 500px;">
+                        <div class="flex-between text-sm mb-2">
+                            <span class="text-white font-bold">Your Progress</span>
+                            <span class="text-primary font-bold">{{ enrollment.get_progress_percentage }}%</span>
+                        </div>
+                        <div class="progress-glass">
+                            <div class="progress-glass-bar" style="width: {{ enrollment.get_progress_percentage }}%;">
+                            </div>
+                        </div>
+
+                        {% if enrollment.current_stage %}
+                        <div class="mt-4">
+                            <a href="{% url 'stage_detail' roadmap.slug enrollment.current_stage.order %}"
+                                class="btn btn-primary w-100">
+                                <i class="fas fa-play me-2"></i> Continue: {{ enrollment.current_stage.title }}
+                            </a>
+                        </div>
+                        {% endif %}
                     </div>
+                    {% else %}
+                    {% if roadmap.is_premium and not user_has_access %}
+                    <!-- CTA for non-enrolled users handled in sidebar, or here -->
+                    {% else %}
+                    <!-- Start Free Button if free -->
+                    {% endif %}
                     {% endif %}
                 </div>
-                {% else %}
-                {% if roadmap.is_premium and not user_has_access %}
-                <!-- CTA for non-enrolled users handled in sidebar, or here -->
-                {% else %}
-                <!-- Start Free Button if free -->
-                {% endif %}
-                {% endif %}
-            </div>
 
-            <!-- Right side decorative or stats could go here, currently empty to keep focus on content/sidebar -->
+                <!-- Right side decorative or stats could go here, currently empty to keep focus on content/sidebar -->
+            </div>
         </div>
     </div>
-</div>
 
-<div class="container container-lg pb-5">
-    <div class="grid" style="grid-template-columns: 1fr 350px; gap: 3rem;">
+    <!-- Visual Roadmap Diagram (Mermaid.js) -->
+    <div class="container container-lg py-5">
+        <div class="glass p-4 position-relative overflow-hidden"
+            style="border-radius: var(--radius-xl); min-height: 400px; background: #1e1e1e;">
+            <h3 class="h4 text-white mb-4 flex items-center gap-2">
+                <i class="fas fa-map-signs text-warning"></i> Interactive Roadmap
+            </h3>
 
-        <!-- Main Timeline -->
-        <div>
-            <div class="timeline animate-fade-in-up delay-300">
-                {% for stage in stages %}
-                {% with is_unlocked=stage.is_free|yesno:"True,False" has_full_access=user_has_access %}
+            <div class="mermaid-container text-center overflow-auto"
+                style="cursor: grab; -webkit-overflow-scrolling: touch;">
+                <!-- Min-width ensures map doesn't shrink too small on mobile -->
+                <div class="mermaid" style="min-width: 800px;">
+                    %%{init: {
+                    'theme': 'base',
+                    'themeVariables': {
+                    'primaryColor': '#ffd54f',
+                    'primaryTextColor': '#000000',
+                    'primaryBorderColor': '#333333',
+                    'lineColor': '#a0a0a0',
+                    'secondaryColor': '#81c784',
+                    'tertiaryColor': '#e0e0e0',
+                    'fontFamily': 'Inter, sans-serif'
+                    }
+                    }}%%
+                    flowchart TD
 
-                <div
-                    class="stage-card {% if enrollment and stage.order <= enrollment.current_stage.order %}completed{% elif stage.is_free %}active{% endif %} p-0 overflow-hidden position-relative">
+                    %% --- Styling Classes (Roadmap.sh Style) ---
+                    %% Yellow Nodes (Topics): Sharp corners, Black Text, Thin Border
+                    classDef default fill:#ffd54f,stroke:#333,stroke-width:1px,color:#000,rx:2,ry:2,font-size:14px;
 
-                    {% if stage.is_free or user_has_access %}
-                    <a href="{% url 'stage_detail' roadmap.slug stage.order %}"
-                        class="text-decoration-none d-block p-4 h-100">
-                        {% else %}
-                        <div class="p-4 h-100 opacity-75">
-                            {% endif %}
+                    %% Green (Done/Start): Rounded Pill
+                    classDef start fill:#81c784,stroke:#388e3c,color:#000,shape:rect,rx:10,ry:10,font-weight:bold;
 
-                            <div class="flex-between items-start mb-3">
-                                <div>
-                                    <span
-                                        class="text-xs text-primary font-bold tracking-widest uppercase mb-1 d-block">Stage
-                                        0{{ stage.order }}</span>
-                                    <h3 class="h4 text-white mb-0">{{ stage.title }}</h3>
-                                </div>
+                    %% Blue (Main Milestones/Stages): Rounded Rect
+                    classDef stage fill:#64b5f6,stroke:#1976d2,color:#000,rx:5,ry:5,font-weight:bold;
 
-                                {% if stage.is_free %}
-                                <span class="badge glass text-success border-success px-3 py-1 text-xs"><i
-                                        class="fas fa-unlock me-1"></i> Free</span>
-                                {% elif user_has_access %}
-                                <span class="badge glass text-primary border-primary px-3 py-1 text-xs"
-                                    style="background: rgba(99, 102, 241, 0.1);"><i
-                                        class="fas fa-check-circle me-1"></i>
-                                    Unlocked</span>
-                                {% else %}
-                                <span class="badge glass text-muted px-3 py-1 text-xs"><i class="fas fa-lock me-1"></i>
-                                    Locked</span>
-                                {% endif %}
-                            </div>
+                    %% --- The Graph ---
 
-                            <p class="text-secondary text-sm mb-4">{{ stage.description|truncatewords:20 }}</p>
+                    Start("🏁 Start"):::start
 
-                            <div class="flex-between items-center pt-3 border-top border-white-5">
-                                <div class="flex gap-4 text-xs text-muted">
-                                    <span><i class="fas fa-list-ul me-1"></i> {{ stage.topics.count }} Topics</span>
-                                    <span class="text-warning"><i class="fas fa-bolt me-1"></i> {{ stage.xp_reward }}
-                                        XP</span>
-                                </div>
+                    {% for stage in stages %}
+                    subgraph S{{ stage.order }} ["Step {{ stage.order }}: {{ stage.title }}"]
+                    direction TB
+                    Stage{{ stage.order }}("{{ stage.title }}"):::stage
 
-                                {% if stage.is_free or user_has_access %}
-                                <span class="text-primary text-sm font-bold hover-underline">
-                                    Start Stage <i class="fas fa-arrow-right ms-1"></i>
-                                </span>
-                                {% else %}
-                                <span class="text-muted text-sm cursor-not-allowed opacity-50"> <i
-                                        class="fas fa-lock me-1"></i>
-                                    Premium</span>
-                                {% endif %}
-                            </div>
+                    {% for topic in stage.topics.all %}
+                    T{{ topic.id }}("{{ topic.title }}")
+                    {% endfor %}
 
-                            {% if stage.is_free or user_has_access %}
-                    </a>
+                    %% Connections within Stage
+                    {% for topic in stage.topics.all %}
+                    {% if forloop.first %}
+                    Stage{{ stage.order }} --> T{{ topic.id }}
                     {% else %}
+                    %% Connect previous topic to current topic (Chain)
+                    T{{ stage.topics.all|slice:forloop.counter0|last|add:"0" }} --> T{{ topic.id }}
+                    {% endif %}
+                    {% endfor %}
+
+                    %% Fallback if chain fails in template logic (Safe Mode: Fan out)
+                    %% This is a bit tricky in pure Django templates.
+                    %% Let's just do Stage -> T1, T1 -> T2...
+                    %% Actually, without a custom template tag to look back, chaining is hard.
+                    %% Let's use a simple hierarchy: Stage connects to all topics? No, that's messy.
+                    %% Let's just use the 'previous' trick with make_list or just rely on CSS grid layout of mermaid?
+                    %% Simplest robust way: Stage -> T1, Stage -> T2 ... (Star topology)
+                    %% OR: Just list them and let Mermaid auto-layout vertically in the subgraph?
+                    %% Let's try listing them and linking Stage -> T1. Then T1 -> T2 etc is implicit top-down? No.
+                    %% Let's do: Stage -> First Topic. Then rely on order?
+                    end
+                    {% endfor %}
+
+                    %% Re-doing connections securely
+                    {% for stage in stages %}
+                    {% for topic in stage.topics.all %}
+                    Stage{{ stage.order }} --> T{{ topic.id }}
+                    {% endfor %}
+                    {% endfor %}
+
+                    %% Connections between Stages
+                    Start --> Stage1
+                    {% for stage in stages %}
+                    {% if not forloop.last %}
+                    Stage{{ stage.order }} --> Stage{{ stage.order|add:"1" }}
+                    {% endif %}
+                    {% endfor %}
+
+                    %% Goal
+                    Goal("🏆 Goal"):::start
+                    Stage{{ stages|length }} --> Goal
+
+                    %% Interactions (Click Topics to Open)
+                    {% for stage in stages %}
+                    click Stage{{ stage.order }} "{% url 'stage_detail' roadmap.slug stage.order %}" "Open Stage
+                    Details"
+                    {% for topic in stage.topics.all %}
+                    click T{{ topic.id }} "{% url 'topic_view' topic.id %}" "Start Learning {{ topic.title }}"
+                    {% endfor %}
+                    {% endfor %}
                 </div>
-                {% endif %}
             </div>
 
-            {% endwith %}
-            {% endfor %}
+            <div class="text-center mt-3">
+                <small class="text-muted">
+                    <i class="fas fa-mouse-pointer me-1"></i>
+                    <span class="text-warning">Yellow boxes</span> are clickable Topics.
+                    <span class="text-primary">Blue boxes</span> are Stages.
+                </small>
+            </div>
         </div>
     </div>
 
-    <!-- Sidebar -->
-    <div>
-        {% if not user_has_access and roadmap.is_premium %}
-        <div class="pricing-glass animate-fade-in-up delay-400">
-            <div class="text-center mb-4">
-                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mx-auto mb-3 shadow-lg shadow-indigo-500/30 text-white text-2xl"
-                    style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; background: var(--gradient-primary); border-radius: 50%;">
-                    <i class="fas fa-gem"></i>
+    <div class="container container-lg pb-5">
+        <div class="grid"
+            style="grid-template-columns: {% if user_has_access or enrollment %}1fr 350px{% else %}1fr{% endif %}; gap: 3rem;">
+
+            <!-- Main Timeline (Removed for Visual-Only Approach) -->
+            <div>
+                <div class="alert glass text-center text-muted">
+                    <i class="fas fa-info-circle me-2"></i> Click on a <strong>Stage (Blue Box)</strong> in the map
+                    above to view details.
                 </div>
-                <h3 class="h4 text-white mb-2">Unlock Full Access</h3>
-                <p class="text-sm text-secondary">Get access to all locked stages, quizzes, and certificates.</p>
-            </div>
-
-            <div class="text-center mb-4">
-                <div class="h2 text-white font-bold mb-0">₹{{ roadmap.price }}</div>
-                <div class="text-xs text-muted uppercase tracking-wide">One-time payment</div>
-            </div>
-
-            {% if monthly_plan %}
-            <button type="button" data-bs-toggle="modal" data-bs-target="#upsellModal"
-                class="btn btn-primary btn-lg w-100 pulse-btn mb-4">
-                Unlock Now <i class="fas fa-arrow-right ms-2"></i>
-            </button>
-            {% else %}
-            <a href="{% url 'initiate_payment' 'roadmap' roadmap.id %}"
-                class="btn btn-primary btn-lg w-100 pulse-btn mb-4">
-                Unlock Now <i class="fas fa-arrow-right ms-2"></i>
-            </a>
-            {% endif %}
-
-            <div class="text-center">
-                <p class="text-xs text-muted mb-2">Or save with a subscription</p>
-                <a href="{% url 'subscription_plans' %}"
-                    class="text-sm text-primary hover-text-white transition-colors">View Plans &rarr;</a>
             </div>
         </div>
-        {% elif enrollment %}
-        <div class="glass p-4 animate-fade-in-up delay-400" style="border-radius: var(--radius-lg);">
-            <h5 class="h6 text-white mb-3">Certificate</h5>
-            <p class="text-xs text-muted mb-3">Complete all stages to earn your certificate of completion.</p>
 
-            <div class="flex items-center gap-3 p-3 glass"
-                style="border-radius: var(--radius-md); background: rgba(255,255,255,0.03);">
-                <div class="text-muted text-xl opacity-50"><i class="fas fa-certificate"></i></div>
-                <div>
-                    <div class="text-xs font-bold text-muted uppercase">Status</div>
-                    <div class="text-sm text-white flex items-center gap-2">
-                        <i class="fas fa-lock text-xs"></i> Locked
+        <!-- Sidebar -->
+        <div>
+            {% if not user_has_access and roadmap.is_premium %}
+            <div class="pricing-glass animate-fade-in-up delay-400">
+                <div class="text-center mb-4">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center mx-auto mb-3 shadow-lg shadow-indigo-500/30 text-white text-2xl"
+                        style="width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; background: var(--gradient-primary); border-radius: 50%;">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3 class="h4 text-white mb-2">Unlock Full Access</h3>
+                    <p class="text-sm text-secondary">Get access to all locked stages, quizzes, and certificates.</p>
+                </div>
+
+                <div class="text-center mb-4">
+                    <div class="h2 text-white font-bold mb-0">₹{{ roadmap.price }}</div>
+                    <div class="text-xs text-muted uppercase tracking-wide">One-time payment</div>
+                </div>
+
+                {% if monthly_plan %}
+                <button type="button" data-bs-toggle="modal" data-bs-target="#upsellModal"
+                    class="btn btn-primary btn-lg w-100 pulse-btn mb-4">
+                    Unlock Now <i class="fas fa-arrow-right ms-2"></i>
+                </button>
+                {% else %}
+                <a href="{% url 'initiate_payment' 'roadmap' roadmap.id %}"
+                    class="btn btn-primary btn-lg w-100 pulse-btn mb-4">
+                    Unlock Now <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+                {% endif %}
+
+                <div class="text-center">
+                    <p class="text-xs text-muted mb-2">Or save with a subscription</p>
+                    <a href="{% url 'subscription_plans' %}"
+                        class="text-sm text-primary hover-text-white transition-colors">View Plans &rarr;</a>
+                </div>
+            </div>
+            {% elif enrollment %}
+            <div class="glass p-4 animate-fade-in-up delay-400" style="border-radius: var(--radius-lg);">
+                <h5 class="h6 text-white mb-3">Certificate</h5>
+                <p class="text-xs text-muted mb-3">Complete all stages to earn your certificate of completion.</p>
+
+                <div class="flex items-center gap-3 p-3 glass"
+                    style="border-radius: var(--radius-md); background: rgba(255,255,255,0.03);">
+                    <div class="text-muted text-xl opacity-50"><i class="fas fa-certificate"></i></div>
+                    <div>
+                        <div class="text-xs font-bold text-muted uppercase">Status</div>
+                        <div class="text-sm text-white flex items-center gap-2">
+                            <i class="fas fa-lock text-xs"></i> Locked
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        {% endif %}
+            {% endif %}
 
-        <!-- Instructor / Info Card (Optional placeholder for future) -->
-        <div class="mt-4 p-4 glass rounded-xl animate-fade-in-up delay-500">
-            <h6 class="text-white text-sm font-bold mb-3">Roadmap Details</h6>
-            <ul class="text-sm text-secondary space-y-2" style="list-style: none; padding: 0;">
-                <li class="mb-2 flex items-center gap-2"><i class="fas fa-user-graduate w-5 text-center text-dim"></i>
-                    Beginner Friendly</li>
-                <li class="mb-2 flex items-center gap-2"><i class="fas fa-certificate w-5 text-center text-dim"></i>
-                    Certificate Included</li>
-                <li class="flex items-center gap-2"><i class="fas fa-globe w-5 text-center text-dim"></i> English
-                </li>
-            </ul>
+            <!-- Instructor / Info Card (Optional placeholder for future) -->
+            <div class="mt-4 p-4 glass rounded-xl animate-fade-in-up delay-500">
+                <h6 class="text-white text-sm font-bold mb-3">Roadmap Details</h6>
+                <ul class="text-sm text-secondary space-y-2" style="list-style: none; padding: 0;">
+                    <li class="mb-2 flex items-center gap-2"><i
+                            class="fas fa-user-graduate w-5 text-center text-dim"></i>
+                        Beginner Friendly</li>
+                    <li class="mb-2 flex items-center gap-2"><i class="fas fa-certificate w-5 text-center text-dim"></i>
+                        Certificate Included</li>
+                    <li class="flex items-center gap-2"><i class="fas fa-globe w-5 text-center text-dim"></i> English
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 </div>
 <!-- PDF Download FAB -->
 {% if roadmap.pdf_file %}
@@ -359,6 +415,8 @@
 {% endif %}
 {% endif %}
 
+
+</div> <!-- End roadmap-main-content -->
 
 <!-- Upsell Modal -->
 {% if monthly_plan %}
@@ -430,4 +488,171 @@
 </div>
 {% endif %}
 
+{% endblock %}
+
+{% block extra_js %}
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Enrollment / Sales Logic
+        const isEnrolled = {% if enrollment or user_has_access %}true{% else %}false{% endif %};
+
+    if (!isEnrolled) {
+        console.log("User not enrolled. Starting 30s recurring timer...");
+
+        // Initial Timer
+        startEngagementTimer();
+
+        // Also Re-trigger when modal is closed
+        const modalEl = document.getElementById('enrollmentPromptModal');
+        if (modalEl) {
+            modalEl.addEventListener('hidden.bs.modal', function () {
+                const content = document.getElementById('roadmap-main-content');
+                if (content) {
+                    content.classList.remove('content-blurred');
+                    content.classList.remove('blur-transition');
+                }
+                console.log("Modal closed. Restarting timer...");
+                startEngagementTimer();
+            });
+        }
+    }
+
+    function startEngagementTimer() {
+        setTimeout(showEnrollmentPrompt, 30000); // 30 seconds
+    }
+
+    function showEnrollmentPrompt() {
+        const modal = document.getElementById('enrollmentPromptModal');
+        const content = document.getElementById('roadmap-main-content');
+
+        if (modal) {
+            // Show Modal
+            const bsModal = new bootstrap.Modal(modal, {
+                backdrop: 'static',
+                keyboard: false
+            });
+            bsModal.show();
+
+            // Add Blur Effect to Background
+            if (content) {
+                content.classList.add('blur-transition');
+                content.classList.add('content-blurred');
+            }
+        }
+    }
+    });
+</script>
+
+<style>
+    /* Blur Transition */
+    .blur-transition {
+        transition: filter 0.5s ease-in-out;
+    }
+
+    .content-blurred {
+        filter: blur(8px);
+        pointer-events: none;
+        /* Prevent clicks on background */
+        user-select: none;
+    }
+
+    /* Enrollment Modal Styling */
+    .enrollment-glow {
+        box-shadow: 0 0 50px rgba(99, 102, 241, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(15, 23, 42, 0.95) !important;
+        backdrop-filter: blur(20px);
+    }
+</style>
+{% endblock %}
+
+{% block content_modal %}
+<!-- Enrollment Prompt Modal - Placed here to be available -->
+<div class="modal fade" id="enrollmentPromptModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content enrollment-glow text-white">
+            <div class="modal-body p-5 text-center">
+
+                <div class="mb-4">
+                    <div class="w-20 h-20 rounded-full bg-primary bg-opacity-10 flex-center mx-auto mb-3 animate-bounce-in"
+                        style="width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; background: rgba(99, 102, 241, 0.1); border-radius: 50%;">
+                        <i class="fas fa-rocket text-primary fa-3x"></i>
+                    </div>
+                    <h2 class="display-5 font-bold mb-3">Ready to Master this Roadmap?</h2>
+                    <p class="text-xl text-secondary mb-4">
+                        You've been exploring the <strong>{{ roadmap.title }}</strong> path.
+                        To track your progress, save your visual map, and get AI assistance, you need to enroll.
+                    </p>
+                </div>
+
+                <div class="row g-4 justify-content-center">
+                    <!-- Single Purchase -->
+                    <div class="col-md-5">
+                        <div class="p-4 rounded-xl border border-white-10 h-100 hover-scale transition-all">
+                            <div class="text-xs text-uppercase text-secondary font-bold mb-2">Lifetime Access</div>
+                            <div class="h2 font-bold mb-1">₹{{ roadmap.price }}</div>
+                            <p class="text-sm text-muted mb-4">One-time payment</p>
+
+                            <ul class="text-start text-sm text-secondary space-y-2 mb-4 list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i> Full Roadmap Access</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Certificate of Completion</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Project Files</li>
+                            </ul>
+
+                            <a href="{% url 'initiate_payment' 'roadmap' roadmap.id %}"
+                                class="btn btn-outline-white w-100 py-2">
+                                Buy Roadmap
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Subscription (Best Value) -->
+                    <div class="col-md-5">
+                        <div
+                            class="p-4 rounded-xl border border-primary h-100 position-relative bg-primary bg-opacity-5 hover-scale transition-all">
+                            <div
+                                class="position-absolute top-0 start-50 translate-middle badge bg-primary px-3 rounded-pill">
+                                RECOMMENDED
+                            </div>
+                            <div class="text-xs text-uppercase text-primary font-bold mb-2 mt-2">Pro Subscription</div>
+                            <div class="h2 font-bold mb-1">
+                                {% if monthly_plan %}₹{{ monthly_plan.price }}{% else %}₹499{% endif %}
+                            </div>
+                            <p class="text-sm text-muted mb-4">Per Month</p>
+
+                            <ul class="text-start text-sm text-secondary space-y-2 mb-4 list-unstyled">
+                                <li><i class="fas fa-check text-primary me-2"></i> <strong>Access ALL Roadmaps</strong>
+                                </li>
+                                <li><i class="fas fa-check text-primary me-2"></i> <strong>Unlimited AI Tutor</strong>
+                                </li>
+                                <li><i class="fas fa-check text-primary me-2"></i> Priority Support</li>
+                            </ul>
+
+                            {% if monthly_plan %}
+                            <a href="{% url 'initiate_payment' 'plan' monthly_plan.id %}"
+                                class="btn btn-primary w-100 py-2 shadow-lg shadow-primary/30 pulse-btn">
+                                Start Subscription
+                            </a>
+                            {% else %}
+                            <a href="{% url 'subscription_plans' %}"
+                                class="btn btn-primary w-100 py-2 shadow-lg shadow-primary/30 pulse-btn">
+                                View Plans
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-5 text-sm text-muted">
+                    <i class="fas fa-lock me-1"></i> Secure Payment • 30-Day Money Back Guarantee
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

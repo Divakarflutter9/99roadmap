@@ -264,220 +264,279 @@
     }
 </style>
 
-<div class="container container-lg">
-    <div class="stage-layout">
+<div id="roadmap-main-content">
+    <div class="container container-lg">
+        <div class="stage-layout">
 
-        <!-- Contnet -->
-        <div class="animate-fade-in-up">
-            <div class="stage-header">
-                <a href="{% url 'roadmap_detail' roadmap.slug %}"
-                    class="text-sm text-secondary hover-text-white mb-3 d-inline-block transition-colors">
-                    <i class="fas fa-arrow-left me-2"></i> Back to Roadmap
-                </a>
-                <div class="mb-2">
-                    <span class="stage-badge">Stage {{ stage.order }}</span>
-                </div>
-                <h1 class="display-3 font-bold text-white mb-3">{{ stage.title }}</h1>
-                <p class="text-lg text-secondary mb-4 page-desc">{{ stage.description }}</p>
-
-                <div class="glass p-3 rounded-lg border-white-5">
-                    {% with total=topics.count completed=completed_topics|length %}
-                    <div class="flex-between text-sm mb-2 font-bold">
-                        <span class="text-white">Stage Progress</span>
-                        <span class="text-success">{{ completed }} / {{ total }} Topics</span>
+            <!-- Contnet -->
+            <div class="animate-fade-in-up">
+                <div class="stage-header">
+                    <a href="{% url 'roadmap_detail' roadmap.slug %}"
+                        class="text-sm text-secondary hover-text-white mb-3 d-inline-block transition-colors">
+                        <i class="fas fa-arrow-left me-2"></i> Back to Roadmap
+                    </a>
+                    <div class="mb-2">
+                        <span class="stage-badge">Stage {{ stage.order }}</span>
                     </div>
-                    <div class="progress-glass-container">
-                        <div class="progress-glass-bar" style="width: {% widthratio completed total 100 %}%;"></div>
+                    <h1 class="display-3 font-bold text-white mb-3">{{ stage.title }}</h1>
+                    <p class="text-lg text-secondary mb-4 page-desc">{{ stage.description }}</p>
+
+                    <div class="glass p-3 rounded-lg border-white-5">
+                        {% with total=topics.count completed=completed_topics|length %}
+                        <div class="flex-between text-sm mb-2 font-bold">
+                            <span class="text-white">Stage Progress</span>
+                            <span class="text-success">{{ completed }} / {{ total }} Topics</span>
+                        </div>
+                        <div class="progress-glass-container">
+                            <div class="progress-glass-bar" style="width: {% widthratio completed total 100 %}%;"></div>
+                        </div>
+                        {% endwith %}
                     </div>
-                    {% endwith %}
                 </div>
-            </div>
 
-            <h3 class="h4 text-white mb-4 flex items-center gap-2">
-                <i class="fas fa-list-ul text-primary"></i> Topics
-            </h3>
+                <!-- Single Stage Visual Map -->
+                <div class="glass p-4 mb-5 position-relative overflow-hidden"
+                    style="border-radius: var(--radius-xl); background: #1e1e1e;">
+                    <h4 class="h5 text-white mb-3 flex items-center gap-2">
+                        <i class="fas fa-map text-warning"></i> Visual Path
+                    </h4>
+                    <div class="mermaid-container text-center overflow-auto"
+                        style="cursor: grab; -webkit-overflow-scrolling: touch;">
+                        <div class="mermaid" style="min-width: 600px;">
+                            %%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#ffd54f', 'primaryTextColor':
+                            '#000000', 'lineColor': '#a0a0a0'}}}%%
+                            flowchart LR
 
-            <div class="topics-list">
-                {% for topic in topics %}
-                <div
-                    class="topic-card {% if topic.id in completed_topics %}completed{% else %}active{% endif %} position-relative">
-                    <div class="grid grid-2 items-center" style="grid-template-columns: 1fr auto; gap: 1rem;">
-                        <div>
-                            <h5 class="h5 text-white mb-1">{{ topic.title }}</h5>
-                            <div class="flex items-center gap-3 text-sm text-secondary">
-                                <span><i class="far fa-clock me-1"></i> {{ topic.duration_minutes }} min</span>
-                                <span class="text-warning"><i class="fas fa-bolt me-1"></i> {{ topic.xp_reward }}
-                                    XP</span>
+                            %% Styles
+                            classDef default
+                            fill:#ffd54f,stroke:#333,stroke-width:1px,color:#000,rx:2,ry:2,font-size:14px;
+                            classDef start
+                            fill:#81c784,stroke:#388e3c,color:#000,shape:rect,rx:10,ry:10,font-weight:bold;
+
+                            Start("🚀 Start Stage"):::start
+
+                            {% for topic in topics %}
+                            T{{ topic.id }}("{{ topic.title }}")
+                            {% endfor %}
+
+                            Goal("🏆 Complete"):::start
+
+                            %% Connections
+                            Start --> T{{ topics.0.id }}
+
+                            {% for topic in topics %}
+                            {% if not forloop.last %}
+                            T{{ topic.id }} --> T{{ topics|slice:forloop.counter|first.id }}
+                            {% endif %}
+                            {% endfor %}
+
+                            T{{ topics.last.id }} --> Goal
+
+                            %% Interactions
+                            {% for topic in topics %}
+                            click T{{ topic.id }} "{% url 'topic_view' topic.id %}" "Start Learning"
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="h4 text-white mb-4 flex items-center gap-2">
+                    <i class="fas fa-list-ul text-primary"></i> Topics
+                </h3>
+
+                <div class="topics-list">
+                    {% for topic in topics %}
+                    <div
+                        class="topic-card {% if topic.id in completed_topics %}completed{% else %}active{% endif %} position-relative">
+                        <div class="grid grid-2 items-center" style="grid-template-columns: 1fr auto; gap: 1rem;">
+                            <div>
+                                <h5 class="h5 text-white mb-1">{{ topic.title }}</h5>
+                                <div class="flex items-center gap-3 text-sm text-secondary">
+                                    <span><i class="far fa-clock me-1"></i> {{ topic.duration_minutes }} min</span>
+                                    <span class="text-warning"><i class="fas fa-bolt me-1"></i> {{ topic.xp_reward }}
+                                        XP</span>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                {% if topic.id in completed_topics %}
+                                <div class="topic-check" title="Completed"><i class="fas fa-check"></i></div>
+                                <a href="{% url 'topic_view' topic.id %}"
+                                    class="btn btn-sm btn-outline-white text-xs stretched-link">Review</a>
+                                {% else %}
+                                <div class="topic-check"></div>
+                                <a href="{% url 'topic_view' topic.id %}"
+                                    class="btn btn-sm btn-primary-soft text-xs stretched-link">Start</a>
+                                {% endif %}
                             </div>
                         </div>
+                    </div>
+                    {% empty %}
+                    <div class="alert glass text-center text-muted">No topics added to this stage yet.</div>
+                    {% endfor %}
+                </div>
 
-                        <div class="flex items-center gap-3">
-                            {% if topic.id in completed_topics %}
-                            <div class="topic-check" title="Completed"><i class="fas fa-check"></i></div>
-                            <a href="{% url 'topic_view' topic.id %}"
-                                class="btn btn-sm btn-outline-white text-xs stretched-link">Review</a>
-                            {% else %}
-                            <div class="topic-check"></div>
-                            <a href="{% url 'topic_view' topic.id %}"
-                                class="btn btn-sm btn-primary-soft text-xs stretched-link">Start</a>
-                            {% endif %}
+                <div class="mt-5 text-center">
+                    {% if topics.count > 0 %}
+                    {% if completed_topics|length == topics.count %}
+                    <div class="glass p-5 text-center border-success animate-fade-in-up">
+                        <div
+                            class="w-16 h-16 rounded-full bg-success bg-opacity-10 text-success flex-center mx-auto mb-3">
+                            <i class="fas fa-trophy text-2xl"></i>
                         </div>
+                        <h3 class="h4 text-white mb-2">Stage Completed!</h3>
+                        <p class="text-secondary mb-4">You've mastered all the topics. It's time to test your knowledge.
+                        </p>
+                        <a href="{% url 'stage_quiz' stage.id %}" class="btn btn-success btn-lg hover-scale pulse">
+                            Take Final Assessment <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
                     </div>
-                </div>
-                {% empty %}
-                <div class="alert glass text-center text-muted">No topics added to this stage yet.</div>
-                {% endfor %}
-            </div>
-
-            <div class="mt-5 text-center">
-                {% if topics.count > 0 %}
-                {% if completed_topics|length == topics.count %}
-                <div class="glass p-5 text-center border-success animate-fade-in-up">
-                    <div class="w-16 h-16 rounded-full bg-success bg-opacity-10 text-success flex-center mx-auto mb-3">
-                        <i class="fas fa-trophy text-2xl"></i>
-                    </div>
-                    <h3 class="h4 text-white mb-2">Stage Completed!</h3>
-                    <p class="text-secondary mb-4">You've mastered all the topics. It's time to test your knowledge.</p>
-                    <a href="{% url 'stage_quiz' stage.id %}" class="btn btn-success btn-lg hover-scale pulse">
-                        Take Final Assessment <i class="fas fa-arrow-right ms-2"></i>
-                    </a>
-                </div>
-                {% else %}
-                <button class="btn btn-secondary btn-lg opacity-50 cursor-not-allowed" disabled>
-                    <i class="fas fa-lock me-2"></i> Complete All Topics to Take Quiz
-                </button>
-                {% endif %}
-                {% endif %}
-            </div>
-        </div>
-
-        <!-- AI Sidebar -->
-        <div class="ai-sidebar-container animate-fade-in-right">
-            {% if is_ai_locked %}
-            <div class="locked-overlay">
-                <div class="locked-card p-4">
-                    <i class="fas fa-crown text-warning fa-2x mb-3"></i>
-                    <h4 class="h6 text-white mb-2">AI Tutor Locked</h4>
-                    <p class="small text-secondary mb-3">Upgrade to Pro or Buy this Roadmap to unlock AI assistance.</p>
-                    <a href="{% url 'subscription_plans' %}" class="btn btn-primary btn-sm w-100">Unlock Now</a>
-                </div>
-            </div>
-            {% endif %}
-
-            <div class="ai-sidebar {% if is_ai_locked %}blur-content{% endif %}">
-                <div class="ai-header flex-between items-center">
-                    <div>
-                        <h4 class="h6 text-white mb-0 font-bold flex items-center gap-2">
-                            <i class="fas fa-robot text-primary"></i> AI Tutor
-                        </h4>
-                        <p class="text-xs text-secondary mb-0">Ask about {{ stage.title }}</p>
-                    </div>
-                    <!-- <button class="btn btn-sm btn-ghost text-muted"><i class="fas fa-times"></i></button> (For mobile close) -->
-                </div>
-
-                <div id="ai-chat-box" class="chat-box custom-scrollbar">
-                    <div class="message ai">
-                        Hi! I'm your AI tutor. I can help you understand any topic in this "{{ stage.title }}" stage.
-                        What would you like to know?
-                    </div>
-                    <!-- Messages will appear here -->
-                </div>
-
-                <div class="input-area">
-                    <textarea id="ai-input" class="ai-input mb-2" rows="2"
-                        placeholder="Ask a doubt... (Shift+Enter for new line)"></textarea>
-                    <button onclick="sendAIMessage()" class="btn btn-primary d-block w-100 py-2">
-                        <i class="fas fa-paper-plane me-2"></i> Ask AI
+                    {% else %}
+                    <button class="btn btn-secondary btn-lg opacity-50 cursor-not-allowed" disabled>
+                        <i class="fas fa-lock me-2"></i> Complete All Topics to Take Quiz
                     </button>
+                    {% endif %}
+                    {% endif %}
                 </div>
             </div>
 
+            <!-- AI Sidebar -->
+            <div class="ai-sidebar-container animate-fade-in-right">
+                {% if is_ai_locked %}
+                <div class="locked-overlay">
+                    <div class="locked-card p-4">
+                        <i class="fas fa-crown text-warning fa-2x mb-3"></i>
+                        <h4 class="h6 text-white mb-2">AI Tutor Locked</h4>
+                        <p class="small text-secondary mb-3">Upgrade to Pro or Buy this Roadmap to unlock AI assistance.
+                        </p>
+                        <a href="{% url 'subscription_plans' %}" class="btn btn-primary btn-sm w-100">Unlock Now</a>
+                    </div>
+                </div>
+                {% endif %}
+
+                <div class="ai-sidebar {% if is_ai_locked %}blur-content{% endif %}">
+                    <div class="ai-header flex-between items-center">
+                        <div>
+                            <h4 class="h6 text-white mb-0 font-bold flex items-center gap-2">
+                                <i class="fas fa-robot text-primary"></i> AI Tutor
+                            </h4>
+                            <p class="text-xs text-secondary mb-0">Ask about {{ stage.title }}</p>
+                        </div>
+                        <!-- <button class="btn btn-sm btn-ghost text-muted"><i class="fas fa-times"></i></button> (For mobile close) -->
+                    </div>
+
+                    <div id="ai-chat-box" class="chat-box custom-scrollbar">
+                        <div class="message ai">
+                            Hi! I'm your AI tutor. I can help you understand any topic in this "{{ stage.title }}"
+                            stage.
+                            What would you like to know?
+                        </div>
+                        <!-- Messages will appear here -->
+                    </div>
+
+                    <div class="input-area">
+                        <textarea id="ai-input" class="ai-input mb-2" rows="2"
+                            placeholder="Ask a doubt... (Shift+Enter for new line)"></textarea>
+                        <button onclick="sendAIMessage()" class="btn btn-primary d-block w-100 py-2">
+                            <i class="fas fa-paper-plane me-2"></i> Ask AI
+                        </button>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
+</div> <!-- End roadmap-main-content -->
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Function to send AI message
+        window.sendAIMessage = function () {
+            const input = document.getElementById('ai-input');
+            const box = document.getElementById('ai-chat-box');
+            const message = input.value.trim();
 
+            if (!message) return;
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Function to send AI message
-            window.sendAIMessage = function () {
-                const input = document.getElementById('ai-input');
-                const box = document.getElementById('ai-chat-box');
-                const message = input.value.trim();
+            // Add user message
+            box.innerHTML += `<div class="message user animate-fade-in-up">${message}</div>`;
+            input.value = '';
+            box.scrollTop = box.scrollHeight;
 
-                if (!message) return;
-
-                // Add user message
-                box.innerHTML += `<div class="message user animate-fade-in-up">${message}</div>`;
-                input.value = '';
-                box.scrollTop = box.scrollHeight;
-
-                // Show typing indicator
-                const loadingId = 'loading-' + Date.now();
-                box.innerHTML += `
+            // Show typing indicator
+            const loadingId = 'loading-' + Date.now();
+            box.innerHTML += `
                 <div id="${loadingId}" class="message ai flex items-center gap-2">
                     <span class="spinner-border spinner-border-sm text-primary" role="status" aria-hidden="true"></span>
                     <span>Thinking...</span>
                 </div>`;
-                box.scrollTop = box.scrollHeight;
+            box.scrollTop = box.scrollHeight;
 
-                fetch('{% url "ai_ask" %}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRFToken': '{{ csrf_token }}'
-                    },
-                    body: JSON.stringify({
-                        message: message,
-                        stage_id: '{{ stage.id }}', // Context
-                        roadmap_id: '{{ roadmap.id }}'
-                    })
+            fetch('{% url "ai_ask" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    message: message,
+                    stage_id: '{{ stage.id }}', // Context
+                    roadmap_id: '{{ roadmap.id }}'
                 })
-                    .then(res => res.json())
-                    .then(data => {
-                        document.getElementById(loadingId)?.remove();
-                        if (data.success) {
-                            const formatted = data.response.replace(/\n/g, '<br>');
-                            box.innerHTML += `<div class="message ai animate-fade-in">${formatted}</div>`;
-                        } else {
-                            box.innerHTML += `<div class="message ai text-danger">Error: ${data.error}</div>`;
-                        }
-                        box.scrollTop = box.scrollHeight;
-                    })
-                    .catch(err => {
-                        document.getElementById(loadingId)?.remove();
-                        box.innerHTML += `<div class="message ai text-danger">Network Connection Error</div>`;
-                        box.scrollTop = box.scrollHeight;
-                    });
-            };
-
-            // Allow Enter key to send (Shift+Enter for new line)
-            const aiInput = document.getElementById('ai-input');
-            if (aiInput) {
-                aiInput.addEventListener('keypress', function (e) {
-                    if (e.key === 'Enter' && !e.shiftKey) {
-                        e.preventDefault();
-                        sendAIMessage();
+            })
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById(loadingId)?.remove();
+                    if (data.success) {
+                        const formatted = data.response.replace(/\n/g, '<br>');
+                        box.innerHTML += `<div class="message ai animate-fade-in">${formatted}</div>`;
+                    } else {
+                        box.innerHTML += `<div class="message ai text-danger">Error: ${data.error}</div>`;
                     }
+                    box.scrollTop = box.scrollHeight;
+                })
+                .catch(err => {
+                    document.getElementById(loadingId)?.remove();
+                    box.innerHTML += `<div class="message ai text-danger">Network Connection Error</div>`;
+                    box.scrollTop = box.scrollHeight;
                 });
-            }
+        };
 
-            // Mobile Toggle for AI Sidebar
-            const aiToggleBtn = document.getElementById('aiToggleBtn');
-            const aiSidebar = document.querySelector('.ai-sidebar-container');
-
-            if (aiToggleBtn && aiSidebar) {
-                console.log("AI Toggle Button found");
-                aiToggleBtn.addEventListener('click', function (e) {
+        // Allow Enter key to send (Shift+Enter for new line)
+        const aiInput = document.getElementById('ai-input');
+        if (aiInput) {
+            aiInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
-                    console.log("AI Toggle Clicked");
-                    aiToggleBtn.classList.toggle('active');
-                    aiSidebar.classList.toggle('show');
-                });
-            } else {
-                console.log("AI Toggle Elements NOT found");
-            }
-        });
-    </script>
+                    sendAIMessage();
+                }
+            });
+        }
 
-    {% endblock %}
+        // Mobile Toggle for AI Sidebar
+        const aiToggleBtn = document.getElementById('aiToggleBtn');
+        const aiSidebar = document.querySelector('.ai-sidebar-container');
+
+        if (aiToggleBtn && aiSidebar) {
+            console.log("AI Toggle Button found");
+            aiToggleBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                console.log("AI Toggle Clicked");
+                aiToggleBtn.classList.toggle('active');
+                aiSidebar.classList.toggle('show');
+            });
+        } else {
+            console.log("AI Toggle Elements NOT found");
+        }
+    });
+</script>
+{% endblock %}
+
+{% block extra_js %}
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
+</script>
+{% endblock %}
+
+{% endblock %}

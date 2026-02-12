@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap.sh Style Demo - Python for AI</title>
+    <!-- Tailwind for basic layout -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Mermaid JS -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'base',
+            flowchart: { curve: 'basis' } // Smooth curves like roadmap.sh
+        });
+    </script>
+    <style>
+        body {
+            background-color: #1e1e1e;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .roadmap-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="roadmap-container">
+        <h1 class="text-3xl font-bold text-white mb-8">Python for Artificial Intelligence</h1>
+        <p class="text-gray-400 mb-10">A pictorial representation in the style of roadmap.sh</p>
+
+        <div class="mermaid">
+            %%{init: {
+            'theme': 'base',
+            'themeVariables': {
+            'primaryColor': '#ffd54f',
+            'primaryTextColor': '#000000',
+            'primaryBorderColor': '#333333',
+            'lineColor': '#a0a0a0',
+            'secondaryColor': '#81c784',
+            'tertiaryColor': '#e0e0e0',
+            'fontFamily': 'Inter, sans-serif'
+            }
+            }}%%
+            flowchart TD
+
+            %% --- Styling Classes (Roadmap.sh Style) ---
+            %% Yellow Nodes (Topics): Sharp corners, Black Text, Thin Border
+            classDef default fill:#ffd54f,stroke:#333,stroke-width:1px,color:#000,rx:2,ry:2,font-size:14px;
+
+            %% Purple/Blue Nodes (Sub-topics): Lighter
+            classDef sub fill:#fff9c4,stroke:#666,stroke-width:1px,color:#333,rx:2,ry:2,stroke-dasharray: 5 5;
+
+            %% Green (Done/Start): Rounded Pill
+            classDef start fill:#81c784,stroke:#388e3c,color:#000,shape:rect,rx:10,ry:10,font-weight:bold;
+
+            %% Blue (Main Milestones/Stages): Rounded Rect
+            classDef stage fill:#64b5f6,stroke:#1976d2,color:#000,rx:5,ry:5,font-weight:bold;
+
+            %% --- The Graph ---
+
+            Start("🏁 Start Journey"):::start
+
+            subgraph Foundations ["Step 1: The Basics (Yellow)"]
+            direction TB
+            S1("Foundations"):::stage
+            T1_1("Python Refresher")
+            T1_2("NumPy Basics")
+            T1_3("Pandas Intro")
+
+            %% Connections
+            S1 --> T1_1
+            T1_1 --> T1_2
+            T1_2 --> T1_3
+            end
+
+            subgraph Beginner ["Step 2: Core ML (Blue/Yellow)"]
+            direction TB
+            S2("Machine Learning"):::stage
+            T2_1("Data Viz")
+            T2_2("Linear Regression")
+            T2_3("Logistic Regression")
+
+            %% Right side "Optional"
+            opt1("Math for ML"):::sub
+            T2_2 -.-> opt1
+            end
+
+            subgraph Advanced ["Step 3: Deep Learning"]
+            direction TB
+            S3("Deep Learning"):::stage
+            T3_1("Neural Networks")
+            T3_2("CNNs")
+            T3_3("NLP")
+            end
+
+            Start --> S1
+            T1_3 --> S2
+            T2_3 --> S3
+
+            Goal("🏆 Project Success"):::start
+            T3_3 --> Goal
+
+            %% Interactive Links
+            click S1 "https://99roadmap.com" "Go to Stage 1"
+        </div>
+    </div>
+</body>
+
+</html>
