@@ -1,0 +1,296 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+    /* Visual Path Container (Sketchy Strip) */
+    .visual-path-container {
+        position: relative;
+        padding: 4rem 2rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        min-height: 300px;
+        background: #202020;
+        /* Dark chalkboard */
+        border-radius: 20px;
+        border: 2px solid #555;
+        font-family: 'Patrick Hand', cursive;
+    }
+
+    /* The Sketchy Line */
+    .path-line-container {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 10px;
+        background: transparent;
+        transform: translateY(-50%);
+        z-index: 1;
+        width: 100%;
+        min-width: 800px;
+        /* Horizontal Wiggly Line SVG */
+        background-image: url("data:image/svg+xml,%3Csvg width='40' height='10' viewBox='0 0 40 10' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,5 Q10,0 20,5 T40,5' stroke='%23555' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+        background-repeat: repeat-x;
+        opacity: 0.8;
+    }
+
+    .path-line-progress {
+        height: 100%;
+        /* Animated sketchy fill? Hard with repeat-x. Let's use a solid colored wiggly line on top or just a simple highlighter style */
+        background: rgba(129, 199, 132, 0.4);
+        width: 0%;
+        transition: width 1s ease-out;
+        box-shadow: 0 0 15px rgba(129, 199, 132, 0.2);
+        border-radius: 10px;
+        display: none;
+        /* Hide standard progress bar, rely on node colors */
+    }
+
+    /* Nodes Wrapper */
+    .path-nodes {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        min-width: 800px;
+        padding: 0 4rem;
+    }
+
+    /* Individual Node */
+    .path-node {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        text-decoration: none !important;
+        width: 140px;
+    }
+
+    /* Sketchy Node Circle/Box */
+    .node-circle {
+        width: 60px;
+        height: 60px;
+        /* Irregular circle */
+        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        background: #2a2a2a;
+        border: 2px solid #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: #ccc;
+        box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s ease;
+        margin-bottom: 1rem;
+        position: relative;
+        z-index: 2;
+        transform: rotate(-2deg);
+    }
+
+    .path-node:nth-child(even) .node-circle {
+        transform: rotate(2deg);
+        border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+    }
+
+    .node-circle::after {
+        content: none;
+    }
+
+    /* Node Label */
+    .node-label {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #cbd5e1;
+        text-align: center;
+        transition: all 0.3s ease;
+        opacity: 0.9;
+        line-height: 1.2;
+    }
+
+    /* Node Type: Start/Goal */
+    .path-node.is-start .node-circle,
+    .path-node.is-goal .node-circle {
+        width: 70px;
+        height: 70px;
+        background: #333;
+        border-width: 3px;
+        font-size: 1.8rem;
+    }
+
+    .path-node.is-start .node-circle {
+        border-color: #81c784;
+        color: #81c784;
+    }
+
+    .path-node.is-goal .node-circle {
+        border-color: #ffd54f;
+        color: #ffd54f;
+    }
+
+    /* Node Status: Active */
+    .path-node.active .node-circle {
+        border-color: #64b5f6;
+        color: #000;
+        background: #64b5f6;
+        box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.4);
+        transform: scale(1.15) rotate(-1deg);
+    }
+
+    .path-node.active .node-label {
+        color: #64b5f6;
+        font-weight: 700;
+        transform: translateY(5px);
+    }
+
+    /* Node Status: Completed */
+    .path-node.completed .node-circle {
+        background: #81c784;
+        border-color: #388e3c;
+        color: #000;
+        box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Node Status: Locked/Future */
+    .path-node.locked .node-circle {
+        opacity: 0.5;
+        border-style: dashed;
+        background: transparent;
+    }
+
+    /* Node Connector Dot - hidden in sketch mode */
+    .node-connector-dot {
+        display: none;
+    }
+
+    /* Hover Effects */
+    .path-node:hover .node-circle {
+        transform: translateY(-5px) scale(1.1) rotate(0deg);
+        box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.5);
+        border-color: #fff;
+        color: #fff;
+    }
+
+    .path-node.active:hover .node-circle {
+        background: #90caf9;
+        color: #000;
+        border-color: #000;
+    }
+
+    /* Tooltip */
+    .path-tooltip {
+        position: absolute;
+        top: -45px;
+        background: #000;
+        color: #fff;
+        padding: 5px 12px;
+        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        border: 1px solid #fff;
+        font-size: 0.9rem;
+        opacity: 0;
+        transform: translateY(10px) rotate(-1deg);
+        transition: all 0.2s ease;
+        pointer-events: none;
+        white-space: nowrap;
+    }
+
+    .path-node:hover .path-tooltip {
+        opacity: 1;
+        transform: translateY(0) rotate(-1deg);
+    }
+
+    /* Scrollbar */
+    .visual-path-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .visual-path-container::-webkit-scrollbar-track {
+        background: #333;
+        border-radius: 4px;
+    }
+
+    .visual-path-container::-webkit-scrollbar-thumb {
+        background: #666;
+        border-radius: 4px;
+        border: 1px solid #333;
+    }
+</style>
+
+<div class="visual-path-container custom-scrollbar">
+    <!-- Progress Line -->
+    <div class="path-line-container">
+        <!-- Calculate progress width: (completed / total) * 100 -->
+        <!-- We use completed_topics|length and topics.count -->
+        {% with total_nodes=topics.count|add:"2" %}
+        <!-- +2 for start and goal. This is rough, logic needs to be dynamic -->
+        <!-- Let's just use CSS flex for layout, line is background -->
+        <div class="path-line-progress"
+            style="width: {% if completed_topics|length == topics.count %}100%{% else %}{% widthratio completed_topics|length topics.count 100 %}%{% endif %}">
+        </div>
+        {% endwith %}
+    </div>
+
+    <div class="path-nodes">
+
+        <!-- START NODE -->
+        <div class="path-node is-start completed">
+            <div class="node-circle">
+                <i class="fas fa-rocket"></i>
+            </div>
+            <div class="node-label">Start</div>
+            <div class="path-tooltip">Let's Begin!</div>
+        </div>
+
+        <!-- TOPIC NODES -->
+        {% for topic in topics %}
+        {% if topic.id in completed_topics %}
+        <!-- Completed Node -->
+        <a href="{% url 'topic_view' topic.id %}" class="path-node completed">
+            <div class="node-circle">
+                <i class="fas fa-check"></i>
+            </div>
+            <div class="node-label">{{ topic.title }}</div>
+            <div class="path-tooltip">Review Topic</div>
+        </a>
+        {% else %}
+        <!-- Active/Locked Node -->
+        <!-- Ideally find the *first* uncompleted topic to make 'active' -->
+        <!-- For now, we render links for all -->
+        <a href="{% url 'topic_view' topic.id %}"
+            class="path-node {% if not topic.id in completed_topics and not previous_completed %}active{% endif %}">
+            <div class="node-circle">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <div class="node-label">{{ topic.title }}</div>
+            <div class="path-tooltip">Start Learning</div>
+        </a>
+
+        {% endif %}
+        {% empty %}
+        <div class="path-node locked">
+            <div class="node-circle"><i class="fas fa-ban"></i></div>
+            <div class="node-label">No Topics</div>
+        </div>
+        {% endfor %}
+
+        <!-- GOAL NODE -->
+        <div
+            class="path-node is-goal {% if completed_topics|length == topics.count and topics.count > 0 %}completed active{% endif %}">
+            <div class="node-circle">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <div class="node-label">Goal</div>
+            <div class="path-tooltip">Stage Completion</div>
+        </div>
+
+    </div>
+</div>
+
+<div class="text-center mt-3 text-sm text-white" style="opacity: 0.8;">
+    <i class="fas fa-info-circle me-1"></i> Scroll horizontally to view the full path
+</div>

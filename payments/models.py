@@ -34,6 +34,7 @@ class SubscriptionPlan(models.Model):
     """Subscription plans available"""
     
     DURATION_CHOICES = [
+        ('trial', 'Free Trial'),
         ('monthly', 'Monthly'),
         ('quarterly', 'Quarterly'),
         ('yearly', 'Yearly'),
@@ -50,6 +51,7 @@ class SubscriptionPlan(models.Model):
     
     is_active = models.BooleanField(default=True)
     is_popular = models.BooleanField(default=False)
+    is_default_trial = models.BooleanField("Is Default Free Trial?", default=False, help_text="If checked, new users will get this plan automatically.")
     
     created_at = models.DateTimeField(auto_now_add=True)
     
@@ -77,6 +79,7 @@ class UserSubscription(models.Model):
     end_date = models.DateTimeField(null=True, blank=True)
     
     auto_renew = models.BooleanField(default=False)
+    is_trial = models.BooleanField(default=False, help_text="Is this a free trial subscription?")
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

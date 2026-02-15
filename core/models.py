@@ -583,17 +583,19 @@ class WeeklyGoal(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     
+    is_completed = models.BooleanField(default=False)
+    
     created_at = models.DateTimeField(auto_now_add=True)
     
     class Meta:
         ordering = ['-created_at']
         
     def __str__(self):
-        return f"{self.user.email} - Goal: {self.target_value} {self.target_type}"
+        return f"{self.user.username} - {self.target_type}: {self.target_value}"
     
     def is_active(self):
         today = timezone.now().date()
-        return self.start_date <= today <= self.end_date
+        return self.start_date <= today <= self.end_date and not self.is_completed
 
 
 class Giveaway(models.Model):

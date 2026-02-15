@@ -29,7 +29,7 @@ def has_ai_access(user, roadmap_id=None):
     # 1. Check Global Subscription
     try:
         sub = user.subscription
-        allowed_plans = ['monthly', 'yearly']
+        allowed_plans = ['monthly', 'yearly', 'quarterly', 'lifetime', 'trial']
         print(f"DEBUG: Sub Status: {sub.status}, Plan: {sub.plan}, End: {sub.end_date}")
         if sub.is_active() and sub.plan and sub.plan.duration_type in allowed_plans:
             print("DEBUG: Global Subscription Active -> True")
@@ -73,14 +73,19 @@ def ai_chat_view(request):
     roadmap_id = request.GET.get('roadmap_id')
     
     # Check subscription access
-    is_locked = not has_ai_access(request.user, roadmap_id)
+    if not has_ai_access(request.user, roadmap_id):
+        from django.contrib import messages
+        from django.shortcuts import redirect
+        messages.warning(request, 'AI Assistant is a premium feature. Please upgrade to Pro.')
+        if roadmap_id:
+            return redirect('roadmap_detail', slug=Roadmap.objects.get(id=roadmap_id).slug)
+        return redirect('pricing')
 
     # Get user's enrolled roadmaps for context context
     enrollments = UserRoadmapEnrollment.objects.filter(user=request.user).select_related('roadmap')
     
     context = {
         'enrollments': enrollments,
-        'is_locked': is_locked,
         'current_roadmap_id': int(roadmap_id) if roadmap_id else None
     }
     return render(request, 'ai/chat.html', context)

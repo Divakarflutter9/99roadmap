@@ -22,9 +22,9 @@ class CouponAdmin(admin.ModelAdmin):
 
 @admin.register(SubscriptionPlan)
 class SubscriptionPlanAdmin(admin.ModelAdmin):
-    list_display = ['name', 'duration_type', 'price', 'duration_days', 'is_active', 'is_popular']
-    list_filter = ['duration_type', 'is_active', 'is_popular']
-    list_editable = ['is_active', 'is_popular']
+    list_display = ['name', 'duration_type', 'price', 'duration_days', 'is_active', 'is_popular', 'is_default_trial']
+    list_filter = ['duration_type', 'is_active', 'is_popular', 'is_default_trial']
+    list_editable = ['is_active', 'is_popular', 'is_default_trial']
     search_fields = ['name', 'description']
 
 

@@ -10,7 +10,8 @@ from nested_admin import NestedModelAdmin, NestedTabularInline
 from .models import (
     User, RoadmapCategory, Roadmap, Stage, Topic, Quiz, QuizQuestion, QuizOption, RoadmapBundle,
     UserRoadmapEnrollment, UserTopicProgress, UserQuizAttempt, UserGamification, XPTransaction,
-    SiteSetting, BroadcastEmail, ProgressEmailCampaign, Giveaway, GiveawayParticipation
+    SiteSetting, BroadcastEmail, ProgressEmailCampaign, Giveaway, GiveawayParticipation,
+    WeeklyGoal
 )
 from payments.models import UserSubscription
 
@@ -346,6 +347,13 @@ class UserGamificationAdmin(admin.ModelAdmin):
             color, obj.level
         )
     level_badge.short_description = 'Level'
+
+
+@admin.register(WeeklyGoal)
+class WeeklyGoalAdmin(admin.ModelAdmin):
+    list_display = ('user', 'target_type', 'target_value', 'start_date', 'end_date', 'is_completed')
+    list_filter = ('is_completed', 'target_type')
+    search_fields = ('user__email',)
 
 
 @admin.register(XPTransaction)

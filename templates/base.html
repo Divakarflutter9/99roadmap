@@ -140,6 +140,33 @@
     </div>
     {% endif %}
 
+    <!-- Trial Banner -->
+    {% if user.is_authenticated and user.subscription and user.subscription.is_trial and user.subscription.is_active %}
+    <div class="container mt-3">
+        <div class="glass glass-bordered p-3 rounded-lg d-flex align-items-center justify-content-between"
+            style="background: linear-gradient(90deg, rgba(99, 102, 241, 0.2) 0%, rgba(168, 85, 247, 0.2) 100%);">
+            <div class="d-flex align-items-center gap-3">
+                <div class="rounded-circle bg-primary p-2 d-flex align-items-center justify-content-center"
+                    style="width: 32px; height: 32px;">
+                    <i class="fas fa-gift text-white text-xs"></i>
+                </div>
+                <div>
+                    <span class="text-white fw-bold">Free Trial Active</span>
+                    <span class="text-secondary text-sm d-none d-md-inline ms-2">You have full Premium access to all
+                        roadmaps and AI.</span>
+                </div>
+            </div>
+            <div class="text-end">
+                <span class="badge bg-warning text-dark fw-bold">{{ user.subscription.days_remaining }} Days
+                    Remaining</span>
+                <a href="{% url 'subscription_plans' %}"
+                    class="btn btn-link btn-sm text-primary text-decoration-none ms-2 d-none d-sm-inline-block">Upgrade
+                    Now <i class="fas fa-arrow-right ms-1"></i></a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
     <!-- Main Content -->
     <main style="min-height: calc(100vh - 200px);">
         {% block content %}{% endblock %}

@@ -208,7 +208,6 @@
         </div>
     </div>
 
-    <!-- Visual Roadmap Diagram (Mermaid.js) -->
     <div class="container container-lg py-5">
         <div class="glass p-4 position-relative overflow-hidden"
             style="border-radius: var(--radius-xl); min-height: 400px; background: #1e1e1e;">
@@ -216,107 +215,8 @@
                 <i class="fas fa-map-signs text-warning"></i> Interactive Roadmap
             </h3>
 
-            <div class="mermaid-container text-center overflow-auto"
-                style="cursor: grab; -webkit-overflow-scrolling: touch;">
-                <!-- Min-width ensures map doesn't shrink too small on mobile -->
-                <div class="mermaid" style="min-width: 800px;">
-                    %%{init: {
-                    'theme': 'base',
-                    'themeVariables': {
-                    'primaryColor': '#ffd54f',
-                    'primaryTextColor': '#000000',
-                    'primaryBorderColor': '#333333',
-                    'lineColor': '#a0a0a0',
-                    'secondaryColor': '#81c784',
-                    'tertiaryColor': '#e0e0e0',
-                    'fontFamily': 'Inter, sans-serif'
-                    }
-                    }}%%
-                    flowchart TD
+            {% include "includes/visual_roadmap_full.html" %}
 
-                    %% --- Styling Classes (Roadmap.sh Style) ---
-                    %% Yellow Nodes (Topics): Sharp corners, Black Text, Thin Border
-                    classDef default fill:#ffd54f,stroke:#333,stroke-width:1px,color:#000,rx:2,ry:2,font-size:14px;
-
-                    %% Green (Done/Start): Rounded Pill
-                    classDef start fill:#81c784,stroke:#388e3c,color:#000,shape:rect,rx:10,ry:10,font-weight:bold;
-
-                    %% Blue (Main Milestones/Stages): Rounded Rect
-                    classDef stage fill:#64b5f6,stroke:#1976d2,color:#000,rx:5,ry:5,font-weight:bold;
-
-                    %% --- The Graph ---
-
-                    Start("🏁 Start"):::start
-
-                    {% for stage in stages %}
-                    subgraph S{{ stage.order }} ["Step {{ stage.order }}: {{ stage.title }}"]
-                    direction TB
-                    Stage{{ stage.order }}("{{ stage.title }}"):::stage
-
-                    {% for topic in stage.topics.all %}
-                    T{{ topic.id }}("{{ topic.title }}")
-                    {% endfor %}
-
-                    %% Connections within Stage
-                    {% for topic in stage.topics.all %}
-                    {% if forloop.first %}
-                    Stage{{ stage.order }} --> T{{ topic.id }}
-                    {% else %}
-                    %% Connect previous topic to current topic (Chain)
-                    T{{ stage.topics.all|slice:forloop.counter0|last|add:"0" }} --> T{{ topic.id }}
-                    {% endif %}
-                    {% endfor %}
-
-                    %% Fallback if chain fails in template logic (Safe Mode: Fan out)
-                    %% This is a bit tricky in pure Django templates.
-                    %% Let's just do Stage -> T1, T1 -> T2...
-                    %% Actually, without a custom template tag to look back, chaining is hard.
-                    %% Let's use a simple hierarchy: Stage connects to all topics? No, that's messy.
-                    %% Let's just use the 'previous' trick with make_list or just rely on CSS grid layout of mermaid?
-                    %% Simplest robust way: Stage -> T1, Stage -> T2 ... (Star topology)
-                    %% OR: Just list them and let Mermaid auto-layout vertically in the subgraph?
-                    %% Let's try listing them and linking Stage -> T1. Then T1 -> T2 etc is implicit top-down? No.
-                    %% Let's do: Stage -> First Topic. Then rely on order?
-                    end
-                    {% endfor %}
-
-                    %% Re-doing connections securely
-                    {% for stage in stages %}
-                    {% for topic in stage.topics.all %}
-                    Stage{{ stage.order }} --> T{{ topic.id }}
-                    {% endfor %}
-                    {% endfor %}
-
-                    %% Connections between Stages
-                    Start --> Stage1
-                    {% for stage in stages %}
-                    {% if not forloop.last %}
-                    Stage{{ stage.order }} --> Stage{{ stage.order|add:"1" }}
-                    {% endif %}
-                    {% endfor %}
-
-                    %% Goal
-                    Goal("🏆 Goal"):::start
-                    Stage{{ stages|length }} --> Goal
-
-                    %% Interactions (Click Topics to Open)
-                    {% for stage in stages %}
-                    click Stage{{ stage.order }} "{% url 'stage_detail' roadmap.slug stage.order %}" "Open Stage
-                    Details"
-                    {% for topic in stage.topics.all %}
-                    click T{{ topic.id }} "{% url 'topic_view' topic.id %}" "Start Learning {{ topic.title }}"
-                    {% endfor %}
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class="text-center mt-3">
-                <small class="text-muted">
-                    <i class="fas fa-mouse-pointer me-1"></i>
-                    <span class="text-warning">Yellow boxes</span> are clickable Topics.
-                    <span class="text-primary">Blue boxes</span> are Stages.
-                </small>
-            </div>
         </div>
     </div>
 
@@ -491,10 +391,7 @@
 {% endblock %}
 
 {% block extra_js %}
-<script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({ startOnLoad: true, securityLevel: 'loose' });
-</script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

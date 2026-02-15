@@ -1,0 +1,785 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+    /* Hand-Drawn Theme (Yellow Stages, Blue Topics, Sketchy Look) */
+    .visual-roadmap-container {
+        position: relative;
+        padding: 3rem 2rem;
+        background: #202020;
+        /* Dark chalkboard-ish */
+        border-radius: 20px;
+        border: 2px solid #555;
+        overflow: hidden;
+        font-family: 'Patrick Hand', cursive;
+        /* Handwritten Font */
+    }
+
+    /* Start Node */
+    .roadmap-start-node {
+        width: 120px;
+        padding: 10px 20px;
+        margin: 0 auto 4rem;
+        background: #81c784;
+        color: #000;
+        font-weight: 700;
+        font-size: 1.2rem;
+        text-align: center;
+        border: 2px solid #000;
+        /* Sketchy Border Radius */
+        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        position: relative;
+        z-index: 2;
+        box-shadow: 2px 3px 0px #000;
+        transform: rotate(-2deg);
+    }
+
+    /* Connecting Lines (Hand-drawn Vertical Sine Wave) */
+    .roadmap-connector-line {
+        position: absolute;
+        top: 60px;
+        bottom: 60px;
+        left: 50%;
+        width: 10px;
+        background: transparent;
+        transform: translateX(-50%);
+        z-index: 0;
+        /* create a squiggly line using repeat-y radial gradients or svg */
+        background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10,0 C5,5 15,15 10,20' stroke='%23aaaaaa' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+        background-repeat: repeat-y;
+        opacity: 0.6;
+    }
+
+    /* Stage Container (Sketchy Cloud/Region) */
+    .roadmap-stage-container {
+        background: rgba(255, 213, 79, 0.8);
+        /* Slightly transparent yellow */
+        border: 2px dashed #333;
+        /* Dashed line for 'zone' feel */
+        /* Cloud-like organic shape */
+        border-radius: 20px 30px 40px 20px / 30px 20px 30px 40px;
+        padding: 1rem;
+        margin-bottom: 5rem;
+        /* More space for the irregular shape */
+        position: relative;
+        z-index: 1;
+        max-width: 950px;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.1);
+        color: #000;
+        transition: transform 0.3s ease;
+    }
+
+    /* Alternating shapes for variety */
+    .roadmap-stage-container:nth-of-type(odd) {
+        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        transform: rotate(-0.5deg);
+    }
+
+    .roadmap-stage-container:nth-of-type(even) {
+        border-radius: 20px 255px 20px 225px / 225px 15px 255px 15px;
+        transform: rotate(0.5deg);
+    }
+
+    .roadmap-stage-container:hover {
+        transform: scale(1.01) rotate(0.5deg);
+    }
+
+    /* Stage Header */
+    .roadmap-stage-header {
+        border-bottom: 2px dashed rgba(0, 0, 0, 0.2);
+        padding: 1rem;
+        text-align: center;
+    }
+
+    .roadmap-stage-title {
+        color: #000;
+        font-weight: 700;
+        font-size: 1.4rem;
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Topics Grid */
+    .roadmap-topics-area {
+        padding: 2.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2rem;
+        position: relative;
+    }
+
+    /* Decorative Curvy Lines between topics (Simulated with background) */
+    .roadmap-topics-area::before {
+        /* None for now, clean look */
+        content: none;
+    }
+
+    /* Topic Node (Sketchy Blue Box) */
+    .roadmap-topic-node {
+        background: #64b5f6;
+        color: #000;
+        border: 2px solid #000;
+        padding: 12px 20px;
+        /* Varied box shapes */
+        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-align: center;
+        min-width: 180px;
+        max-width: 250px;
+        position: relative;
+        z-index: 1;
+        text-decoration: none !important;
+        transition: all 0.3s ease;
+        box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2);
+    }
+
+    .roadmap-topic-node:nth-child(odd) {
+        border-radius: 15px 225px 15px 255px / 255px 15px 225px 15px;
+        transform: rotate(1deg);
+    }
+
+    .roadmap-topic-node:nth-child(even) {
+        transform: rotate(-1deg);
+    }
+
+    .roadmap-topic-node:hover {
+        transform: scale(1.05) rotate(0deg) !important;
+        background: #42a5f5;
+        box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.4);
+        z-index: 10;
+    }
+
+    /* Arrow connecting Stages */
+    .stage-connector-arrow {
+        position: absolute;
+        bottom: -45px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #a0a0a0;
+        font-size: 2rem;
+        z-index: 2;
+        /* Use a hand-drawn arrow character or icon */
+        font-family: 'Patrick Hand', cursive;
+    }
+
+    .stage-connector-arrow i {
+        /* Replace standard arrow with something sketchier if possible, or style it */
+    }
+
+    /* Goal Node */
+    .roadmap-goal-node {
+        width: 120px;
+        padding: 10px 20px;
+        margin: 0 auto;
+        background: #81c784;
+        color: #000;
+        font-weight: 700;
+        font-size: 1.2rem;
+        text-align: center;
+        border: 2px solid #000;
+        border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+        position: relative;
+        z-index: 2;
+        box-shadow: 2px 3px 0px #000;
+        transform: rotate(2deg);
+    }
+
+    .interactive-hint {
+        color: #ccc;
+        font-size: 1rem;
+        margin-top: 2rem;
+        text-align: center;
+        font-family: 'Patrick Hand', cursive;
+    }
+
+    .hint-yellow {
+        background: #ffd54f;
+        border: 2px solid #000;
+        border-radius: 3px;
+    }
+
+    .hint-blue {
+        background: #64b5f6;
+        border: 2px solid #000;
+        border-radius: 3px;
+    }
+
+    /* Completion Styles */
+    .stage-completed {
+        background: #a5d6a7 !important;
+        /* Green 200 */
+        border-color: #2e7d32 !important;
+        /* Green 800 */
+    }
+
+    .topic-completed {
+        background: #e8f5e9 !important;
+        /* Green 50 */
+        border: 2px solid #4caf50 !important;
+        /* Green 500 */
+        color: #1b5e20 !important;
+    }
+
+    /* Mobile Optimizations */
+    @media (max-width: 768px) {
+        .visual-roadmap-container {
+            padding: 2rem 1rem;
+        }
+
+        .roadmap-stage-container {
+            margin-bottom: 2.5rem;
+            border-radius: var(--radius-md);
+        }
+
+        .roadmap-stage-header {
+            padding: 1rem;
+        }
+
+        .roadmap-stage-title {
+            font-size: 1rem;
+        }
+
+        /* Horizontal Scroll for Topics on Mobile */
+        .roadmap-topics-area {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            justify-content: flex-start;
+            padding: 1rem;
+            gap: 1rem;
+            -webkit-overflow-scrolling: touch;
+            scroll-snap-type: x mandatory;
+            /* Hide scrollbar but allow scrolling */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            /* Inner shadow for scroll hint */
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.1), transparent 10%, transparent 90%, rgba(0, 0, 0, 0.1));
+        }
+
+        .roadmap-topics-area::-webkit-scrollbar {
+            display: none;
+        }
+
+        .roadmap-topic-node {
+            min-width: 200px;
+            /* Wider for better touch targets */
+            flex-shrink: 0;
+            scroll-snap-align: center;
+            margin-bottom: 0;
+            white-space: normal;
+            /* Allow text wrap inside */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .stage-connector-arrow {
+            bottom: -25px;
+            font-size: 1.2rem;
+        }
+
+        /* Hint text update for mobile */
+        .interactive-hint {
+            font-size: 0.75rem;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    }
+</style>
+
+<div class="visual-roadmap-container">
+    <!-- Center Line -->
+    <div class="roadmap-connector-line"></div>
+
+    <!-- Start -->
+    <div class="roadmap-start-node">
+        <i class="fas fa-flag-checkered me-2"></i> Start
+    </div>
+
+    <!-- Arrow down -->
+    <div class="text-center mb-4 text-white-50"><i class="fas fa-arrow-down"></i></div>
+
+    {% for stage in stages %}
+    <div class="roadmap-stage-container animate-fade-in-up {% if stage.id in completed_stage_ids %}stage-completed{% endif %}"
+        style="animation-delay: {{ forloop.counter0|add:1 }}00ms;">
+        <!-- Stage Link -->
+        <!-- Stage Link -->
+        <a href="{% url 'stage_detail' roadmap.slug stage.order %}"
+            class="d-block text-decoration-none {% if not user_has_access and not stage.is_free %}locked-stage-link{% endif %}"
+            {% if not user_has_access and not stage.is_free %}style="cursor: pointer;" {% endif %}>
+            <div class="roadmap-stage-header">
+                <h5 class="roadmap-stage-title">
+                    {% if stage.id in completed_stage_ids %}
+                    <i class="fas fa-check-circle text-success me-2" style="color: #1b5e20 !important;"></i>
+                    {% elif not user_has_access and not stage.is_free %}
+                    <i class="fas fa-lock text-muted me-2" style="opacity: 0.7;"></i>
+                    {% endif %}
+                    Step {{ stage.order }}: {{ stage.title }}
+                </h5>
+                <div class="text-sm text-dark mt-1 font-weight-bold" style="opacity: 0.7;">
+                    {% if not user_has_access and not stage.is_free %}
+                    <i class="fas fa-lock me-1"></i> Locked (Click to Unlock)
+                    {% else %}
+                    Click to Open Stage <i class="fas fa-external-link-alt ms-1"></i>
+                    {% endif %}
+                </div>
+            </div>
+        </a>
+
+        <!-- Topics -->
+        <div class="roadmap-topics-area">
+            {% for topic in stage.topics.all %}
+            <a href="{% url 'topic_view' topic.id %}"
+                class="roadmap-topic-node {% if topic.id in completed_topic_ids %}topic-completed{% endif %}"
+                title="{{ topic.title }}">
+                {% if topic.id in completed_topic_ids %}
+                <i class="fas fa-check me-1"></i>
+                {% endif %}
+                {{ topic.title }}
+            </a>
+            {% empty %}
+            <span class="text-secondary text-sm">No topics yet</span>
+            {% endfor %}
+        </div>
+
+        <!-- Mobile Scroll Hint -->
+        <div class="d-md-none text-center pb-2 text-white text-xs" style="font-size: 0.8rem; opacity: 0.9;">
+            <i class="fas fa-arrow-right animate-pulse me-1"></i> Swipe for more
+        </div>
+
+        {% if not forloop.last %}
+        <div class="stage-connector-arrow">
+            <svg width="30" height="60" viewBox="0 0 30 60" fill="none" xmlns="http://www.w3.org/2000/svg"
+                style="opacity: 0.6;">
+                <path d="M15 0C15 0 5 15 15 30C25 45 15 60 15 60" stroke="#ccc" stroke-width="2"
+                    stroke-linecap="round" />
+                <path d="M5 50L15 60L25 50" stroke="#ccc" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <!-- Goal -->
+    <div class="roadmap-goal-node animate-fade-in-up" style="animation-delay: 500ms;">
+        <i class="fas fa-trophy me-2"></i> Goal
+    </div>
+
+    <div class="interactive-hint">
+        <span class="me-3"><span class="hint-box hint-yellow"></span> Clickable Topics</span>
+        <span><span class="hint-box hint-blue"></span> Stages (Click Header)</span>
+    </div>
+</div>
+
+<!-- Cinematic Intro Overlay (Pure Black, High Z-Index) -->
+<div id="cinematic-overlay"
+    style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99999; background: #000; display: flex; align-items: flex-end; justify-content: center; pointer-events: none; transition: opacity 0.5s ease;">
+    <!-- Skip button only, no loading text/spinner as requested -->
+    <button id="skip-intro-btn" class="btn btn-sm btn-outline-light mb-5"
+        style="font-family: 'Patrick Hand', cursive; pointer-events: auto; z-index: 100000;">Skip Intro</button>
+</div>
+
+<style>
+    /* Cinematic Mode: Fullscreen Overlay Style for the Container */
+    .visual-roadmap-container.is-cinematic {
+        position: fixed !important;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 99998;
+        /* Just below overlay/skip button */
+        margin: 0 !important;
+        border-radius: 0 !important;
+        background: #000 !important;
+        overflow-y: auto;
+        /* Internal scrolling */
+        padding: 5vh 5vw !important;
+        border: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Hide scrollbar in cinematic mode */
+    .visual-roadmap-container.is-cinematic::-webkit-scrollbar {
+        width: 8px;
+        background: #000;
+    }
+
+    .visual-roadmap-container.is-cinematic::-webkit-scrollbar-thumb {
+        background: #333;
+        border-radius: 4px;
+    }
+
+    /* Hide specific hints during cinematic to clean up */
+    .visual-roadmap-container.is-cinematic .interactive-hint,
+    .visual-roadmap-container.is-cinematic .d-md-none {
+        display: none !important;
+    }
+
+    /* Disable CSS animations in cinematic mode to prevent conflicts */
+    .visual-roadmap-container.is-cinematic .animate-fade-in-up {
+        animation: none !important;
+        opacity: 0;
+        /* JS will handle reveal */
+    }
+
+    /* Enrollment Alert Modal - Polished UI */
+    #enrollment-alert-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10000;
+        background: rgba(0, 0, 0, 0.6);
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(8px);
+    }
+
+    .alert-content {
+        background: #ffffff;
+        padding: 2.5rem;
+        border-radius: 20px;
+        text-align: center;
+        max-width: 450px;
+        width: 90%;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        font-family: 'Inter', 'Segoe UI', sans-serif;
+        /* Professional Font */
+        position: relative;
+        transform: scale(0.95);
+        opacity: 0;
+        animation: alertPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes alertPop {
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+    .blur-roadmap {
+        filter: blur(10px);
+        pointer-events: none;
+        transition: filter 0.5s ease;
+    }
+
+    .skip-btn-container {
+        margin-top: 2rem;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 0.5rem;
+    }
+
+    .btn-timer {
+        color: #6c757d;
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+</style>
+
+<!-- Enrollment Alert Modal -->
+<div id="enrollment-alert-modal">
+    <div class="alert-content">
+        <div class="mb-4">
+            <i class="fas fa-lock text-warning" style="font-size: 3rem;"></i>
+        </div>
+        <h3 class="mb-3" style="font-weight: 800; color: #2d3748;">Unlock Full Access</h3>
+        <p class="mb-4 text-muted" style="line-height: 1.6;">
+            {% if not user.is_authenticated %}
+            Join <strong>99Roadmap</strong> to track your progress, take quizzes, and master this skill with a
+            structured path.
+            {% else %}
+            This content is locked. Subscribe to <strong>Pro</strong> to get full access to all stages, quizzes, and
+            projects!
+            {% endif %}
+        </p>
+
+        <div class="d-grid gap-3">
+            {% if not user.is_authenticated %}
+            <a href="{% url 'register' %}" class="btn btn-primary btn-lg shadow-sm" style="font-weight: 600;">Sign Up
+                Free</a>
+            <a href="{% url 'login' %}" class="btn btn-outline-dark" style="font-weight: 600;">Log In</a>
+            {% else %}
+            <a href="/pricing" class="btn btn-warning text-dark btn-lg shadow-sm"
+                style="font-weight: 700; background-color: #ffc107; border: none;">Upgrade to Pro 🚀</a>
+            {% endif %}
+        </div>
+
+        <div class="skip-btn-container">
+            <span id="skip-timer" class="btn-timer"><i class="far fa-clock me-2"></i>Wait 5s...</span>
+            <button id="alert-skip-btn" class="btn btn-link text-decoration-none text-muted fw-bold"
+                style="display: none; font-size: 0.9rem;">
+                Skip for now
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // --- CINEMATIC INTRO LOGIC ---
+        const ENABLE_CINEMATIC = true;
+        const TOTAL_DURATION = 10000; // 10s
+
+        const overlay = document.getElementById('cinematic-overlay');
+        const container = document.querySelector('.visual-roadmap-container');
+        const skipBtn = document.getElementById('skip-intro-btn');
+
+        // --- ENROLLMENT ALERT LOGIC ---
+        const userAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
+        const userHasAccess = "{{ user_has_access|yesno:'true,false' }}" === "true";
+        const shouldShowAlert = !userAuthenticated || !userHasAccess;
+
+        const alertModal = document.getElementById('enrollment-alert-modal');
+        const skipTimer = document.getElementById('skip-timer');
+        const alertSkipBtn = document.getElementById('alert-skip-btn');
+        const roadmapContainer = document.querySelector('.visual-roadmap-container');
+
+        // Locked Stage Click Handler
+        if (shouldShowAlert) {
+            const lockedStages = document.querySelectorAll('.locked-stage-link');
+            lockedStages.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault(); // Stop navigation (no reload!)
+                    showAlert(); // Trigger the alert
+                });
+            });
+        }
+
+        // Shared Show Alert Function
+        let alertInterval;
+
+        function showAlert() {
+            // Don't show during intro
+            if (roadmapContainer && roadmapContainer.classList.contains('is-cinematic')) return;
+            // Don't show if already open
+            if (alertModal.style.display === 'flex') return;
+
+            alertModal.style.display = 'flex';
+            if (roadmapContainer) roadmapContainer.classList.add('blur-roadmap');
+
+            // Reset Skip Button
+            alertSkipBtn.style.display = 'none';
+            skipTimer.style.display = 'block';
+            skipTimer.innerHTML = '<i class="far fa-clock me-2"></i>Wait 5s...';
+
+            let countdown = 5;
+            const timerInterval = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    skipTimer.innerHTML = `<i class="far fa-clock me-2"></i>Wait ${countdown}s...`;
+                } else {
+                    clearInterval(timerInterval);
+                    skipTimer.style.display = 'none';
+                    alertSkipBtn.style.display = 'inline-block';
+                }
+            }, 1000);
+        }
+
+        if (shouldShowAlert && alertModal && alertSkipBtn) {
+            alertSkipBtn.addEventListener('click', function () {
+                alertModal.style.display = 'none';
+                if (roadmapContainer) roadmapContainer.classList.remove('blur-roadmap');
+            });
+
+            // Recurring Timer
+            alertInterval = setInterval(showAlert, 20000);
+        }
+
+        if (!ENABLE_CINEMATIC || !container) {
+            if (overlay) overlay.style.display = 'none';
+            return;
+        }
+
+        // ENTER CINEMATIC MODE IMMEDIATELY
+        container.classList.add('is-cinematic');
+        document.body.style.overflow = 'hidden'; // Prevent body scroll behind
+
+        // 1. Prepare Elements
+        const nodes = [];
+        const startNode = container.querySelector('.roadmap-start-node');
+        if (startNode) nodes.push({ el: startNode, type: 'node' });
+
+        const stages = container.querySelectorAll('.roadmap-stage-container');
+        const connectors = container.querySelectorAll('.stage-connector-arrow');
+        const firstArrow = container.querySelector('.text-white-50'); // First arrow
+        if (firstArrow) nodes.push({ el: firstArrow, type: 'connector' });
+
+        stages.forEach((stage, index) => {
+            nodes.push({ el: stage, type: 'stage' });
+            if (connectors[index]) nodes.push({ el: connectors[index], type: 'connector' });
+        });
+
+        const goalNode = container.querySelector('.roadmap-goal-node');
+        if (goalNode) nodes.push({ el: goalNode, type: 'node' });
+
+        // Hide elements
+        nodes.forEach(item => {
+            if (item.el) {
+                item.el.style.opacity = '0';
+                item.el.style.transform = 'translateY(20px)';
+                item.el.style.transition = 'all 0.5s ease-out';
+            }
+        });
+
+        // Hide overlay quickly to reveal the BLACK container (effectively smooth)
+        // Actually overlay IS black, container IS black. 
+        // We just fade out overlay to let clicks through, or keep it transparent?
+        // No, let's fade out overlay entirely, since container is now covering screen with black anyway.
+        setTimeout(() => {
+            if (overlay) overlay.style.opacity = '0';
+            setTimeout(() => { if (overlay) overlay.style.display = 'none'; }, 500);
+
+            // Start Animation
+            playAnimation();
+        }, 500); // 0.5s initial black pause
+
+        let currentIndex = 0;
+        let animationInterval;
+        // Calculate exact delay per step to fit 10s
+        const stepDelay = nodes.length > 0 ? (TOTAL_DURATION / nodes.length) : 800;
+
+        // Ensure starting state: Scroll to top of container
+        if (container) container.scrollTop = 0;
+
+        // Setup Line Animation
+        const mainLine = container.querySelector('.roadmap-connector-line');
+        if (mainLine) {
+            mainLine.style.height = '0';
+            mainLine.style.transition = 'height 1s linear'; // Smooth growth
+            // Reset transition for initial hidden state if needed
+            // Actually, we want it to grow Step-by-Step.
+        }
+
+        if (skipBtn) skipBtn.addEventListener('click', stopAnimation);
+
+        function playAnimation() {
+            function nextStep() {
+                if (currentIndex >= nodes.length) {
+                    // FINISHED: Wait a moment then exit cinematic mode
+                    setTimeout(stopAnimation, 2000);
+                    return;
+                }
+
+                const item = nodes[currentIndex];
+                if (item.el) {
+                    item.el.style.opacity = '1';
+                    item.el.style.transform = 'translateY(0) rotate(' + (Math.random() * 2 - 1) + 'deg)';
+
+                    // ROBUST POSITION CALCULATION
+                    // Use getBoundingClientRect to get absolute position relative to viewport
+                    // Then account for container scroll to get position relative to container CONTENT
+                    const itemRect = item.el.getBoundingClientRect();
+                    const containerRect = container.getBoundingClientRect();
+                    const currentScroll = container.scrollTop;
+                    const containerHeight = container.clientHeight;
+
+                    // Distance from top of container's visible area
+                    const relativeTop = itemRect.top - containerRect.top;
+                    // Absolute position in the scrollable content
+                    const absoluteTop = relativeTop + currentScroll;
+
+                    const itemHeight = itemRect.height;
+
+                    // Goal: Element center aligns with container center
+                    const targetScroll = absoluteTop - (containerHeight / 2) + (itemHeight / 2);
+
+                    container.scrollTo({
+                        top: targetScroll,
+                        behavior: 'smooth'
+                    });
+
+                    // ANIMATE LINE TO THIS ITEM
+                    if (mainLine) {
+                        // Calculate absolute bottom of this item relative to content start
+                        const absoluteBottom = absoluteTop + itemHeight;
+
+                        // Line starts at 60px from top of container content (CSS: top: 60px)
+                        const lineStart = 60;
+                        const targetHeight = absoluteBottom - lineStart;
+
+                        // For stages, we might want line to stop at their TOP, or go through them?
+                        // "Line stages ki topics ki connect avvuthu" implies going through.
+                        // But usually line sits behind. So targetHeight = absoluteBottom is fine.
+                        // Actually, if we want strict "draw to here", maybe center of stage?
+                        // Let's stick to bottom of current item (so it connects to next).
+
+                        if (targetHeight > 0) {
+                            mainLine.style.height = targetHeight + 'px';
+                        }
+                    }
+
+                    // Stage topics staggering
+                    if (item.type === 'stage') {
+                        const topics = item.el.querySelectorAll('.roadmap-topic-node');
+                        // Fast ripple for topics
+                        const topicDelay = Math.min(100, (stepDelay * 0.9) / (topics.length || 1));
+
+                        topics.forEach((t, i) => {
+                            t.style.opacity = '0';
+                            t.style.transform = 'scale(0.9)';
+                            setTimeout(() => {
+                                t.style.transition = 'all 0.3s ease';
+                                t.style.opacity = '1';
+                                t.style.transform = 'scale(1) rotate(' + (Math.random() * 2 - 1) + 'deg)';
+                            }, topicDelay * (i + 1));
+                        });
+                    }
+                }
+                currentIndex++;
+                animationInterval = setTimeout(nextStep, stepDelay);
+            }
+            nextStep();
+        }
+
+        function stopAnimation() {
+            if (animationInterval) clearTimeout(animationInterval);
+            if (overlay) overlay.style.display = 'none';
+
+            // Exit Cinematic Mode
+            container.classList.remove('is-cinematic');
+            document.body.style.overflow = ''; // Restore body scroll
+
+            // Show all elements
+            nodes.forEach(item => {
+                if (item.el) {
+                    item.el.style.opacity = '1';
+                    item.el.style.transform = 'none';
+                }
+            });
+            const allTopics = container.querySelectorAll('.roadmap-topic-node');
+            allTopics.forEach(t => {
+                t.style.opacity = '1';
+                t.style.transform = 'none';
+            });
+
+            // Restore Line
+            if (mainLine) mainLine.style.height = '';
+
+            // Scroll window to container location
+            setTimeout(() => {
+                // Try to scroll to where we were roughly? Or just top of map.
+                const rect = container.getBoundingClientRect();
+                const absoluteTop = window.scrollY + rect.top;
+                window.scrollTo({ top: absoluteTop - 100, behavior: 'smooth' });
+            }, 100);
+        }
+    });
+</script>

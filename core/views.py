@@ -85,6 +85,23 @@ def register_view(request):
             
             # Send Welcome Email
             try:
+                # FREE TRIAL LOGIC
+                # Check for an active default trial plan
+                trial_plan = SubscriptionPlan.objects.filter(is_default_trial=True, is_active=True).first()
+                
+                if trial_plan:
+                    trial_days = trial_plan.duration_days
+                    UserSubscription.objects.create(
+                        user=user,
+                        plan=trial_plan,
+                        status='active', # ACTIVE immediately
+                        start_date=timezone.now(),
+                        end_date=timezone.now() + timezone.timedelta(days=trial_days),
+                        is_trial=True,
+                        auto_renew=False
+                    )
+                    messages.success(request, f"Welcome! You have started your {trial_days}-day Free Trial! 🚀")
+                
                 from django.template.loader import render_to_string
                 
                 html_message = render_to_string('emails/welcome.html', {
@@ -101,12 +118,10 @@ def register_view(request):
                     html_message=html_message
                 )
             except Exception as e:
-                print(f"Error sending welcome email: {e}")
+                print(f"Error in registration process: {e}")
             
             # Auto-login and redirect
-            user.backend = 'django.contrib.auth.backends.ModelBackend'
-            login(request, user)
-            messages.success(request, f'Registration successful! Welcome to 99Roadmap.')
+            login(request, user, backend='django.contrib.auth.backends.ModelBackend')
             return redirect('dashboard')
     else:
         form = UserRegistrationForm()
@@ -480,7 +495,6 @@ def dashboard_view(request):
 
 # ==================== Roadmap Views ====================
 
-@login_required
 def roadmap_list_view(request):
     """List all roadmaps with filtering"""
     
@@ -513,13 +527,16 @@ def roadmap_list_view(request):
     user_has_subscription = False
     
     # Get directly purchased roadmaps
-    purchased_roadmap_ids = set(
-        Payment.objects.filter(
-            user=request.user, 
-            roadmap__isnull=False, 
-            status='success'
-        ).values_list('roadmap_id', flat=True)
-    )
+    if request.user.is_authenticated:
+        purchased_roadmap_ids = set(
+            Payment.objects.filter(
+                user=request.user, 
+                roadmap__isnull=False, 
+                status='success'
+            ).values_list('roadmap_id', flat=True)
+        )
+    else:
+        purchased_roadmap_ids = set()
     
     # Check subscription
     try:
@@ -539,7 +556,6 @@ def roadmap_list_view(request):
     return render(request, 'roadmaps/list.html', context)
 
 
-@login_required
 def roadmap_detail_view(request, slug):
     """Roadmap detail page"""
     
@@ -550,19 +566,22 @@ def roadmap_detail_view(request, slug):
     user_has_access = False
     
     # KYC Check: Google users must complete profile
-    if request.user.is_google_user() and not request.user.kyc_completed():
+    if request.user.is_authenticated and request.user.is_google_user() and not request.user.kyc_completed():
         messages.warning(request, 'Please complete your profile to access roadmaps.')
         return redirect('profile')
     
-    enrollment, created = UserRoadmapEnrollment.objects.get_or_create(
-        user=request.user,
-        roadmap=roadmap
-    )
+    if request.user.is_authenticated:
+        enrollment, created = UserRoadmapEnrollment.objects.get_or_create(
+            user=request.user,
+            roadmap=roadmap
+        )
+    else:
+        enrollment = None
     
     # Check if user has access (subscribed or free content)
     if not roadmap.is_premium:
         user_has_access = True
-    else:
+    elif request.user.is_authenticated:
         # Check subscription (will implement in payments app)
         has_subscription = getattr(request.user, 'has_active_subscription', lambda: False)()
         
@@ -574,10 +593,42 @@ def roadmap_detail_view(request, slug):
         ).exists()
         
         user_has_access = has_subscription or has_purchase
+    else:
+        user_has_access = False
     
     
     # Upsell Data: Get the first active monthly plan
     monthly_plan = SubscriptionPlan.objects.filter(is_active=True, duration_type='monthly').first()
+
+    # Calculate Progress
+    completed_topic_ids = set()
+    completed_stage_ids = set()
+    
+    if request.user.is_authenticated:
+        # Get all completed topics for this user in this roadmap
+        completed_positions = UserTopicProgress.objects.filter(
+            user=request.user,
+            topic__stage__roadmap=roadmap,
+            is_completed=True
+        ).values_list('topic_id', flat=True)
+        
+        completed_topic_ids = set(completed_positions)
+        
+        # Calculate completed stages
+        for stage in stages:
+            # We used prefetch_related('topics') above, so this shouldn't hit DB again
+            stage_topics = stage.topics.all()
+            if stage_topics.exists():
+                # Check if all topics in this stage are completed
+                is_stage_complete = all(t.id in completed_topic_ids for t in stage_topics)
+                if is_stage_complete:
+                    completed_stage_ids.add(stage.id)
+            else:
+                # If stage has no topics, do we consider it complete? 
+                # Let's say yes if it's not the goal node itself (which isn't a stage)
+                # But safer to ignore empty stages or mark them complete.
+                # Let's leave them incomplete to force simple logic for now, or assume they don't exist.
+                pass
 
     context = {
         'roadmap': roadmap,
@@ -585,6 +636,8 @@ def roadmap_detail_view(request, slug):
         'enrollment': enrollment,
         'user_has_access': user_has_access,
         'monthly_plan': monthly_plan,
+        'completed_topic_ids': completed_topic_ids,
+        'completed_stage_ids': completed_stage_ids,
     }
     return render(request, 'roadmaps/detail.html', context)
 

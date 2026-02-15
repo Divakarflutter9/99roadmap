@@ -8,16 +8,27 @@ def download_roadmap_pdf(request, roadmap_id):
     # Requirement says "add a floating download pdf button". 
     # Usually requires premium access for premium roadmaps.
     
-    # Simple check: If premium, user must have enrollment or subscription
+    # Security Check: Ensure user has valid access to this premium resource
     if roadmap.is_premium:
-        has_access = False
-        if request.user.enrollments.filter(roadmap=roadmap).exists():
-            has_access = True
-        elif hasattr(request.user, 'subscription') and request.user.subscription.is_active():
-            has_access = True
+        # Check if user has active subscription
+        has_subscription = False
+        try:
+            if hasattr(request.user, 'subscription') and request.user.subscription.is_active():
+                has_subscription = True
+        except Exception:
+            pass
             
-        if not has_access:
-            messages.error(request, "You need full access to download resources.")
+        # Check for direct purchase
+        has_purchase = False
+        from payments.models import Payment
+        has_purchase = Payment.objects.filter(
+            user=request.user,
+            roadmap=roadmap,
+            status='success'
+        ).exists()
+        
+        if not (has_subscription or has_purchase):
+            messages.error(request, "You need a Pro subscription or purchase to download the Roadmap PDF.")
             return redirect('roadmap_detail', slug=roadmap.slug)
 
     if not roadmap.pdf_file:
