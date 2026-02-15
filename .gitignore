@@ -9,6 +9,8 @@ env/
 # Django
 db.sqlite3
 *.log
+*.zip
+venv.zip
 local_settings.py
 staticfiles/
 media/
