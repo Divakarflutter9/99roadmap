@@ -288,18 +288,7 @@
             {% endif %}
 
             <!-- Instructor / Info Card (Optional placeholder for future) -->
-            <div class="mt-4 p-4 glass rounded-xl animate-fade-in-up delay-500">
-                <h6 class="text-white text-sm font-bold mb-3">Roadmap Details</h6>
-                <ul class="text-sm text-secondary space-y-2" style="list-style: none; padding: 0;">
-                    <li class="mb-2 flex items-center gap-2"><i
-                            class="fas fa-user-graduate w-5 text-center text-dim"></i>
-                        Beginner Friendly</li>
-                    <li class="mb-2 flex items-center gap-2"><i class="fas fa-certificate w-5 text-center text-dim"></i>
-                        Certificate Included</li>
-                    <li class="flex items-center gap-2"><i class="fas fa-globe w-5 text-center text-dim"></i> English
-                    </li>
-                </ul>
-            </div>
+            <!-- Instructor / Info Card (Removed as requested) -->
         </div>
     </div>
 </div>
@@ -325,7 +314,7 @@
         <div class="modal-content glass border-0 text-white"
             style="background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px);">
             <div class="modal-header border-bottom border-white-10">
-                <h5 class="modal-title" id="upsellModalLabel">Wait! Here's a Better Deal 🚀</h5>
+                <h5 class="modal-title" id="upsellModalLabel">Choose Your Access Plan 🚀</h5>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                     aria-label="Close"></button>
             </div>
@@ -335,27 +324,31 @@
                         style="background: rgba(99, 102, 241, 0.1);">
                         <i class="fas fa-gem fa-2x text-primary"></i>
                     </div>
-                    <h4 class="fw-bold mb-2">Get Everything for Just ₹{{ monthly_plan.price|floatformat:0 }}</h4>
-                    <p class="text-secondary small">Why buy just one when you can have it all?</p>
+                    <h4 class="fw-bold mb-2">Unlock Full Access</h4>
+                    <p class="text-secondary small">Select a plan that works best for you</p>
                 </div>
 
                 <div class="row g-3 mb-4">
                     <!-- Single Purchase Option -->
                     <div class="col-6">
-                        <div class="p-3 rounded border border-white-10 h-100 text-center opacity-50">
+                        <div class="p-3 rounded border border-white-10 h-100 text-center opacity-75 d-flex flex-column">
                             <div class="text-xs text-uppercase text-secondary fw-bold mb-1">Single Roadmap</div>
                             <div class="h3 mb-0">₹{{ roadmap.price|floatformat:0 }}</div>
                             <div class="text-xs text-muted mb-2">One-time</div>
-                            <ul class="list-unstyled text-xs text-start mt-3 mb-0 space-y-1">
+                            <ul class="list-unstyled text-xs text-start mt-3 mb-4 space-y-1 flex-grow-1">
                                 <li><i class="fas fa-check text-success me-1"></i> This Roadmap Only</li>
                                 <li><i class="fas fa-times text-danger me-1"></i> No AI Tutor</li>
                             </ul>
+                            <a href="{% url 'initiate_payment' 'roadmap' roadmap.id %}"
+                                class="btn btn-light btn-sm fw-bold w-100 mt-auto">
+                                Buy Now
+                            </a>
                         </div>
                     </div>
 
                     <!-- Monthly Plan Option (Highlighted) -->
                     <div class="col-6">
-                        <div class="p-3 rounded border border-primary h-100 text-center position-relative"
+                        <div class="p-3 rounded border border-primary h-100 text-center position-relative d-flex flex-column"
                             style="background: rgba(99, 102, 241, 0.1);">
                             <div
                                 class="position-absolute top-0 start-50 translate-middle badge bg-primary rounded-pill px-3">
@@ -363,24 +356,17 @@
                             <div class="text-xs text-uppercase text-primary fw-bold mb-1 mt-1">Monthly Access</div>
                             <div class="h3 mb-0">₹{{ monthly_plan.price|floatformat:0 }}</div>
                             <div class="text-xs text-muted mb-2">Per Month</div>
-                            <ul class="list-unstyled text-xs text-start mt-3 mb-0 space-y-1">
+                            <ul class="list-unstyled text-xs text-start mt-3 mb-4 space-y-1 flex-grow-1">
                                 <li><i class="fas fa-check text-success me-1"></i> <strong>All Roadmaps</strong></li>
                                 <li><i class="fas fa-check text-success me-1"></i> <strong>Unlimited AI Tutor</strong>
                                 </li>
                             </ul>
+                            <a href="{% url 'initiate_payment' 'plan' monthly_plan.id %}"
+                                class="btn btn-primary btn-sm w-100 pulse-btn mt-auto">
+                                Start Subscription
+                            </a>
                         </div>
                     </div>
-                </div>
-
-                <div class="d-grid gap-2">
-                    <a href="{% url 'initiate_payment' 'plan' monthly_plan.id %}"
-                        class="btn btn-primary btn-lg fw-bold pulse-btn">
-                        Switch to Monthly Plan <i class="fas fa-arrow-right ms-2"></i>
-                    </a>
-                    <a href="{% url 'initiate_payment' 'roadmap' roadmap.id %}"
-                        class="btn btn-outline-white btn-sm border-0 text-muted">
-                        No thanks, continue with single purchase
-                    </a>
                 </div>
             </div>
         </div>

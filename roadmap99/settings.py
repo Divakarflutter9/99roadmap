@@ -113,17 +113,11 @@ AUTH_USER_MODEL = 'core.User'
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
         'OPTIONS': {'min_length': 8},
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'core.validators.LetterRequiredValidator',
+        'NAME': 'core.validators.AlphaNumericValidator',
     },
 ]
 

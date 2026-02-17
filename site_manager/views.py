@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -216,17 +218,20 @@ def suggest_roadmap(request):
         # 3. Fetch & Rank Results
         matches = Roadmap.objects.none()
         reason = ""
+        
+        # Base Query: Active AND Has Content (at least 1 stage)
+        base_qs = Roadmap.objects.filter(is_active=True, total_stages__gt=0)
 
         # Strategy A: Strict Match (Level + Keywords)
         if final_keywords:
-            matches = Roadmap.objects.filter(is_active=True).filter(diff_q & keyword_q).order_by('-enrolled_count')
+            matches = base_qs.filter(diff_q & keyword_q).order_by('-enrolled_count')
             if matches.exists():
                 matched_term = final_keywords[0].title()
                 reason = f"Perfect match for '{matched_term}' at {level} level!"
         
         # Strategy B: Keywords Only (Ignore Level)
         if not matches.exists() and final_keywords:
-            matches = Roadmap.objects.filter(is_active=True).filter(keyword_q).order_by('-enrolled_count')
+            matches = base_qs.filter(keyword_q).order_by('-enrolled_count')
             if matches.exists():
                 reason = f"Found a great roadmap for '{final_keywords[0].title()}'."
 
@@ -234,37 +239,44 @@ def suggest_roadmap(request):
         # If user typed something we couldn't parse well, just try the raw input as a broad search
         if not matches.exists() and len(goal_input) > 3:
              broad_q = Q(title__icontains=goal_input) | Q(description__icontains=goal_input)
-             matches = Roadmap.objects.filter(is_active=True).filter(broad_q).order_by('-enrolled_count')
+             matches = base_qs.filter(broad_q).order_by('-enrolled_count')
              if matches.exists():
                  reason = f"This looks relevant to '{goal_input}'."
 
-        # Strategy D: Level Only (Popularity Fallback)
-        if not matches.exists():
-            matches = Roadmap.objects.filter(is_active=True).filter(diff_q).order_by('-enrolled_count')
+        # Strategy D: Level Only (Popularity Fallback - ONLY if keywords were vague/generic)
+        # If user typed "engineering" (which is a stop word or generic) we might fall here.
+        # But if they typed "Cooking" and we found nothing, we should NOT show random coding courses.
+        # So we only do this if we had NO specific search terms or the input was very short.
+        if not matches.exists() and (not final_keywords or len(goal_input) < 4):
+            matches = base_qs.filter(diff_q).order_by('-enrolled_count')
             if matches.exists():
-                reason = f"We couldn't find an exact match for '{goal_input}', but this is our top {level} roadmap!"
+                 reason = f"Here are our top {level} roadmaps!"
 
-        # Strategy D: Absolute Fallback (Most Popular Overall)
-        if not matches.exists():
-             matches = Roadmap.objects.filter(is_active=True).order_by('-enrolled_count')
-             reason = "Our most popular roadmap to get you started!"
+        # Strategy E: Absolute Fallback (Most Popular Overall) - REMOVED
+        # User requested ONLY valid suggestions. Showing "Python" for "Cooking" is invalid.
+        # We will only return if we actually found a match.
              
-        best_match = matches.first()
+        # Take Top 3 Matches
+        top_matches = matches[:3]
         
-        if not best_match:
-             return JsonResponse({'status': 'error', 'message': 'No roadmaps available.'}, status=404)
+        if not top_matches:
+             return JsonResponse({'status': 'error', 'message': 'No relevant roadmaps found. Try searching for "Python", "Web", or "AI".'}, status=404)
+
+        roadmaps_data = []
+        for r in top_matches:
+            roadmaps_data.append({
+                'id': r.id,
+                'title': r.title,
+                'slug': r.slug,
+                'description': r.description[:80] + '...', # Shorter description for list
+                'image': r.thumbnail.url if r.thumbnail else '/static/images/default-roadmap.png',
+                'enrolled': r.enrolled_count,
+                'rating': '4.9' 
+            })
 
         return JsonResponse({
             'status': 'success',
-            'roadmap': {
-                'id': best_match.id,
-                'title': best_match.title,
-                'slug': best_match.slug,
-                'description': best_match.description[:120] + '...',
-                'image': best_match.thumbnail.url if best_match.thumbnail else '/static/images/default-roadmap.png',
-                'enrolled': best_match.enrolled_count,
-                'rating': '4.9' # Placeholder
-            },
+            'roadmaps': roadmaps_data, # Return list
             'reason': reason
         })
         
