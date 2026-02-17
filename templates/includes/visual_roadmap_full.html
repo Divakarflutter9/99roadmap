@@ -336,6 +336,7 @@
         <!-- Topics -->
         <div class="roadmap-topics-area">
             {% for topic in stage.topics.all %}
+            {% if user_has_access or stage.is_free %}
             <a href="{% url 'topic_view' topic.id %}"
                 class="roadmap-topic-node {% if topic.id in completed_topic_ids %}topic-completed{% endif %}"
                 title="{{ topic.title }}">
@@ -344,6 +345,13 @@
                 {% endif %}
                 {{ topic.title }}
             </a>
+            {% else %}
+            <a href="#" data-bs-toggle="modal" data-bs-target="#upsellModal" class="roadmap-topic-node"
+                style="opacity: 0.8; background: #e0e0e0; color: #555; border-color: #999;"
+                title="Locked: {{ topic.title }}">
+                <i class="fas fa-lock me-1"></i> {{ topic.title }}
+            </a>
+            {% endif %}
             {% empty %}
             <span class="text-secondary text-sm">No topics yet</span>
             {% endfor %}
