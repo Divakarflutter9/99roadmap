@@ -517,8 +517,9 @@
                 Free</a>
             <a href="{% url 'login' %}" class="btn btn-outline-dark" style="font-weight: 600;">Log In</a>
             {% else %}
-            <a href="/pricing" class="btn btn-warning text-dark btn-lg shadow-sm"
-                style="font-weight: 700; background-color: #ffc107; border: none;">Upgrade to Pro 🚀</a>
+            <a href="{% url 'initiate_payment' 'roadmap' roadmap.id %}"
+                class="btn btn-warning text-dark btn-lg shadow-sm"
+                style="font-weight: 700; background-color: #ffc107; border: none;">Unlock Roadmap 🚀</a>
             {% endif %}
         </div>
 

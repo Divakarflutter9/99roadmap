@@ -431,3 +431,41 @@ def manager_panel_view(request):
     }
     return render(request, 'payments/manager_panel.html', context)
 
+@login_required
+def activate_trial_view(request):
+    """Manually activate free trial if eligible"""
+    
+    # Check if user already has/had a trial
+    # We check if they have any subscription record with is_trial=True
+    has_used_trial = UserSubscription.objects.filter(user=request.user, is_trial=True).exists()
+    
+    if has_used_trial:
+        messages.error(request, 'You have already used your Free Trial.')
+        return redirect('subscription_plans')
+        
+    # Get the default trial plan
+    try:
+        trial_plan = SubscriptionPlan.objects.get(is_default_trial=True, is_active=True)
+    except SubscriptionPlan.DoesNotExist:
+        messages.error(request, 'Free Trial is currently unavailable.')
+        return redirect('subscription_plans')
+        
+    # Activate
+    # Create or update subscription
+    sub, created = UserSubscription.objects.get_or_create(user=request.user)
+    
+    # If they have an active paid plan, don't overwrite it with a trial!
+    if sub.is_active() and not sub.is_trial:
+        messages.warning(request, 'You already have an active paid subscription.')
+        return redirect('subscription_plans')
+        
+    sub.plan = trial_plan
+    sub.status = 'active'
+    sub.start_date = timezone.now()
+    sub.end_date = timezone.now() + timedelta(days=trial_plan.duration_days)
+    sub.is_trial = True
+    sub.auto_renew = False
+    sub.save()
+    
+    messages.success(request, f'Success! Your {trial_plan.duration_days}-Day Free Trial has started. Enjoy Pro features! 🚀')
+    return redirect('dashboard')

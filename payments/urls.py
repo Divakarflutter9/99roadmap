@@ -12,4 +12,5 @@ urlpatterns = [
     path('webhook/', views.payment_webhook, name='payment_webhook'),
     path('apply-coupon/', views.apply_coupon, name='apply_coupon'),
     path('manager/', views.manager_panel_view, name='manager_panel'),
+    path('trial/activate/', views.activate_trial_view, name='activate_trial'),
 ]

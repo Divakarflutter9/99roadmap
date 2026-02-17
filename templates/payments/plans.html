@@ -267,6 +267,33 @@
     </div>
     {% endif %}
 
+    <!-- Free Trial Banner -->
+    {% if not current_subscription.is_active %}
+    <!-- Check if user has EVER had a trial. We need to pass this context or check efficiently.
+         For now, the view handles the strict check, but UI should try to be smart.
+         Let's assume if no active sub, we show the offer, but maybe clicking it shows error if used.
+         Better: Context variable 'has_used_trial' -> simple bool passed from view?
+         The plans view doesn't pass 'has_used_trial' yet. Let's update view first or just show it 
+         and let the view handle rejection (User friendly enough for now).
+    -->
+    <div class="glass border-primary p-4 mb-5 mx-auto flex items-center justify-content-between gap-4 animate-fade-in-up delay-100"
+        style="max-width: 800px; background: rgba(99, 102, 241, 0.1);">
+        <div class="d-flex align-items-center gap-3">
+            <div class="bg-primary rounded-circle p-3 d-flex align-items-center justify-content-center"
+                style="width: 60px; height: 60px;">
+                <i class="fas fa-gift fa-2x text-white"></i>
+            </div>
+            <div>
+                <h5 class="h4 text-white mb-1">Start Your 7-Day Free Trial</h5>
+                <p class="text-secondary mb-0">Experience Premium features with no commitment.</p>
+            </div>
+        </div>
+        <a href="{% url 'activate_trial' %}" class="btn btn-primary btn-lg fw-bold hover-glow px-5 whitespace-nowrap">
+            Start Free Trial <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+    </div>
+    {% endif %}
+
     <!-- Tabs -->
     <div class="pricing-tabs-container animate-fade-in-up delay-100">
         <div class="pricing-tabs nav nav-pills" id="pills-tab" role="tablist">

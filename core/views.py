@@ -85,22 +85,7 @@ def register_view(request):
             
             # Send Welcome Email
             try:
-                # FREE TRIAL LOGIC
-                # Check for an active default trial plan
-                trial_plan = SubscriptionPlan.objects.filter(is_default_trial=True, is_active=True).first()
-                
-                if trial_plan:
-                    trial_days = trial_plan.duration_days
-                    UserSubscription.objects.create(
-                        user=user,
-                        plan=trial_plan,
-                        status='active', # ACTIVE immediately
-                        start_date=timezone.now(),
-                        end_date=timezone.now() + timezone.timedelta(days=trial_days),
-                        is_trial=True,
-                        auto_renew=False
-                    )
-                    messages.success(request, f"Welcome! You have started your {trial_days}-day Free Trial! 🚀")
+                # FREE TRIAL LOGIC REMOVED (Now Manual via /payments/trial/activate/)
                 
                 from django.template.loader import render_to_string
                 
