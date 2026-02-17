@@ -606,7 +606,10 @@
         });
     </script>
 
-    <!-- KYC Completion Popup for Google Users -->
+    <!-- Roadmap Suggestor Modal -->
+    {% include 'struct/roadmap_suggestor.html' %}
+
+    <!-- KYC Modal (Existing) -->
     {% if user.is_authenticated and user.is_google_user and not user.kyc_completed and request.path != '/profile/' %}
     <div class="modal fade" id="kycModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"
         data-bs-keyboard="false">
@@ -673,6 +676,8 @@
     </script>
     {% endif %}
 
+    <!-- AI Guide Script -->
+    <script src="{% static 'js/guide.js' %}"></script>
 </body>
 
 </html>

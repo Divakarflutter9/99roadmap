@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'widget_tweaks',
     # Local apps
+    'site_manager',
     'core',
     'payments',
     'ai_assistant',

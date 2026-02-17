@@ -26,11 +26,15 @@ def has_ai_access(user, roadmap_id=None):
         print("DEBUG: User not authenticated -> False")
         return False
 
+    # 0. Check Superuser
+    if user.is_superuser:
+        print("DEBUG: User is Superuser -> Access Granted")
+        return True
+
     # 1. Check Global Subscription
     try:
         sub = user.subscription
         allowed_plans = ['monthly', 'yearly', 'quarterly', 'lifetime', 'trial']
-        print(f"DEBUG: Sub Status: {sub.status}, Plan: {sub.plan}, End: {sub.end_date}")
         if sub.is_active() and sub.plan and sub.plan.duration_type in allowed_plans:
             print("DEBUG: Global Subscription Active -> True")
             return True
@@ -72,21 +76,27 @@ def ai_chat_view(request):
     # Contextual check
     roadmap_id = request.GET.get('roadmap_id')
     
+    # Handle 'null' string from frontend JS
+    if roadmap_id == 'null' or roadmap_id == 'None':
+        roadmap_id = None
+        
     # Check subscription access
-    if not has_ai_access(request.user, roadmap_id):
-        from django.contrib import messages
-        from django.shortcuts import redirect
-        messages.warning(request, 'AI Assistant is a premium feature. Please upgrade to Pro.')
-        if roadmap_id:
-            return redirect('roadmap_detail', slug=Roadmap.objects.get(id=roadmap_id).slug)
-        return redirect('pricing')
-
+    has_access = has_ai_access(request.user, roadmap_id)
+    
     # Get user's enrolled roadmaps for context context
     enrollments = UserRoadmapEnrollment.objects.filter(user=request.user).select_related('roadmap')
     
+    current_roadmap_id = None
+    if roadmap_id:
+        try:
+             current_roadmap_id = int(roadmap_id)
+        except ValueError:
+             current_roadmap_id = None
+    
     context = {
         'enrollments': enrollments,
-        'current_roadmap_id': int(roadmap_id) if roadmap_id else None
+        'current_roadmap_id': current_roadmap_id,
+        'is_locked': not has_access
     }
     return render(request, 'ai/chat.html', context)
 

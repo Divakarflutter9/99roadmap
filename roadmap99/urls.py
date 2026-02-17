@@ -14,6 +14,7 @@ urlpatterns = [
     path('ai/', include('ai_assistant.urls')),
     path('_nested_admin/', include('nested_admin.urls')),
     path('accounts/', include('allauth.urls')),
+    path('', include('site_manager.urls')),
 ]
 
 # Serve media files in development

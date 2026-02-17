@@ -1,0 +1,382 @@
+<!-- Roadmap Suggestor Modal v3 (Compact & Smart) -->
+<style>
+    /* Glassmorphism Variables */
+    :root {
+        --glass-bg: rgba(255, 255, 255, 0.08);
+        /* Slightly more transparent */
+        --glass-border: rgba(255, 255, 255, 0.15);
+        --neon-primary: #818cf8;
+        /* Indigo-400 */
+        --neon-secondary: #f472b6;
+        /* Pink-400 */
+    }
+
+    .glass-modal .modal-dialog {
+        max-width: 480px;
+        /* Compart Size */
+    }
+
+    .glass-modal .modal-content {
+        background: rgba(15, 23, 42, 0.90);
+        /* Darker Slate */
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid var(--glass-border);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+        color: white;
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    .form-control-glass {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--glass-border);
+        color: white;
+        padding: 1rem 1.25rem;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control-glass:focus {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--neon-primary);
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+        color: white;
+    }
+
+    .form-control-glass::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-glow {
+        background: linear-gradient(135deg, var(--neon-primary), var(--neon-secondary));
+        color: white;
+        border: none;
+        box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        transition: all 0.2s;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-glow:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.6);
+        color: white;
+    }
+
+    .level-badge-select {
+        cursor: pointer;
+        opacity: 0.7;
+        transition: all 0.2s;
+        border: 1px solid transparent;
+    }
+
+    .level-badge-select:hover {
+        opacity: 1;
+        transform: translateY(-1px);
+    }
+
+    .level-badge-select.active {
+        opacity: 1;
+        background: rgba(255, 255, 255, 0.15);
+        border-color: var(--neon-primary);
+        box-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
+    }
+
+    .shimmer-text {
+        background: linear-gradient(to right, #818cf8, #f472b6, #818cf8);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        background-size: 200% auto;
+        animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer {
+        to {
+            background-position: 200% center;
+        }
+    }
+</style>
+
+<div class="modal fade" id="roadmapSuggestorModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Match KYC Modal Style -->
+        <div class="modal-content border-0 shadow-lg"
+            style="background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1);">
+            <div class="modal-body p-4 pt-5 pb-5">
+
+                <!-- Close Button -->
+                <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3"
+                    data-bs-dismiss="modal" aria-label="Close" style="opacity: 0.5;"></button>
+
+                <!-- Step 1: Input -->
+                <div id="suggestor-step-1">
+                    <div class="text-center mb-4">
+                        <div class="mb-3">
+                            <span class="fs-1">🚀</span>
+                        </div>
+                        <h4 class="fw-bold mb-2">Find Your <span class="text-gradient">Dream Career</span></h4>
+                        <p class="text-secondary small">Tell us what you want to achieve.</p>
+                    </div>
+
+                    <!-- Goal Input (Dropdown) -->
+                    <div class="mb-4">
+                        <label class="d-block text-secondary fs-7 fw-bold mb-2 text-uppercase ls-1"
+                            style="font-size: 0.75rem; letter-spacing: 1px;">Select your Branch</label>
+                        <select class="form-select fs-5 text-white" id="goal-input"
+                            style="background: rgba(30, 41, 59, 0.5); border: 1px solid rgba(255,255,255,0.1); cursor: pointer; padding: 1rem;">
+                            <option value="computer science cse software" selected>Computer Science (CSE) 💻</option>
+                            <option value="information technology it software">Information Technology (IT) 🖥️</option>
+                            <option value="artificial intelligence data science ai">AI & Data Science (AI&DS) 🤖
+                            </option>
+                            <option value="electronics communication ece embedded">Electronics & Comm. (ECE) 📡</option>
+                            <option value="electrical electronics eee">Electrical (EEE) ⚡</option>
+                            <option value="mechanical engineering">Mechanical Engineering ⚙️</option>
+                            <option value="civil engineering">Civil Engineering 🏗️</option>
+                            <option value="chemical engineering">Chemical Engineering 🧪</option>
+                            <option value="biotechnology">Biotechnology 🧬</option>
+                            <option value="cyber security">Cyber Security 🛡️</option>
+                        </select>
+                    </div>
+
+                    <!-- Level Select (Pills) -->
+                    <div class="mb-4 text-center">
+                        <label class="d-block text-secondary fs-7 fw-bold mb-3 text-uppercase ls-1"
+                            style="font-size: 0.75rem; letter-spacing: 1px;">My Level</label>
+                        <div class="d-inline-flex bg-white bg-opacity-5 rounded-pill p-1 gap-1"
+                            style="border: 1px solid rgba(255,255,255,0.05);">
+                            <span class="badge rounded-pill py-2 px-3 level-badge-select active"
+                                style="cursor: pointer; transition: all 0.2s; background: rgba(255,139,56,0.1); color: #FF8B38; border: 1px solid #FF8B38;"
+                                onclick="selectLevelV3('beginner', this)">Beginner</span>
+                            <span class="badge rounded-pill py-2 px-3 level-badge-select text-secondary"
+                                style="cursor: pointer; transition: all 0.2s; background: transparent; border: 1px solid transparent;"
+                                onclick="selectLevelV3('intermediate', this)">Intermediate</span>
+                            <span class="badge rounded-pill py-2 px-3 level-badge-select text-secondary"
+                                style="cursor: pointer; transition: all 0.2s; background: transparent; border: 1px solid transparent;"
+                                onclick="selectLevelV3('pro', this)">Pro</span>
+                        </div>
+                        <input type="hidden" id="selected-level" value="beginner">
+                    </div>
+
+                    <button class="btn btn-primary w-100 py-3 rounded-pill" onclick="getRoadmapSuggestion()">
+                        Get Personal Roadmap <i class="fas fa-arrow-right ms-2"></i>
+                    </button>
+
+                    <div id="suggestor-loading" class="text-center mt-3 d-none">
+                        <span class="spinner-border spinner-border-sm text-primary me-2" role="status"></span>
+                        <span class="text-secondary small">Analyzing your request...</span>
+                    </div>
+                </div>
+
+                <!-- Step 2: Result -->
+                <div id="suggestor-step-2" class="d-none text-center fade-in">
+                    <!-- Success Header -->
+                    <div class="mb-4">
+                        <span
+                            class="badge bg-success bg-opacity-25 text-success border border-success px-3 py-1 rounded-pill small">
+                            <i class="fas fa-check-circle me-1"></i> Recommendation Found
+                        </span>
+                    </div>
+
+                    <!-- Result Card -->
+                    <div class="bg-surface rounded-4 p-3 mb-4 text-start position-relative overflow-hidden"
+                        style="border: 1px solid rgba(255,255,255,0.1);">
+
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="flex-shrink-0 me-3">
+                                <img id="suggest-img" src="" class="rounded-3 shadow-sm"
+                                    style="width: 60px; height: 60px; object-fit: cover;">
+                            </div>
+                            <div>
+                                <h5 class="fw-bold mb-0 text-white" id="suggest-title">Python Roadmap</h5>
+                                <div class="text-warning small">
+                                    <i class="fas fa-star"></i> <span id="suggest-rating">4.9</span>
+                                    <span class="text-secondary ms-1">• <span id="suggest-enrolled">1.2k</span>
+                                        Students</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p class="text-secondary small mb-3" id="suggest-desc" style="line-height: 1.5;">Start here to
+                            build a solid foundation...</p>
+
+                        <!-- AI Reason Bubble -->
+                        <div class="p-2 rounded-3 small border d-flex align-items-center"
+                            style="background: rgba(255,139,56,0.1); border-color: rgba(255,139,56,0.2) !important; color: #FF8B38;">
+                            <i class="fas fa-robot fs-5 me-2"></i>
+                            <span id="suggest-reason">Because you want to learn backend...</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="d-grid gap-2">
+                        <!-- Standard Link for Robustness -->
+                        <a id="enroll-btn-link" href="#" class="btn btn-primary py-3 rounded-pill">
+                            Start Learning Now <i class="fas fa-play-circle ms-2"></i>
+                        </a>
+
+                        <!-- Backup Link -->
+                        <a id="suggest-link" href="#"
+                            class="btn btn-outline-light py-2 rounded-3 border-opacity-10 text-muted"
+                            style="border-color: rgba(255,255,255,0.2);">
+                            <i class="fas fa-info-circle me-1"></i> View Roadmap Details
+                        </a>
+
+                        <button class="btn btn-link text-secondary btn-sm text-decoration-none"
+                            onclick="resetSuggestor()">
+                            Search Again
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let suggestedRoadmapIdV3 = null;
+    let suggestedRoadmapSlug = null;
+
+    // UI Selection Logic
+    function selectLevelV3(val, el) {
+        document.getElementById('selected-level').value = val;
+        // Reset all badges
+        document.querySelectorAll('.level-badge-select').forEach(b => {
+            b.classList.remove('active');
+            b.classList.add('text-secondary');
+            b.style.background = 'transparent';
+            b.style.color = '#B4C0D3';
+            b.style.borderColor = 'transparent';
+        });
+
+        // Activate clicked badge
+        el.classList.add('active');
+        el.classList.remove('text-secondary');
+        el.style.background = 'rgba(255,139,56,0.1)';
+        el.style.color = '#FF8B38';
+        el.style.borderColor = '#FF8B38';
+    }
+
+    function getRoadmapSuggestion() {
+        const level = document.getElementById('selected-level').value;
+        const goalRaw = document.getElementById('goal-input').value;
+
+        document.getElementById('suggestor-loading').classList.remove('d-none');
+
+        fetch('/api/guide/suggest-roadmap/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({ level, goal: goalRaw })
+        })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('suggestor-loading').classList.add('d-none');
+                if (data.status === 'success') {
+                    showSuggestionResultV3(data.roadmap, data.reason);
+                } else {
+                    console.error('API Error', data);
+                    alert('We could not find a roadmap for that. Try "Python" or "Java".');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                document.getElementById('suggestor-loading').classList.add('d-none');
+                alert("Network error.");
+            });
+    }
+
+    function showSuggestionResultV3(roadmap, reason) {
+        document.getElementById('suggestor-step-1').classList.add('d-none');
+        document.getElementById('suggestor-step-2').classList.remove('d-none');
+
+        document.getElementById('suggest-title').innerText = roadmap.title;
+        document.getElementById('suggest-desc').innerText = roadmap.description;
+        document.getElementById('suggest-img').src = roadmap.image;
+        document.getElementById('suggest-enrolled').innerText = roadmap.enrolled;
+        document.getElementById('suggest-rating').innerText = roadmap.rating || '4.8';
+        document.getElementById('suggest-reason').textContent = reason;
+
+        suggestedRoadmapIdV3 = roadmap.id;
+        suggestedRoadmapSlug = roadmap.slug;
+
+        // Update enrollment link (Simple GET request)
+        const enrollBtn = document.getElementById('enroll-btn-link');
+        if (enrollBtn) {
+            enrollBtn.href = `/site-manager/enroll/${roadmap.id}/`;
+            // Add click listener to set local storage flag immediately
+            enrollBtn.onclick = function () {
+                localStorage.setItem('roadmap_suggestion_completed_v2', 'true');
+            };
+        }
+
+        // Update backup link
+        const linkBtn = document.getElementById('suggest-link');
+        if (linkBtn) linkBtn.href = '/roadmap/' + roadmap.slug + '/';
+    }
+
+    // Removed old enrollSuggestedV3 function - using direct link now.
+
+
+    function resetSuggestor() {
+        document.getElementById('suggestor-step-1').classList.remove('d-none');
+        document.getElementById('suggestor-step-2').classList.add('d-none');
+        document.getElementById('goal-input').value = '';
+        document.getElementById('goal-input').focus();
+    }
+
+    // Auto-Launch Logic
+    document.addEventListener('DOMContentLoaded', function () {
+        // Bind click event explicitly for debug button if exists
+        const enrollBtn = document.getElementById('enroll-btn-v3');
+        if (enrollBtn) {
+            // enrollBtn.addEventListener('click', enrollSuggestedV3); // Function removed
+        }
+
+        // --- Logic: Show Once Per Day for All Users ---
+
+        const isAuthenticated = "{{ user.is_authenticated|yesno:'true,false' }}" === "true";
+        const hasHash = window.location.hash === '#suggest';
+        const hasQuery = new URLSearchParams(window.location.search).has('suggest');
+
+        // Date Check
+        const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+        const lastSeenDate = localStorage.getItem('roadmap_suggestor_last_seen_date');
+
+        // Logic:
+        // 1. Force show via URL/Hash (Debugging/Manual)
+        // 2. Auto Show:
+        //    - User IS Logged In
+        //    - User has NOT seen it today (today != lastSeen)
+        //    - (Optional) We can ignore isEnrolled now as requested
+
+        let shouldShow = false;
+
+        if (hasHash || hasQuery) {
+            shouldShow = true;
+            console.log("Roadmap Suggestor: Forced by URL");
+        } else if (isAuthenticated && lastSeenDate !== today) {
+            shouldShow = true;
+            console.log("Roadmap Suggestor: Showing (First time today)");
+        } else {
+            console.log("Roadmap Suggestor: Skipped (Already seen today or Not Logged In)", { today, lastSeenDate });
+        }
+
+        if (shouldShow) {
+            setTimeout(() => {
+                const suggestModalEl = document.getElementById('roadmapSuggestorModal');
+                if (suggestModalEl) {
+                    const suggestModal = new bootstrap.Modal(suggestModalEl);
+                    suggestModal.show();
+
+                    // Mark as seen today immediately when shown
+                    localStorage.setItem('roadmap_suggestor_last_seen_date', today);
+                }
+            }, 1500); // 1.5s delay for smooth entry
+        }
+    });
+</script>
